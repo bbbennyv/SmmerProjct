@@ -2,6 +2,12 @@ using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum Hand
+{
+    Left, 
+    Right
+}
+
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
@@ -10,7 +16,6 @@ public class PlayerController : MonoBehaviour
     private float jumpHeight = 10.0f;
 
     private float horizontalMovement; 
-    private float verticalMovement;
 
     private bool isGrounded = true;
 
@@ -22,6 +27,13 @@ public class PlayerController : MonoBehaviour
        rb = GetComponent<Rigidbody2D>();
     }
 
+    void Update()
+    {
+
+        rb.linearVelocity = new Vector2(horizontalMovement * movementSpeed, rb.linearVelocity.y);
+        Debug.Log(isGrounded);
+    }
+
     public void Move(InputAction.CallbackContext action)
     {
         //^read inputs
@@ -29,8 +41,6 @@ public class PlayerController : MonoBehaviour
         //its in vector2 so it should be easier for you
 
         horizontalMovement = action.ReadValue<Vector2>().x;
-
-        //rb.linearVelocity = new Vector2(horizontalMovement * movementSpeed, rb.linearVelocity.y);
 
         Debug.Log("MOVEMENT");
     }
@@ -55,6 +65,21 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public void LeftPunch(InputAction.CallbackContext action)
+    {
+        if (action.started) { 
+
+
+        }
+    }
+
+    public void RightPunch(InputAction.CallbackContext action)
+    {
+        if (action.started) { 
+        
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
@@ -63,10 +88,4 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-
-        rb.linearVelocity = new Vector2(horizontalMovement * movementSpeed, rb.linearVelocity.y);
-        Debug.Log(isGrounded);
-    }
 }
