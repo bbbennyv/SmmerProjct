@@ -3,22 +3,11 @@ using UnityEngine.XR;
 
 public class PunchSystem : MonoBehaviour
 {
-    [SerializeField]
-    private float maxChargeTime = 1.2f;
+    [SerializeField] private float maxChargeTime = 1.2f;
 
-    [SerializeField]
-    private float minPunchForce = 5.0f;
-    [SerializeField]
-    private float maxPunchForce = 20.0f;
-    [SerializeField]
-    public float fistRadius = 0.18f;
-    [SerializeField]
-    public float punchReach = 0.55f;
-
-    [SerializeField]
-    private LayerMask hitLayers;
-
-
+    [SerializeField] private float minPunchForce = 5.0f;
+    [SerializeField] private float maxPunchForce = 20.0f;
+    [SerializeField] private float upwardsAngle = 0.3f;
 
     private bool isLeftCharging;
     private bool isRightCharging;
@@ -30,14 +19,18 @@ public class PunchSystem : MonoBehaviour
     private float leftCharge;
     private float rightCharge;
 
-    private Transform leftHandBone;
-    private Transform rightHandBone;
+    [SerializeField] private FistController leftFist;
+    [SerializeField] private FistController rightFist;
 
+    private Rigidbody2D rb;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
+
+        if (leftFist) leftFist.OnFistHit += (col, charge) => HandleHit(col, charge, Hand.Left);
+        if (rightFist) rightFist.OnFistHit += (col, charge) => HandleHit(col, charge, Hand.Right);
     }
 
     // Update is called once per frame
@@ -49,18 +42,31 @@ public class PunchSystem : MonoBehaviour
         if(isLeftCharging)
         {
             leftCharge = Mathf.Min(leftCharge + Time.deltaTime, maxChargeTime);
+            leftFist.SetChargeRatio(leftCharge/ maxChargeTime);
         }
 
         if (isRightCharging)
         {
             rightCharge = Mathf.Min(rightCharge + Time.deltaTime, maxChargeTime);
+            rightFist.SetChargeRatio(-rightCharge/ maxChargeTime);
         }
     }
 
     public void ChargePunch(Hand hand)
     {
-        if (hand == Hand.Left && leftCooldown <= 0) isLeftCharging = true;
-        if (hand == Hand.Right && rightCooldown <= 0) isRightCharging = true;
+        if (hand == Hand.Left && leftCooldown <= 0)
+        {
+            isLeftCharging = true;
+            leftCharge = 0;
+            leftFist.StartCharge();
+
+        }
+        if (hand == Hand.Right && rightCooldown <= 0)
+        {
+            isRightCharging = true;
+            rightCharge = 0;
+            rightFist.StartCharge();
+        }
 
     }
 
@@ -68,50 +74,48 @@ public class PunchSystem : MonoBehaviour
     {
         if(hand == Hand.Left && isLeftCharging)
         {
-            FirePunch(Hand.Left, leftCharge / maxChargeTime);
+            FirePunch(Hand.Left, leftCharge / maxChargeTime, leftFist);
             leftCharge = 0;
             isLeftCharging = false;
             leftCooldown = cooldown;
         }
         if(hand == Hand.Right && isRightCharging)
         {
-            FirePunch(Hand.Right, rightCharge / maxChargeTime);
+            FirePunch(Hand.Right, rightCharge / maxChargeTime, rightFist);
             rightCharge = 0;
             isRightCharging = false;
             rightCooldown = cooldown;
         }
     }
 
-    private void FirePunch(Hand hand, float ChargeAmount)
+    private void FirePunch(Hand hand, float chargeAmount, FistController fist)
     {
-        Transform handBone = hand == Hand.Left ? leftHandBone : rightHandBone;
+        if (fist == null) return;
 
-        float force = Mathf.Lerp(minPunchForce, maxPunchForce, ChargeAmount);
+        fist.SetChargeRatio(chargeAmount);
+        fist.ReleasePunch();
 
-        Vector2 facing = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
-        Vector2 punchDirection = (facing + Vector2.up).normalized;
+        Vector2 punchDir = getPunchDirection();
+        float selfImpulse = Mathf.Lerp(minPunchForce, maxPunchForce, chargeAmount) * 0.1f;
+        rb.AddForce(punchDir * selfImpulse, ForceMode2D.Impulse);
+    }
 
-        Vector2 origin = handBone.position;
+    Vector2 getPunchDirection()
+    {
+        float facingX = transform.localScale.x > 0 ? 1f : -1f;
+        return new Vector2(facingX, upwardsAngle).normalized;
+    }
 
-        RaycastHit2D hit = Physics2D.CircleCast(origin, fistRadius, punchDirection, punchReach, hitLayers);
+    void HandleHit(Collider2D other, float chargeAmount, Hand hand)
+    {
+        float knockback = Mathf.Lerp(minPunchForce, maxPunchForce, chargeAmount);
 
-        if( hit)
+        Vector2 hitDir = getPunchDirection();
+
+        Rigidbody2D targetRb = other.attachedRigidbody;
+        if (targetRb != null)
         {
-            Rigidbody2D targetRb = hit.rigidbody;
-
-            if (targetRb != null) {
-
-                targetRb.AddForce(punchDirection * force, ForceMode2D.Impulse);
-
-                PlayerController targetPlayer = targetRb.GetComponent<PlayerController>();
-                if (targetPlayer != null) { 
-                
-                    
-
-                }
-
-            }
-
+            targetRb.AddForce(hitDir * knockback, ForceMode2D.Impulse);
         }
     }
 

@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public enum Hand
 {
@@ -17,11 +18,11 @@ public class PlayerController : MonoBehaviour
 
     private float horizontalMovement; 
 
-    private bool isGrounded = true;
-
     private int jumpsToUse = 2;
 
     private Rigidbody2D rb;
+    private PunchSystem punch;
+
     void Start()
     {
        rb = GetComponent<Rigidbody2D>();
@@ -29,9 +30,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-
         rb.linearVelocity = new Vector2(horizontalMovement * movementSpeed, rb.linearVelocity.y);
-        Debug.Log(isGrounded);
     }
 
     public void Move(InputAction.CallbackContext action)
@@ -42,7 +41,6 @@ public class PlayerController : MonoBehaviour
 
         horizontalMovement = action.ReadValue<Vector2>().x;
 
-        Debug.Log("MOVEMENT");
     }
 
     public void Jump(InputAction.CallbackContext action) 
@@ -61,22 +59,34 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        Debug.Log("Jump");
-
     }
 
     public void LeftPunch(InputAction.CallbackContext action)
     {
-        if (action.started) { 
+        if (action.started) {
 
-
+            punch?.ChargePunch(Hand.Left);
+            Debug.Log("charge left");
         }
+        else
+        {
+            punch?.ReleaseCharge(Hand.Left);
+        }
+
     }
 
     public void RightPunch(InputAction.CallbackContext action)
     {
-        if (action.started) { 
-        
+        if (action.started)
+        {
+
+            punch?.ChargePunch(Hand.Right);
+            Debug.Log("charge right");
+
+        }
+        else
+        {
+            punch?.ReleaseCharge(Hand.Right);
         }
     }
 
