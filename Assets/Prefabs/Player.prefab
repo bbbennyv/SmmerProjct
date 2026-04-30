@@ -82,10 +82,10 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.18836774, g: 0.34331644, b: 0.7830189, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -151,7 +151,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -171,12 +171,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FistController
   side: 1
   anchorOffset: {x: -0.8, y: -0.2}
-  chargeOffset: {x: 0.1, y: 0}
-  punchOffset: {x: 0.9, y: 0.05}
-  returnSpeed: 18
+  chargeOffset: {x: -2, y: 0}
+  punchOffset: {x: 1.5, y: 0}
+  returnSpeed: 5
   chargeSpeed: 10
-  punchSpeed: 40
-  punchDuration: 0.12
+  punchSpeed: 20
+  punchDuration: 0.1
   hitLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -262,10 +262,10 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.745283, g: 0.21444462, b: 0.21444462, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -352,11 +352,11 @@ MonoBehaviour:
   side: 0
   anchorOffset: {x: 0.8, y: -0.2}
   chargeOffset: {x: 0.1, y: 0}
-  punchOffset: {x: 0.9, y: 0.05}
-  returnSpeed: 18
+  punchOffset: {x: 1.5, y: 0}
+  returnSpeed: 5
   chargeSpeed: 10
-  punchSpeed: 40
-  punchDuration: 0.12
+  punchSpeed: 20
+  punchDuration: 0.1
   hitLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -656,7 +656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa82fa750f73a0449afbc16e4a0dd74e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PunchSystem
-  maxChargeTime: 1.2
+  maxChargeTime: 1
   minPunchForce: 5
   maxPunchForce: 20
   upwardsAngle: 0.3

@@ -59,13 +59,15 @@ public class PunchSystem : MonoBehaviour
             isLeftCharging = true;
             leftCharge = 0;
             leftFist.StartCharge();
-
+            Debug.Log("Punch Left charge");
         }
         if (hand == Hand.Right && rightCooldown <= 0)
         {
             isRightCharging = true;
             rightCharge = 0;
             rightFist.StartCharge();
+            Debug.Log("Punch right charge");
+
         }
 
     }

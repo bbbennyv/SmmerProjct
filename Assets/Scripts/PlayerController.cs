@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
        rb = GetComponent<Rigidbody2D>();
+        punch = GetComponent<PunchSystem>();
     }
 
     void Update()
@@ -68,8 +69,8 @@ public class PlayerController : MonoBehaviour
             punch?.ChargePunch(Hand.Left);
             Debug.Log("charge left");
         }
-        else
-        {
+        if (action.canceled) {
+        
             punch?.ReleaseCharge(Hand.Left);
         }
 
@@ -84,7 +85,8 @@ public class PlayerController : MonoBehaviour
             Debug.Log("charge right");
 
         }
-        else
+
+        if (action.canceled)
         {
             punch?.ReleaseCharge(Hand.Right);
         }
