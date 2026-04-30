@@ -48,7 +48,7 @@ public class PunchSystem : MonoBehaviour
         if (isRightCharging)
         {
             rightCharge = Mathf.Min(rightCharge + Time.deltaTime, maxChargeTime);
-            rightFist.SetChargeRatio(-rightCharge/ maxChargeTime);
+            rightFist.SetChargeRatio(rightCharge/ maxChargeTime);
         }
     }
 
@@ -66,7 +66,7 @@ public class PunchSystem : MonoBehaviour
             isRightCharging = true;
             rightCharge = 0;
             rightFist.StartCharge();
-            Debug.Log("Punch right charge");
+            Debug.Log("Punch Left charge");
 
         }
 
@@ -97,9 +97,9 @@ public class PunchSystem : MonoBehaviour
         fist.SetChargeRatio(chargeAmount);
         fist.ReleasePunch();
 
-        Vector2 punchDir = getPunchDirection();
-        float selfImpulse = Mathf.Lerp(minPunchForce, maxPunchForce, chargeAmount) * 0.1f;
-        rb.AddForce(punchDir * selfImpulse, ForceMode2D.Impulse);
+        //Vector2 punchDir = getPunchDirection();
+        //float selfImpulse = Mathf.Lerp(minPunchForce, maxPunchForce, chargeAmount) * 0.1f;
+        //rb.AddForce(punchDir * selfImpulse, ForceMode2D.Impulse);
     }
 
     Vector2 getPunchDirection()

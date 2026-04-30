@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2209429618232138023}
   - component: {fileID: 771210563186174010}
   m_Layer: 0
-  m_Name: Right Hand
+  m_Name: Left Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -169,9 +169,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c253b41e00bea84ea1cb1feaf891248, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FistController
-  side: 1
+  side: 0
   anchorOffset: {x: -0.8, y: -0.2}
-  chargeOffset: {x: -2, y: 0}
+  chargeOffset: {x: -0.1, y: 0}
   punchOffset: {x: 1.5, y: 0}
   returnSpeed: 5
   chargeSpeed: 10
@@ -179,7 +179,7 @@ MonoBehaviour:
   punchDuration: 0.1
   hitLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
 --- !u!1 &1153286422902562420
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: 1628470022960838021}
   - component: {fileID: 5668249406111205683}
   m_Layer: 0
-  m_Name: Left Hand
+  m_Name: Right Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -349,9 +349,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c253b41e00bea84ea1cb1feaf891248, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  side: 0
+  side: 1
   anchorOffset: {x: 0.8, y: -0.2}
-  chargeOffset: {x: 0.1, y: 0}
+  chargeOffset: {x: -0.1, y: 0}
   punchOffset: {x: 1.5, y: 0}
   returnSpeed: 5
   chargeSpeed: 10
@@ -359,7 +359,7 @@ MonoBehaviour:
   punchDuration: 0.1
   hitLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
 --- !u!1 &3015877833799681643
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,7 +376,7 @@ GameObject:
   - component: {fileID: 24756916358254882}
   - component: {fileID: 7067668913706727250}
   - component: {fileID: 8926006953864321296}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -657,8 +657,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PunchSystem
   maxChargeTime: 1
-  minPunchForce: 5
-  maxPunchForce: 20
+  minPunchForce: 20
+  maxPunchForce: 50
   upwardsAngle: 0.3
-  leftFist: {fileID: 5668249406111205683}
-  rightFist: {fileID: 771210563186174010}
+  leftFist: {fileID: 771210563186174010}
+  rightFist: {fileID: 5668249406111205683}

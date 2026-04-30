@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FistController : MonoBehaviour
@@ -35,6 +36,7 @@ public class FistController : MonoBehaviour
         circleCollider.isTrigger = true;
 
         transform.localPosition = anchorOffset;
+
     }
 
     void FixedUpdate()
@@ -43,6 +45,7 @@ public class FistController : MonoBehaviour
 
         Vector2 worldTarget = ownerTransform.TransformPoint(targetLocal);
         float speed = GetCurrentSpeed();
+
         Vector2 newPos = Vector2.MoveTowards(rb.position, worldTarget, speed * Time.fixedDeltaTime);
         rb.MovePosition(newPos);
 
@@ -87,6 +90,8 @@ public class FistController : MonoBehaviour
 
         if (other.transform.IsChildOf(ownerTransform) || other.transform == ownerTransform) return;
 
+        Debug.Log("hit opponent");
+
         hitRegistered = true;
         OnFistHit?.Invoke(other, chargeRatio);
 
@@ -99,8 +104,15 @@ public class FistController : MonoBehaviour
         State = newState;
     }
 
+    Vector2 sideAdjustment(Vector2 vector)
+    {
+        float sideMult = (side == Hand.Left) ? 1 : -1;
+        return new Vector2(vector.x *  sideMult, vector.y);
+    }
+
     Vector2 GetTargetLocalPosition()
     {
+
         return State switch
         {
             FistState.Charging => Vector2.Lerp(anchorOffset, chargeOffset, chargeRatio),
@@ -118,6 +130,7 @@ public class FistController : MonoBehaviour
             _ => returnSpeed,
         };
     }
+
 
 }
 
