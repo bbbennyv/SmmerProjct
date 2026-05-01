@@ -173,7 +173,7 @@ MonoBehaviour:
   anchorOffset: {x: -0.8, y: -0.2}
   chargeOffset: {x: -0.1, y: 0}
   punchOffset: {x: 1.5, y: 0}
-  returnSpeed: 5
+  returnSpeed: 10
   chargeSpeed: 10
   punchSpeed: 20
   punchDuration: 0.1
@@ -353,7 +353,7 @@ MonoBehaviour:
   anchorOffset: {x: 0.8, y: -0.2}
   chargeOffset: {x: -0.1, y: 0}
   punchOffset: {x: 1.5, y: 0}
-  returnSpeed: 5
+  returnSpeed: 10
   chargeSpeed: 10
   punchSpeed: 20
   punchDuration: 0.1

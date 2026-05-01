@@ -104,12 +104,6 @@ public class FistController : MonoBehaviour
         State = newState;
     }
 
-    Vector2 sideAdjustment(Vector2 vector)
-    {
-        float sideMult = (side == Hand.Left) ? 1 : -1;
-        return new Vector2(vector.x *  sideMult, vector.y);
-    }
-
     Vector2 GetTargetLocalPosition()
     {
 
