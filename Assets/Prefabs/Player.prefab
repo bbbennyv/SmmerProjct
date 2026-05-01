@@ -170,9 +170,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FistController
   side: 0
-  anchorOffset: {x: -0.8, y: -0.2}
-  chargeOffset: {x: -0.1, y: 0}
-  punchOffset: {x: 1.5, y: 0}
+  anchorForward: 0.42
+  anchorLateral: 0.18
+  chargeDistance: 0.35
+  punchForwardDistance: 0.85
+  verticalOffset: 0.05
   returnSpeed: 10
   chargeSpeed: 10
   punchSpeed: 20
@@ -350,9 +352,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   side: 1
-  anchorOffset: {x: 0.8, y: -0.2}
-  chargeOffset: {x: -0.1, y: 0}
-  punchOffset: {x: 1.5, y: 0}
+  anchorForward: 0.42
+  anchorLateral: 0.18
+  chargeDistance: 0.35
+  punchForwardDistance: 0.85
+  verticalOffset: 0.05
   returnSpeed: 10
   chargeSpeed: 10
   punchSpeed: 20
@@ -376,6 +380,7 @@ GameObject:
   - component: {fileID: 24756916358254882}
   - component: {fileID: 7067668913706727250}
   - component: {fileID: 8926006953864321296}
+  - component: {fileID: 6668006397209498759}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -662,3 +667,16 @@ MonoBehaviour:
   upwardsAngle: 0.3
   leftFist: {fileID: 771210563186174010}
   rightFist: {fileID: 5668249406111205683}
+--- !u!114 &6668006397209498759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3015877833799681643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 509d0c4f5e7ce2b469c97d9d42677cbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyScan
+  scanInterval: 0.1

@@ -23,11 +23,15 @@ public class PunchSystem : MonoBehaviour
     [SerializeField] private FistController rightFist;
 
     private Rigidbody2D rb;
+    private PlayerController fighter;
+    private EnemyScan tracker;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        fighter = GetComponent<PlayerController>();
+        tracker = GetComponent<EnemyScan>();
 
         if (leftFist) leftFist.OnFistHit += (col, charge) => HandleHit(col, charge, Hand.Left);
         if (rightFist) rightFist.OnFistHit += (col, charge) => HandleHit(col, charge, Hand.Right);
@@ -59,14 +63,13 @@ public class PunchSystem : MonoBehaviour
             isLeftCharging = true;
             leftCharge = 0;
             leftFist.StartCharge();
-            Debug.Log("Punch Left charge");
+
         }
         if (hand == Hand.Right && rightCooldown <= 0)
         {
             isRightCharging = true;
             rightCharge = 0;
             rightFist.StartCharge();
-            Debug.Log("Punch Left charge");
 
         }
 
@@ -76,43 +79,49 @@ public class PunchSystem : MonoBehaviour
     {
         if(hand == Hand.Left && isLeftCharging)
         {
-            FirePunch(Hand.Left, leftCharge / maxChargeTime, leftFist);
+            FirePunch(leftCharge / maxChargeTime, leftFist);
             leftCharge = 0;
             isLeftCharging = false;
             leftCooldown = cooldown;
         }
         if(hand == Hand.Right && isRightCharging)
         {
-            FirePunch(Hand.Right, rightCharge / maxChargeTime, rightFist);
+            FirePunch(rightCharge / maxChargeTime, rightFist);
             rightCharge = 0;
             isRightCharging = false;
             rightCooldown = cooldown;
         }
     }
 
-    private void FirePunch(Hand hand, float chargeAmount, FistController fist)
+    private void FirePunch(float chargeAmount, FistController fist)
     {
         if (fist == null) return;
 
         fist.SetChargeRatio(chargeAmount);
         fist.ReleasePunch();
 
+
         //Vector2 punchDir = getPunchDirection();
         //float selfImpulse = Mathf.Lerp(minPunchForce, maxPunchForce, chargeAmount) * 0.1f;
         //rb.AddForce(punchDir * selfImpulse, ForceMode2D.Impulse);
     }
-
-    Vector2 getPunchDirection()
+    Vector2 TowardEnemy()
     {
-        float facingX = transform.localScale.x > 0 ? 1f : -1f;
-        return new Vector2(facingX, upwardsAngle).normalized;
-    }
+        if (tracker != null && tracker.closestEnemy != null)
+            return tracker.DirectionToEnemy;
 
+        return fighter.transform.localScale.x >= 0 ? Vector2.right : Vector2.left;
+    }
+    Vector2 TowardEnemyWithBias()
+    {
+        Vector2 dir = TowardEnemy();
+        return new Vector2(dir.x, dir.y + upwardsAngle).normalized;
+    }
     void HandleHit(Collider2D other, float chargeAmount, Hand hand)
     {
         float knockback = Mathf.Lerp(minPunchForce, maxPunchForce, chargeAmount);
 
-        Vector2 hitDir = getPunchDirection();
+        Vector2 hitDir = TowardEnemyWithBias();
 
         Rigidbody2D targetRb = other.attachedRigidbody;
         if (targetRb != null)
