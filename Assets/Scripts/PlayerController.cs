@@ -31,7 +31,15 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        rb.linearVelocity = new Vector2(horizontalMovement * movementSpeed, rb.linearVelocity.y);
+        //rb.linearVelocity = new Vector2(horizontalMovement * movementSpeed, rb.linearVelocity.y);
+    }
+
+    private void FixedUpdate()
+    {
+        float targetSpeed = horizontalMovement * movementSpeed;
+        float speedDiff = targetSpeed - rb.linearVelocity.x;
+
+        rb.AddForce(new Vector2(speedDiff * 10f, 0f));
     }
 
     public void Move(InputAction.CallbackContext action)

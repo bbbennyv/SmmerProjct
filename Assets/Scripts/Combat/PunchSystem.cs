@@ -7,7 +7,9 @@ public class PunchSystem : MonoBehaviour
 
     [SerializeField] private float minPunchForce = 5.0f;
     [SerializeField] private float maxPunchForce = 20.0f;
-    [SerializeField] private float upwardsAngle = 0.3f;
+    [SerializeField] private float verticalKnockback = 0.3f;
+    [SerializeField] private float horizontalKnockback = 0.01f;
+
 
     private bool isLeftCharging;
     private bool isRightCharging;
@@ -114,8 +116,8 @@ public class PunchSystem : MonoBehaviour
     }
     Vector2 TowardEnemyWithBias()
     {
-        Vector2 dir = TowardEnemy();
-        return new Vector2(dir.x, dir.y + upwardsAngle).normalized;
+        float x = Mathf.Sign(TowardEnemy().x);
+        return new Vector2(x * horizontalKnockback,  verticalKnockback).normalized;
     }
     void HandleHit(Collider2D other, float chargeAmount, Hand hand)
     {
