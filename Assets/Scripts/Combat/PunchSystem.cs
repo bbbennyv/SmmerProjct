@@ -16,7 +16,7 @@ public class PunchSystem : MonoBehaviour
 
     private float leftCooldown;
     private float rightCooldown;
-    const float cooldown = 0.3f;
+    [SerializeField]private float cooldown = 0.3f;
 
     private float leftCharge;
     private float rightCharge;

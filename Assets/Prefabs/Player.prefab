@@ -666,6 +666,7 @@ MonoBehaviour:
   maxPunchForce: 50
   verticalKnockback: 0.3
   horizontalKnockback: 1
+  cooldown: 0.1
   leftFist: {fileID: 771210563186174010}
   rightFist: {fileID: 5668249406111205683}
 --- !u!114 &6668006397209498759
