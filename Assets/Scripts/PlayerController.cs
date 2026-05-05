@@ -75,7 +75,6 @@ public class PlayerController : MonoBehaviour
         if (action.started) {
 
             punch?.ChargePunch(Hand.Left);
-            Debug.Log("charge left");
         }
         if (action.canceled) {
         
@@ -90,7 +89,6 @@ public class PlayerController : MonoBehaviour
         {
 
             punch?.ChargePunch(Hand.Right);
-            Debug.Log("charge right");
 
         }
 

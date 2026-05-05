@@ -98,8 +98,7 @@ public class FistController : MonoBehaviour
         SetState(FistState.Idle);
     }
 
-
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         if (State != FistState.Punching) return;
         if (hitRegistered) return;
@@ -107,12 +106,11 @@ public class FistController : MonoBehaviour
 
         if (other.transform.IsChildOf(ownerTransform) || other.transform == ownerTransform) return;
 
-        Debug.Log("hit opponent");
-
         hitRegistered = true;
         OnFistHit?.Invoke(other, chargeRatio);
         SetState(FistState.Idle);
     }
+
 
     void SetState(FistState newState)
     {

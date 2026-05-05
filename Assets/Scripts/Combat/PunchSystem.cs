@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.XR;
@@ -10,7 +11,8 @@ public class PunchSystem : MonoBehaviour
     [SerializeField] private float maxPunchForce = 20.0f;
     [SerializeField] private float verticalKnockback = 0.3f;
     [SerializeField] private float horizontalKnockback = 0.01f;
-
+    [SerializeField] private int minAttackDamage = 10;
+    [SerializeField] private int maxAttackDamage = 20;
 
     private bool isLeftCharging;
     private bool isRightCharging;
@@ -129,6 +131,8 @@ public class PunchSystem : MonoBehaviour
     void HandleHit(Collider2D other, float chargeAmount, Hand hand)
     {
         float knockback = Mathf.Lerp(minPunchForce, maxPunchForce, chargeAmount);
+        int damage = (int)Mathf.Lerp(minAttackDamage, maxAttackDamage, chargeAmount);
+
 
         Vector2 hitDir = TowardEnemyWithBias();
 
@@ -150,6 +154,8 @@ public class PunchSystem : MonoBehaviour
                 CameraShake.Instance.ShakeCamera(7f, .1f);
 
             }
+            HealthSystem targetHealth = targetRb.GetComponent<HealthSystem>();
+            targetHealth.TakeDamage(damage);
         }
     }
 
