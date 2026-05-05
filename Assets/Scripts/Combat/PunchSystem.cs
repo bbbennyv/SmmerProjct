@@ -146,12 +146,12 @@ public class PunchSystem : MonoBehaviour
             if(charge < 0.5)
             {
                 Instantiate(PunchParticles, targetRb.position, Quaternion.identity);
-                CameraShake.Instance.ShakeCamera(5f, .1f);
+                CameraShake.Instance.ShakeCamera(2f, .1f);
             }
             else
             {
                 Instantiate(PunchParticlesCharged, targetRb.position, Quaternion.identity);
-                CameraShake.Instance.ShakeCamera(7f, .1f);
+                CameraShake.Instance.ShakeCamera(3f, .1f);
 
             }
             HealthSystem targetHealth = targetRb.GetComponent<HealthSystem>();
