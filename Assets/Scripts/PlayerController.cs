@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,7 +18,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float jumpHeight = 10.0f;
 
-    private float horizontalMovement; 
+    [SerializeField]
+    private float dashAmount = 20.0f;
+    [SerializeField]
+    private float dashCooldown = 1.0f;
+
+    private bool isDashing; 
+    private float horizontalMovement;
 
     private int jumpsToUse = 2;
 
@@ -25,13 +33,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-       rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         punch = GetComponent<PunchSystem>();
-    }
-
-    void Update()
-    {
-        //rb.linearVelocity = new Vector2(horizontalMovement * movementSpeed, rb.linearVelocity.y);
     }
 
     private void FixedUpdate()
@@ -44,30 +47,38 @@ public class PlayerController : MonoBehaviour
 
     public void Move(InputAction.CallbackContext action)
     {
-        //^read inputs
-        //code in what to do with the input
-        //its in vector2 so it should be easier for you
-
         horizontalMovement = action.ReadValue<Vector2>().x;
 
     }
 
-    public void Jump(InputAction.CallbackContext action) 
+    public void Jump(InputAction.CallbackContext action)
     {
-        //^read jump input
-        //code in what to do with the input
-        //i assume its on pressed so..
 
-        
-        if (action.started) { 
-        
-            if(jumpsToUse > 0)
+        if (action.started) {
+
+            if (jumpsToUse > 0)
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpHeight);
-                jumpsToUse --;
+                jumpsToUse--;
             }
         }
 
+    }
+
+    public void Dash(InputAction.CallbackContext action)
+    {
+        if (action.started && !isDashing)
+        {
+            StartCoroutine(DashAction());
+        }
+    }
+
+    private IEnumerator DashAction()
+    {
+        isDashing = true;
+        rb.AddForce(new Vector2(rb.linearVelocity.x * dashAmount, rb.linearVelocity.y), ForceMode2D.Impulse);
+        yield return new WaitForSeconds(dashCooldown);
+        isDashing = false;
     }
 
     public void LeftPunch(InputAction.CallbackContext action)

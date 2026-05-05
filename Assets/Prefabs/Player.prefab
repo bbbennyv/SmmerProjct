@@ -631,6 +631,22 @@ MonoBehaviour:
         m_CallState: 1
     m_ActionId: d2d26dcf-92a1-4c00-99d2-6410b797f53f
     m_ActionName: 'GamePlay/RightPunch[/XInputControllerWindows/rightShoulder]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6794226252741254352}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: Dash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+    m_ActionId: d5db4dac-7971-4d5b-b263-ba899ae4b5f4
+    m_ActionName: 'GamePlay/Dash[/XInputControllerWindows/buttonEast,/XInputControllerWindows1/buttonEast]'
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: GamePlay
@@ -648,8 +664,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc9bd3112e5af47438ad461e518198ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  movementSpeed: 5
+  movementSpeed: 8
   jumpHeight: 10
+  dashAmount: 5
+  dashCooldown: 1
 --- !u!50 &-7706404620283566449
 Rigidbody2D:
   serializedVersion: 5
@@ -744,7 +762,8 @@ MonoBehaviour:
   maxPunchForce: 50
   verticalKnockback: 0.3
   horizontalKnockback: 1
-  attackDamage: 10
+  minAttackDamage: 5
+  maxAttackDamage: 10
   cooldown: 0.1
   leftFist: {fileID: 771210563186174010}
   rightFist: {fileID: 5668249406111205683}
