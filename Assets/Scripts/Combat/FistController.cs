@@ -81,6 +81,11 @@ public class FistController : MonoBehaviour
         chargeRatio = Mathf.Clamp01(ratio);
     }
 
+    public float GetChargeRatio()
+    {
+        return chargeRatio;
+    }
+
     public void ReleasePunch()
     {
         hitRegistered = false;

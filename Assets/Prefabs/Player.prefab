@@ -669,6 +669,8 @@ MonoBehaviour:
   cooldown: 0.1
   leftFist: {fileID: 771210563186174010}
   rightFist: {fileID: 5668249406111205683}
+  PunchParticles: {fileID: 8245891158460389032, guid: 507e127c786967348adf9c98659c154d, type: 3}
+  PunchParticlesCharged: {fileID: 8245891158460389032, guid: 405740676f6c5654e925eb57c0543d27, type: 3}
 --- !u!114 &6668006397209498759
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.XR;
 
 public class PunchSystem : MonoBehaviour
@@ -24,6 +25,10 @@ public class PunchSystem : MonoBehaviour
     [SerializeField] private FistController leftFist;
     [SerializeField] private FistController rightFist;
 
+    [SerializeField] private ParticleSystem PunchParticles;
+    [SerializeField] private ParticleSystem PunchParticlesCharged;
+    private float charge;
+
     private Rigidbody2D rb;
     private PlayerController fighter;
     private EnemyScan tracker;
@@ -34,12 +39,12 @@ public class PunchSystem : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         fighter = GetComponent<PlayerController>();
         tracker = GetComponent<EnemyScan>();
-
         if (leftFist) leftFist.OnFistHit += (col, charge) => HandleHit(col, charge, Hand.Left);
         if (rightFist) rightFist.OnFistHit += (col, charge) => HandleHit(col, charge, Hand.Right);
     }
 
     // Update is called once per frame
+    [System.Obsolete]
     void Update()
     {
         leftCooldown = Mathf.Max(0, leftCooldown - Time.deltaTime);
@@ -56,7 +61,10 @@ public class PunchSystem : MonoBehaviour
             rightCharge = Mathf.Min(rightCharge + Time.deltaTime, maxChargeTime);
             rightFist.SetChargeRatio(rightCharge/ maxChargeTime);
         }
+        
     }
+
+
 
     public void ChargePunch(Hand hand)
     {
@@ -101,8 +109,7 @@ public class PunchSystem : MonoBehaviour
 
         fist.SetChargeRatio(chargeAmount);
         fist.ReleasePunch();
-
-
+        charge = fist.GetChargeRatio();
         //Vector2 punchDir = getPunchDirection();
         //float selfImpulse = Mathf.Lerp(minPunchForce, maxPunchForce, chargeAmount) * 0.1f;
         //rb.AddForce(punchDir * selfImpulse, ForceMode2D.Impulse);
@@ -129,6 +136,20 @@ public class PunchSystem : MonoBehaviour
         if (targetRb != null)
         {
             targetRb.AddForce(hitDir * knockback, ForceMode2D.Impulse);
+            
+
+                Debug.Log(charge);
+            if(charge < 0.5)
+            {
+                Instantiate(PunchParticles, targetRb.position, Quaternion.identity);
+                CameraShake.Instance.ShakeCamera(5f, .1f);
+            }
+            else
+            {
+                Instantiate(PunchParticlesCharged, targetRb.position, Quaternion.identity);
+                CameraShake.Instance.ShakeCamera(7f, .1f);
+
+            }
         }
     }
 
