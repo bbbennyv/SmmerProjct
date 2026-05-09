@@ -39,9 +39,13 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         punch = GetComponent<PunchSystem>();
         
-       
+ /*       GameManager.Instance.spawnedPlayers.Add(this);
+        if (!GameManager.Instance.alivePlayers.Contains(this))
+        {
+            GameManager.Instance.alivePlayers.Add(this);
+        }
+*/
 
-        
     }
 
     private void FixedUpdate()

@@ -29,6 +29,7 @@ public class PlayerInputManager : MonoBehaviour
             gamepad.gameObject.SetActive(false);
 
         }
+
     }
 
     private int spawn;
@@ -41,14 +42,37 @@ public class PlayerInputManager : MonoBehaviour
                 var player = PlayerInput.Instantiate(playerPrefab, controlScheme: "Gamepad", pairWithDevice: gamepad);
                 player.transform.position =  spawnPoints[spawn].position;
                 readyText[spawn].SetActive(true);
+                player.name = $"Player {spawn + 1}";
                 spawn++;
                 joinedGamepads.Add(gamepad);
-                if(spawn > 1)
+
+                var controller = player.GetComponent<PlayerController>();
+
+                GameManager.Instance.spawnedPlayers.Add(controller);
+                GameManager.Instance.alivePlayers.Add(controller);
+
+                if (spawn > 1)
                 {
                     gameStartable = true;
                     Debug.Log("STartable");
                 }
             }
-        } 
+
+
+        }
+
+        if (GameManager.Instance.respawn)
+        {
+            GameManager.Instance.alivePlayers.Clear();
+            GameManager.Instance.respawn = false;
+            spawn = 0;
+            foreach (var player in GameManager.Instance.spawnedPlayers)
+            {
+                GameManager.Instance.PlacePlayersAtSpawnPoints(player, spawnPoints[spawn]);
+                GameManager.Instance.alivePlayers.Add(player);
+                spawn++;
+            }
+            GameManager.Instance.GoToGameplay();
+        }
     }
 }
