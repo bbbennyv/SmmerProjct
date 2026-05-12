@@ -17,6 +17,7 @@ public class PlayerInputManager : MonoBehaviour
             {
                 var player = PlayerInput.Instantiate(playerPrefab, controlScheme: "Gamepad", pairWithDevice: gamepad);
                 player.transform.position =  spawnPoints[spawn].position;
+                player.GetComponent<Deck>().Initialise(spawn);
                 spawn++;
 
                 joinedGamepads.Add(gamepad);

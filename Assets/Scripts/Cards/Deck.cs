@@ -21,10 +21,12 @@ public class Deck : MonoBehaviour
 
     [SerializeField] private  Canvas _cardCanvas;
 
-    public List<Card> _deckPile = new();
-    public List<Card> _discardPile = new();
+    private Transform _cardParent;
+    private List<Card> _deckPile = new();
+    private List<Card> _discardPile = new();
 
     [field:SerializeField] public List<Card> HandCards { get; private set; } = new();
+    [SerializeField] private int handSize;
 
 
     #endregion
@@ -33,18 +35,25 @@ public class Deck : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        // if(Instance == null)
+        // {
+        //     Instance = this;
+        // }
+        // else
+        // {
+        //     Destroy(gameObject);
+        // }
     }
 
     private void Start()
     {
+        //InstantiateDeck();
+    }
+
+    public void Initialise(int playerIndex)
+    {
+        Canvas sharedCanvas = GameObject.FindWithTag("CardCanvas").GetComponent<Canvas>();
+        _cardParent = PlayerHandUI.All[playerIndex].transform;
         InstantiateDeck();
     }
 
@@ -52,7 +61,7 @@ public class Deck : MonoBehaviour
     {
         for (int i = 0; i < _playerDeck.CardsInCollection.Count; i++)
         {
-        Card card = Instantiate(_cardPrefab, _cardCanvas.transform); //instantiate the card prefab as child of the card canvas
+        Card card = Instantiate(_cardPrefab, _cardParent.transform); //instantiate the card prefab as child of the card canvas
         card.SetUp(_playerDeck.CardsInCollection[i]);
         _deckPile.Add(card);
         card.gameObject.SetActive(false); //we will later activare the cards when we draw them, for bnow we just want to build the pool
@@ -62,18 +71,24 @@ public class Deck : MonoBehaviour
 
     private void ShuffleDeck()
     {
-
+        for(int i = _deckPile.Count; i > 0; i--)
+        {
+            int j = Random.Range(0, i + 1);
+            var temp = _deckPile[i];
+            _deckPile[i] = _deckPile[j];
+            _deckPile[j] = temp;
+        }
     }
 
-    public void DrawHand(int amount = 2)
+    public void DrawHand()
     {
-        for (int i  = 0; i < amount; i++)
+        for (int i  = 0; i < _deckPile.Count; i++)
         {
             if(_deckPile.Count <= 0)
             {
                 _discardPile = _deckPile;
                 _discardPile.Clear();
-
+                ShuffleDeck();
             }
             HandCards.Add(_deckPile[0]);
             _deckPile[0].gameObject.SetActive(true);

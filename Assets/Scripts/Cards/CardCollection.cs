@@ -12,7 +12,7 @@ public class CardCollection : ScriptableObject
 {
     [field: SerializeField] public List<ScriptableCard> CardsInCollection {get; private set; }
     
-    public void RemoveCardFromCOllection(ScriptableCard card)
+    public void RemoveCardFromCollection(ScriptableCard card)
     {
         if (CardsInCollection.Contains(card))
         {

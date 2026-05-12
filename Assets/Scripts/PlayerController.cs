@@ -31,10 +31,13 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private PunchSystem punch;
 
+    private Deck _deck;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         punch = GetComponent<PunchSystem>();
+        _deck = GetComponent<Deck>();
     }
 
     private void FixedUpdate()
@@ -115,6 +118,12 @@ public class PlayerController : MonoBehaviour
         {
             jumpsToUse = 2;
         }
+    }
+
+    public void Draw(InputAction.CallbackContext action)
+    {
+        if(!action.started) return;
+        _deck.DrawHand();
     }
 
 }

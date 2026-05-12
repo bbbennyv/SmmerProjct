@@ -37,4 +37,10 @@ public class ScriptableCard : ScriptableObject
         Legendary
     }
 
+
+    public void Use(GameObject card)
+    {
+
+    }
+
 }
