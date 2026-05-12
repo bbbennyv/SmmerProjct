@@ -668,6 +668,7 @@ MonoBehaviour:
   jumpHeight: 10
   dashAmount: 5
   dashCooldown: 1
+  swordData: {fileID: 11400000, guid: de82748275e774f46931efa29111cf9d, type: 2}
 --- !u!50 &-7706404620283566449
 Rigidbody2D:
   serializedVersion: 5

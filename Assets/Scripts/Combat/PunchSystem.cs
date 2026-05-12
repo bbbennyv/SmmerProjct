@@ -41,6 +41,7 @@ public class PunchSystem : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         fighter = GetComponent<PlayerController>();
         tracker = GetComponent<EnemyScan>();
+
         if (leftFist) leftFist.OnFistHit += (col, charge) => HandleHit(col, charge, Hand.Left);
         if (rightFist) rightFist.OnFistHit += (col, charge) => HandleHit(col, charge, Hand.Right);
     }
@@ -65,8 +66,6 @@ public class PunchSystem : MonoBehaviour
         }
         
     }
-
-
 
     public void ChargePunch(Hand hand)
     {
@@ -159,5 +158,13 @@ public class PunchSystem : MonoBehaviour
         }
     }
 
+    public FistController GetLeftFist()
+    {
+        return leftFist;
+    }
 
+    public FistController GetRightFist()
+    {
+        return rightFist;
+    }
 }

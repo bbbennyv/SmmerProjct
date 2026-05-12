@@ -1,3 +1,4 @@
+using System.Buffers.Text;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -36,6 +37,9 @@ public class FistController : MonoBehaviour
     private bool hitRegistered;
 
     private float lateralSign;
+
+    private bool isFistFull = false;
+    private BaseWeapon currentWeapon; 
 
     public System.Action<Collider2D, float> OnFistHit;
     void Awake()
@@ -176,7 +180,22 @@ public class FistController : MonoBehaviour
         return new Vector2(-fwd.y, fwd.x);
     }
 
+    public void SetFistFull (bool fistFull)
+    {
+        isFistFull = fistFull;
+    }
 
+    public bool GetFistFull () 
+    { 
+        return isFistFull; 
+    }
+
+    public void SetWeapon(BaseWeapon weapon)
+    {
+        currentWeapon = weapon;
+    }
+
+    public BaseWeapon GetWeapon() { return currentWeapon; }
 }
 
 public enum FistState { Idle, Charging, Punching }

@@ -1,3 +1,4 @@
+using System.Buffers.Text;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +14,6 @@ public enum Hand
 
 public class PlayerController : MonoBehaviour
 {
-
 
     [Header("Movement Config")]
     [SerializeField]
@@ -34,17 +34,25 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private PunchSystem punch;
 
+    private FistController leftFist;
+    private FistController rightFist;
+
+    public WeaponData swordData;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         punch = GetComponent<PunchSystem>();
-        
- /*       GameManager.Instance.spawnedPlayers.Add(this);
-        if (!GameManager.Instance.alivePlayers.Contains(this))
-        {
-            GameManager.Instance.alivePlayers.Add(this);
-        }
-*/
+
+        /*       GameManager.Instance.spawnedPlayers.Add(this);
+               if (!GameManager.Instance.alivePlayers.Contains(this))
+               {
+                   GameManager.Instance.alivePlayers.Add(this);
+               }
+       */
+
+        leftFist = punch.GetLeftFist();
+        rightFist = punch.GetRightFist();
 
     }
 
@@ -105,6 +113,7 @@ public class PlayerController : MonoBehaviour
             {
 
                 punch?.ChargePunch(Hand.Left);
+
             }
             if (action.canceled)
             {
@@ -123,6 +132,7 @@ public class PlayerController : MonoBehaviour
             {
 
                 punch?.ChargePunch(Hand.Right);
+                EquipWeapon(swordData);
 
             }
 
@@ -131,6 +141,58 @@ public class PlayerController : MonoBehaviour
                 punch?.ReleaseCharge(Hand.Right);
             }
         }
+    }
+
+    public void EquipWeapon(WeaponData weaponData)
+    {
+
+        if (weaponData != null) { } ;
+
+
+        if (!rightFist.GetFistFull())
+        {
+            SpawnWeaponInHand(rightFist, weaponData);
+            rightFist.SetFistFull(true);
+            return;
+        }
+
+        if (!leftFist.GetFistFull())
+        {
+            SpawnWeaponInHand(leftFist, weaponData);
+            leftFist.SetFistFull(true);
+
+            return;
+        }
+
+        RemoveWeaponInHand(rightFist);
+
+        SpawnWeaponInHand(rightFist, weaponData);
+
+
+    }
+
+    private void SpawnWeaponInHand(FistController fist, WeaponData weaponData)
+    {
+        GameObject weaponObject = Instantiate(weaponData.weaponPrefab, fist.transform.position, fist.transform.rotation);
+
+        weaponObject.transform.SetParent(fist.transform);
+        weaponObject.transform.rotation = Quaternion.identity;
+
+        BaseWeapon weapon = weaponObject.GetComponent<BaseWeapon>();
+
+        fist.SetWeapon(weapon);
+    }
+
+    private void RemoveWeaponInHand(FistController fist)
+    {
+        BaseWeapon weapon = fist.GetWeapon();
+
+        if (weapon != null) 
+        {
+            Destroy(weapon.gameObject);
+        }
+
+        fist.SetWeapon(null);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
