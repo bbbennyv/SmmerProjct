@@ -2,15 +2,13 @@ using UnityEngine;
 
 public class BaseWeapon : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected WeaponData weaponData;
+    protected PlayerController player;
+    public virtual void Use() { }
+    
+    public virtual void Initialize( WeaponData weaponData, PlayerController player)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        this.weaponData = weaponData;
+        this.player = player;
     }
 }

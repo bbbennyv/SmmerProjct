@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6594785998802245108}
   - component: {fileID: 8909354038547725264}
+  - component: {fileID: -5508930471269435172}
   m_Layer: 0
   m_Name: SwordPlaceholder
   m_TagString: Untagged
@@ -91,3 +92,15 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &-5508930471269435172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3923255714736054391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baed19053bc70584f81a773c767c14ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MeleeWeapon

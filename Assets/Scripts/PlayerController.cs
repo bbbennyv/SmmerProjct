@@ -108,18 +108,24 @@ public class PlayerController : MonoBehaviour
     {
         if (GameManager.Instance.IsGameplay)
         {
-
-            if (action.started)
+            if (leftFist.GetFistFull())
             {
-
-                punch?.ChargePunch(Hand.Left);
-
+                leftFist.GetWeapon().Use();
             }
-            if (action.canceled)
+            else
             {
+                if (action.started)
+                {
+                    punch?.ChargePunch(Hand.Left);
 
-                punch?.ReleaseCharge(Hand.Left);
+                }
+                if (action.canceled)
+                {
+
+                    punch?.ReleaseCharge(Hand.Left);
+                }
             }
+
         }
     }
 
@@ -127,18 +133,24 @@ public class PlayerController : MonoBehaviour
     {
         if (GameManager.Instance.IsGameplay)
         {
-
-            if (action.started)
+            EquipWeapon(swordData);
+            if (rightFist.GetFistFull())
             {
-
-                punch?.ChargePunch(Hand.Right);
-                EquipWeapon(swordData);
-
+                rightFist.GetWeapon().Use();
             }
-
-            if (action.canceled)
+            else
             {
-                punch?.ReleaseCharge(Hand.Right);
+
+                if (action.started)
+                {
+                    punch?.ChargePunch(Hand.Right);
+
+                }
+
+                if (action.canceled)
+                {
+                    punch?.ReleaseCharge(Hand.Right);
+                }
             }
         }
     }
