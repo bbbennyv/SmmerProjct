@@ -142,7 +142,7 @@ public class PunchSystem : MonoBehaviour
             targetRb.AddForce(hitDir * knockback, ForceMode2D.Impulse);
             
 
-                Debug.Log(charge);
+                //Debug.Log(charge);
             if(charge < 0.5)
             {
                 Instantiate(PunchParticles, targetRb.position, Quaternion.identity);

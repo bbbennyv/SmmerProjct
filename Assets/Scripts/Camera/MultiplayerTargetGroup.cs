@@ -11,6 +11,7 @@ public class MultiplayerTargetGroupManager : MonoBehaviour
 
     void Awake()
     {
+
         if (targetGroup == null)
         {
             targetGroup = FindFirstObjectByType<CinemachineTargetGroup>();

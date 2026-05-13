@@ -13,6 +13,9 @@ public enum Hand
 
 public class PlayerController : MonoBehaviour
 {
+
+
+    [Header("Movement Config")]
     [SerializeField]
     private float movementSpeed = 500.0f;
     [SerializeField]
@@ -35,14 +38,26 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         punch = GetComponent<PunchSystem>();
+        
+ /*       GameManager.Instance.spawnedPlayers.Add(this);
+        if (!GameManager.Instance.alivePlayers.Contains(this))
+        {
+            GameManager.Instance.alivePlayers.Add(this);
+        }
+*/
+
     }
 
     private void FixedUpdate()
     {
-        float targetSpeed = horizontalMovement * movementSpeed;
-        float speedDiff = targetSpeed - rb.linearVelocity.x;
 
-        rb.AddForce(new Vector2(speedDiff * 10f, 0f));
+        if (GameManager.Instance.IsGameplay)
+        {
+            float targetSpeed = horizontalMovement * movementSpeed;
+            float speedDiff = targetSpeed - rb.linearVelocity.x;
+
+            rb.AddForce(new Vector2(speedDiff * 10f, 0f));
+        }
     }
 
     public void Move(InputAction.CallbackContext action)
@@ -54,7 +69,7 @@ public class PlayerController : MonoBehaviour
     public void Jump(InputAction.CallbackContext action)
     {
 
-        if (action.started) {
+        if (action.started && GameManager.Instance.IsGameplay) {
 
             if (jumpsToUse > 0)
             {
@@ -67,7 +82,7 @@ public class PlayerController : MonoBehaviour
 
     public void Dash(InputAction.CallbackContext action)
     {
-        if (action.started && !isDashing)
+        if (action.started && !isDashing && GameManager.Instance.IsGameplay)
         {
             StartCoroutine(DashAction());
         }
@@ -83,29 +98,38 @@ public class PlayerController : MonoBehaviour
 
     public void LeftPunch(InputAction.CallbackContext action)
     {
-        if (action.started) {
+        if (GameManager.Instance.IsGameplay)
+        {
 
-            punch?.ChargePunch(Hand.Left);
-        }
-        if (action.canceled) {
-        
-            punch?.ReleaseCharge(Hand.Left);
-        }
+            if (action.started)
+            {
 
+                punch?.ChargePunch(Hand.Left);
+            }
+            if (action.canceled)
+            {
+
+                punch?.ReleaseCharge(Hand.Left);
+            }
+        }
     }
 
     public void RightPunch(InputAction.CallbackContext action)
     {
-        if (action.started)
+        if (GameManager.Instance.IsGameplay)
         {
 
-            punch?.ChargePunch(Hand.Right);
+            if (action.started)
+            {
 
-        }
+                punch?.ChargePunch(Hand.Right);
 
-        if (action.canceled)
-        {
-            punch?.ReleaseCharge(Hand.Right);
+            }
+
+            if (action.canceled)
+            {
+                punch?.ReleaseCharge(Hand.Right);
+            }
         }
     }
 
