@@ -35,14 +35,7 @@ public class Deck : MonoBehaviour
 
     private void Awake()
     {
-        // if(Instance == null)
-        // {
-        //     Instance = this;
-        // }
-        // else
-        // {
-        //     Destroy(gameObject);
-        // }
+
     }
 
     private void Start()
@@ -84,21 +77,15 @@ public class Deck : MonoBehaviour
     public void DrawHand()
     {
         Debug.Log("Size: " + _deckPile.Count);
-            
         while(_deckPile.Count != 0)
-        {
-           
+        { 
             ShuffleDeck();
             HandCards.Add(_deckPile[0]);
             _deckPile[0].gameObject.SetActive(true);
             _deckPile.RemoveAt(0);
         }
-       
             _discardPile = _deckPile;
-            _discardPile.Clear();
-            
-       
-        
+            _discardPile.Clear(); 
     }
 
     public void DiscardCard(Card card)

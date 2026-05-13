@@ -18,3 +18,4 @@ MonoBehaviour:
 '
   <PlayCost>k__BackingField: 0
   <Image>k__BackingField: {fileID: -3876109809262808709, guid: e1d3ec4ca7eaea84ea28591d15c51369, type: 3}
+  <Effect>k__BackingField: {fileID: 11400000, guid: 8d020c0ec7a15324191ef72c7803d3e7, type: 2}

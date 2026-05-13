@@ -651,10 +651,10 @@ MonoBehaviour:
     m_ActionName: 'GamePlay/Dash[/XInputControllerWindows/buttonEast,/XInputControllerWindows1/buttonEast]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6794226252741254352}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: Draw
-        m_Mode: 0
+      - m_Target: {fileID: 4217750004536523879}
+        m_TargetAssemblyTypeName: Deck, Assembly-CSharp
+        m_MethodName: DrawHand
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -879,7 +879,6 @@ MonoBehaviour:
   _deckPile: []
   _discardPile: []
   <HandCards>k__BackingField: []
-  handSize: 0
 --- !u!114 &-2974716199231695279
 MonoBehaviour:
   m_ObjectHideFlags: 0

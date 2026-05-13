@@ -16,3 +16,4 @@ MonoBehaviour:
   <CardDescription>k__BackingField: raor
   <PlayCost>k__BackingField: 0
   <Image>k__BackingField: {fileID: -3876109809262808709, guid: e1d3ec4ca7eaea84ea28591d15c51369, type: 3}
+  <Effect>k__BackingField: {fileID: 0}

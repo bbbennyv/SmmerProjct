@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private PunchSystem punch;
 
+    private Deck _deck;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -45,6 +46,7 @@ public class PlayerController : MonoBehaviour
             GameManager.Instance.alivePlayers.Add(this);
         }
 */
+        _deck = GetComponent<Deck>();
 
     }
 
