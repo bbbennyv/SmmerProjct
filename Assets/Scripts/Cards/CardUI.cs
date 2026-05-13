@@ -34,7 +34,7 @@ public class CardUI : MonoBehaviour
     SetCardUI();
    }
 
-   private void OnValidat()
+   private void OnValidate()
    {
     Awake();
    }
@@ -50,11 +50,8 @@ public class CardUI : MonoBehaviour
 
     private void SetCardText()
     {
-      
-
         _cardName.text = _card.CardData.CardName;
         _cardDescription.text = _card.CardData.CardDescription;
-
     }
 
     
