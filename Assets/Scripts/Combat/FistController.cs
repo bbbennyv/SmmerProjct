@@ -76,9 +76,9 @@ public class FistController : MonoBehaviour
 
         if(currentWeapon != null)
         {
-            circleCollider.enabled = false;
             if(currentWeapon is MeleeWeapon melee)
             {
+                circleCollider.enabled = false; 
                 melee.SetChargeRatio(chargeRatio);
                 melee.SetBaseAngle(TrackingForward());
             }
@@ -117,7 +117,7 @@ public class FistController : MonoBehaviour
     private void OnTriggerStay2D(Collider2D other)
     {
         if (State != FistState.Punching) return;
-        if (circleCollider == null) return;
+        if (circleCollider.enabled == false) return;
         if (hitRegistered) return;
         if (((1 << other.gameObject.layer) & hitLayers) == 0) return;
 

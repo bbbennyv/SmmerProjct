@@ -19,4 +19,10 @@ public class WeaponData : ScriptableObject
 
     public Vector3 weaponOffset;
 
+    public float minKnockback;
+    public float maxKnockback;
+
+    public float minDamage;
+    public float maxDamage;
+
 }

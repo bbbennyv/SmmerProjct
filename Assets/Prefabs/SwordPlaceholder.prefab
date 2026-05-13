@@ -109,6 +109,9 @@ MonoBehaviour:
   raisedAngle: 110
   swingAngle: -200
   rotateLerpSpeed: 18
+  hitLayers:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!70 &1612380200211508294
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

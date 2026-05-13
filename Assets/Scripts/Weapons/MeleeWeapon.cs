@@ -22,8 +22,20 @@ public class MeleeWeapon : BaseWeapon
     private float swingProgress;
     private bool swinging;
 
+    private PlayerController owner;
+    private Transform ownerTransform;
 
-    private List<Collider2D> hitTargets = new List<Collider2D>();
+    private Vector2 hitDirection;
+
+    [SerializeField] public LayerMask hitLayers;
+
+
+    private void Start()
+    {
+        owner = GetComponentInParent<PlayerController>();
+        ownerTransform = owner.GetComponent<Transform>();
+        
+    }
 
     public override void Update()
     {
@@ -45,7 +57,6 @@ public class MeleeWeapon : BaseWeapon
     public override void BeginCharge()
     {
         swinging = false;
-        hitTargets.Clear();
     }
 
     public void SetChargeRatio(float ratio)
@@ -100,6 +111,24 @@ public class MeleeWeapon : BaseWeapon
         }
     }
 
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (((1 << other.gameObject.layer) & hitLayers) == 0) return;
+
+        if (other.transform.IsChildOf(ownerTransform) || other.transform == ownerTransform) return;
+
+
+        float knockback = Mathf.Lerp(weaponData.minKnockback, weaponData.maxKnockback, chargeRatio);
+        int damage = (int)Mathf.Lerp(weaponData.minDamage, weaponData.maxDamage, chargeRatio);
+
+        Rigidbody2D targetRb = other.attachedRigidbody;
+        if (targetRb != null)
+        {
+            HealthSystem targetHealth = targetRb.GetComponent<HealthSystem>();
+            targetHealth.TakeDamage(damage, knockback, hitDirection, targetRb, chargeRatio);
+        }
+
+    }
 
     public void SetArmPivot(Transform pivot)
     {
@@ -108,6 +137,8 @@ public class MeleeWeapon : BaseWeapon
 
     public void SetBaseAngle(Vector2 forward)
     {
+        hitDirection = forward;
         baseAngle = Mathf.Atan2(forward.y, forward.x) * Mathf.Rad2Deg;
+
     }
 }
