@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     private float startTimer = 3;
     private float winTimer = 3;
     private float UpgradeTimer = 3;
+    private float drawTimerPeriod = 3;
     public bool respawn = false;
     private void Awake()
     {
@@ -74,7 +75,7 @@ public class GameManager : MonoBehaviour
         }
         else if (currentState == gameplayState)
         {
-            if (alivePlayers.Count <= 0)
+      /*      if (alivePlayers.Count <= 0)
             {
                 SetWinnerText("DRAW");
                 SetState(wonState);
@@ -88,7 +89,31 @@ public class GameManager : MonoBehaviour
                 SetState(wonState);
 
                 Debug.Log("WON");
+            }*/
+
+            if(alivePlayers.Count <= 1)
+            {
+                drawTimerPeriod -= Time.deltaTime;
             }
+
+
+
+            if(alivePlayers.Count == 0 && drawTimerPeriod <= 0)
+            {
+                SetWinnerText("DRAW");
+                SetState(wonState);
+
+                Debug.Log("DRAW");
+            }
+            else if(alivePlayers.Count == 1 && drawTimerPeriod <= 0)
+            {
+                SetWinnerText($"{alivePlayers[0].name} WON!!");
+                SetState(wonState);
+
+                Debug.Log("WON");
+            }
+
+
         }
         else if (currentState == wonState)
         {
@@ -126,8 +151,10 @@ public class GameManager : MonoBehaviour
         currentState = newState;
 
         if (currentState == wonState)
+        {
             winTimer = 3f;
-
+            drawTimerPeriod = 3f;
+        }
         if (currentState == upgradeState)
             UpgradeTimer = 3f;
 
