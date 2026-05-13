@@ -21,13 +21,16 @@ public class FistController : MonoBehaviour
     [SerializeField] private float chargeSpeed = 10f;  
     [SerializeField] private float punchSpeed = 40f;   
 
-    [SerializeField] private float punchDuration = 0.12f; 
+    [SerializeField] private float punchDuration = 0.12f;
+
+    [SerializeField] private float chargeLift = 0.25f;
 
     [SerializeField] public LayerMask hitLayers;
 
     public FistState State { get; private set; } = FistState.Idle;
 
     private Rigidbody2D rb;
+    [SerializeField]
     private Transform ownerTransform;    
     private CircleCollider2D circleCollider;
     private EnemyScan tracker;
@@ -47,7 +50,6 @@ public class FistController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         circleCollider = GetComponent<CircleCollider2D>();
         tracker = GetComponentInParent<EnemyScan>();
-        ownerTransform = transform.parent;
 
         circleCollider.isTrigger = true;
 
@@ -70,6 +72,16 @@ public class FistController : MonoBehaviour
             punchTimer -= Time.fixedDeltaTime;
             if (punchTimer <= 0f)
                 SetState(FistState.Idle);
+        }
+
+        if(currentWeapon != null)
+        {
+            circleCollider.enabled = false;
+            if(currentWeapon is MeleeWeapon melee)
+            {
+                melee.SetChargeRatio(chargeRatio);
+                melee.SetBaseAngle(TrackingForward());
+            }
         }
     }
 
@@ -105,6 +117,7 @@ public class FistController : MonoBehaviour
     private void OnTriggerStay2D(Collider2D other)
     {
         if (State != FistState.Punching) return;
+        if (circleCollider == null) return;
         if (hitRegistered) return;
         if (((1 << other.gameObject.layer) & hitLayers) == 0) return;
 
@@ -139,7 +152,7 @@ public class FistController : MonoBehaviour
 
         Vector2 offset = State switch
         {
-            FistState.Charging => ChargeOffset(forward, lateral),
+            FistState.Charging => ChargeOffset(forward, lateral) + ChargeLift(forward),
             FistState.Punching => PunchOffset(forward, lateral),
             _ => AnchorOffset(forward, lateral),
         };
@@ -157,6 +170,15 @@ public class FistController : MonoBehaviour
     {
         float backDist = Mathf.Lerp(anchorForward, -chargeDistance, chargeRatio);
         return fwd * backDist + lat * (anchorLateral * lateralSign);
+    }
+
+    Vector2 ChargeLift(Vector2 forward)
+    {
+        Vector2 up = Vector2.up;
+
+        float eased = Mathf.SmoothStep(0, 1, chargeRatio);
+
+        return up * (eased * chargeLift);
     }
 
     Vector2 PunchOffset(Vector2 fwd, Vector2 lat)
