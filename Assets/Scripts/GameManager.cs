@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void PlacePlayersAtSpawnPoints(PlayerController spawnedPlayer,Transform point)
+    public void PlacePlayersAtSpawnPoints(PlayerController spawnedPlayer,Vector2 point)
     {
         spawnedPlayer.GetComponent<HealthSystem>().Respawn(point);
     }
@@ -163,4 +163,5 @@ public class GameManager : MonoBehaviour
         var playertext = WonUI.GetComponentInChildren<TextMeshProUGUI>();
         playertext.text = text;
     }
+
 }

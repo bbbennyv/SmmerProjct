@@ -74,12 +74,12 @@ public class HealthSystem : MonoBehaviour
         GameManager.Instance.alivePlayers.Remove(player);
     }
 
-    public void Respawn(Transform pos)
+    public void Respawn(Vector2 pos)
     {
         isDead = false;
         currentHealth = maxHealth;
 
-        transform.position = pos.position;
+        transform.position = pos;
         gameObject.SetActive(true);
 
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
