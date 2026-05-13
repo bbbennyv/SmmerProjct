@@ -68,6 +68,8 @@ public class PlayerController : MonoBehaviour
             float targetSpeed = horizontalMovement * movementSpeed;
             float speedDiff = targetSpeed - rb.linearVelocity.x;
 
+            float force = speedDiff * rb.mass / Time.fixedDeltaTime;
+
             rb.AddForce(new Vector2(speedDiff * 10f, 0f));
         }
     }

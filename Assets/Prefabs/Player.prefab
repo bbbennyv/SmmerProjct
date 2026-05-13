@@ -251,7 +251,7 @@ MonoBehaviour:
   chargeDistance: 0.35
   punchForwardDistance: 2
   verticalOffset: 0.05
-  returnSpeed: 10
+  returnSpeed: 20
   chargeSpeed: 10
   punchSpeed: 20
   punchDuration: 0.1
@@ -435,7 +435,7 @@ MonoBehaviour:
   chargeDistance: 0.35
   punchForwardDistance: 2
   verticalOffset: 0.05
-  returnSpeed: 10
+  returnSpeed: 20
   chargeSpeed: 10
   punchSpeed: 20
   punchDuration: 0.1
@@ -668,8 +668,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc9bd3112e5af47438ad461e518198ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  movementSpeed: 8
-  jumpHeight: 10
+  movementSpeed: 12
+  jumpHeight: 14
   dashAmount: 5
   dashCooldown: 1
   swordData: {fileID: 11400000, guid: de82748275e774f46931efa29111cf9d, type: 2}
@@ -772,8 +772,6 @@ MonoBehaviour:
   cooldown: 0.1
   leftFist: {fileID: 771210563186174010}
   rightFist: {fileID: 5668249406111205683}
-  PunchParticles: {fileID: 8245891158460389032, guid: 507e127c786967348adf9c98659c154d, type: 3}
-  PunchParticlesCharged: {fileID: 8245891158460389032, guid: 405740676f6c5654e925eb57c0543d27, type: 3}
 --- !u!114 &6668006397209498759
 MonoBehaviour:
   m_ObjectHideFlags: 0

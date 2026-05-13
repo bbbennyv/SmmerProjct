@@ -136,7 +136,7 @@ public class PunchSystem : MonoBehaviour
         if (targetRb != null)
         { 
             HealthSystem targetHealth = targetRb.GetComponent<HealthSystem>();
-            targetHealth.TakeDamage(damage, knockback, hitDir, targetRb, charge);
+            targetHealth.TakeDamage(damage, knockback, hitDir, targetRb, chargeAmount);
         }
     }
 
