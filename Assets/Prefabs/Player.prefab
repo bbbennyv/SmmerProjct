@@ -459,7 +459,6 @@ GameObject:
   - component: {fileID: 6668006397209498759}
   - component: {fileID: -262954450070483999}
   - component: {fileID: 4217750004536523879}
-  - component: {fileID: 8577787380236516335}
   - component: {fileID: -2974716199231695279}
   m_Layer: 6
   m_Name: Player
@@ -699,7 +698,19 @@ MonoBehaviour:
     m_ActionId: 54e8ec28-2e74-4d62-95c8-43d1986d781d
     m_ActionName: 'GamePlay/ScrollRight[/XInputControllerWindows/rightTrigger,/XInputControllerWindows1/rightTrigger]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -2974716199231695279}
+        m_TargetAssemblyTypeName: HandController, Assembly-CSharp
+        m_MethodName: UseCard
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 95faeadb-babb-43e2-a665-5d144e89ebf8
     m_ActionName: 'GamePlay/Use[/XInputControllerWindows/buttonEast,/XInputControllerWindows1/buttonEast]'
   m_NeverAutoSwitchControlSchemes: 1
@@ -865,23 +876,10 @@ MonoBehaviour:
   _playerDeck: {fileID: 11400000, guid: 7433c123432f5004ca1ff36778cf2d57, type: 2}
   _cardPrefab: {fileID: 6977478660672259614, guid: 3793483ab3297304b8514cfccc3dc0a0, type: 3}
   _cardCanvas: {fileID: 1025655645226629151, guid: 57ea8f4ecca89eb4aad7dbc1c32c02ec, type: 3}
+  _deckPile: []
+  _discardPile: []
   <HandCards>k__BackingField: []
---- !u!114 &8577787380236516335
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3015877833799681643}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cb9cf36f426baa45afcea69d3784ae8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Deck
-  _playerDeck: {fileID: 11400000, guid: 7433c123432f5004ca1ff36778cf2d57, type: 2}
-  _cardPrefab: {fileID: 6977478660672259614, guid: 3793483ab3297304b8514cfccc3dc0a0, type: 3}
-  _cardCanvas: {fileID: 0}
-  <HandCards>k__BackingField: []
+  handSize: 0
 --- !u!114 &-2974716199231695279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -897,6 +895,8 @@ MonoBehaviour:
   selectedScale: 1.2
   neighbourScale: 0.9
   scaleSpeed: 8
+  cardSpacing: 80
+  moveSpeed: 8
 --- !u!1 &5402991200195749604
 GameObject:
   m_ObjectHideFlags: 0

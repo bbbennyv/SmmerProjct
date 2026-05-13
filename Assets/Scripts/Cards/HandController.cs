@@ -7,11 +7,11 @@ public class HandController : MonoBehaviour
 {
     #region Fields and Properties
 
-    [SerializeField] private float selectedScale = 1.2f;
-    [SerializeField] private float neighbourScale = 0.9f;
+    [SerializeField] private float selectedScale = 1.0f;
+    [SerializeField] private float neighbourScale = 0.6f;
     [SerializeField] private float scaleSpeed = 8f;
 
-    [SerializeField] private float cardSpacing = 80f;
+    [SerializeField] private float cardSpacing = 150f;
     [SerializeField] private float moveSpeed = 8f;
 
     private int  selectedIndex = 0;
@@ -31,7 +31,7 @@ public class HandController : MonoBehaviour
     {
         if(deck.HandCards.Count == 0) return;
         UpdateCardVisibility();
-        //UpdateCardScales();
+        UpdateCardScales();
         UpdateCardPositions();
     }
 

@@ -22,11 +22,11 @@ public class Deck : MonoBehaviour
     [SerializeField] private  Canvas _cardCanvas;
 
     private Transform _cardParent;
-    private List<Card> _deckPile = new();
-    private List<Card> _discardPile = new();
+    [field:SerializeField]  private List<Card> _deckPile = new();
+    [field:SerializeField]private List<Card> _discardPile = new();
 
     [field:SerializeField] public List<Card> HandCards { get; private set; } = new();
-    [SerializeField] private int handSize;
+    
 
 
     #endregion
@@ -71,7 +71,8 @@ public class Deck : MonoBehaviour
 
     private void ShuffleDeck()
     {
-        for(int i = _deckPile.Count; i > 0; i--)
+        Debug.Log("shuffle");
+        for(int i = _deckPile.Count - 1; i > 0; i--)
         {
             int j = Random.Range(0, i + 1);
             var temp = _deckPile[i];
@@ -82,18 +83,22 @@ public class Deck : MonoBehaviour
 
     public void DrawHand()
     {
-        for (int i  = 0; i < _deckPile.Count; i++)
+        Debug.Log("Size: " + _deckPile.Count);
+            
+        while(_deckPile.Count != 0)
         {
-            if(_deckPile.Count <= 0)
-            {
-                _discardPile = _deckPile;
-                _discardPile.Clear();
-                ShuffleDeck();
-            }
+           
+            ShuffleDeck();
             HandCards.Add(_deckPile[0]);
             _deckPile[0].gameObject.SetActive(true);
             _deckPile.RemoveAt(0);
         }
+       
+            _discardPile = _deckPile;
+            _discardPile.Clear();
+            
+       
+        
     }
 
     public void DiscardCard(Card card)
