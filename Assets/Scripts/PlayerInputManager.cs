@@ -83,11 +83,14 @@ public class PlayerInputManager : MonoBehaviour
             
             foreach (var player in GameManager.Instance.spawnedPlayers)
             {
+                var playerController = player.GetComponent<PlayerController>();
+                playerController.isDashing = false;
                 GameManager.Instance.PlacePlayersAtSpawnPoints(player, spawnPoints[spawn]);
                 GameManager.Instance.alivePlayers.Add(player);
                 spawn++;
+
             }
-            GameManager.Instance.GoToGameplay();
+            GameManager.Instance.GoToStart();
         }
     }
 

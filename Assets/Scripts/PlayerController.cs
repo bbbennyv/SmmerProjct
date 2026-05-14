@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float dashCooldown = 1.0f;
 
-    private bool isDashing; 
+    public bool isDashing; 
     private float horizontalMovement;
 
     private int jumpsToUse = 2;
