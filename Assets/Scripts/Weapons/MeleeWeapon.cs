@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
@@ -14,6 +15,9 @@ public class MeleeWeapon : BaseWeapon
     [SerializeField]
     private float swingAngle = 70f;
 
+    [SerializeField]
+    private float swingSpeed = 3f;
+
     private float baseAngle;
 
     [SerializeField] float rotateLerpSpeed = 18f;
@@ -26,10 +30,10 @@ public class MeleeWeapon : BaseWeapon
     private Transform ownerTransform;
 
     private Vector2 hitDirection;
-    private bool returning = false;
 
     private bool hitRegistered = false;
-    private float directionSign = 1f;
+    
+    private float currentAngle;
 
     [SerializeField] public LayerMask hitLayers;
 
@@ -72,15 +76,16 @@ public class MeleeWeapon : BaseWeapon
     public override void Use()
     {
         if (!CanUse()) return;
-        if (swinging || returning) return;
+        if (chargeRatio < 0.9f) return;
+        if (swinging) return;
 
         swinging = true;
         swingProgress = 0f;
-        returning = false;
 
-        float startAngle = baseAngle + (raisedAngle * directionSign);
+        float startAngle = baseAngle + (raisedAngle);
+        currentAngle = startAngle;
 
-        armPivot.localRotation = Quaternion.Euler(0, 0, startAngle);
+        armPivot.localRotation = Quaternion.Euler(0, 0, FinalAngle(currentAngle));
 
         ResetCooldown();
     }
@@ -88,48 +93,47 @@ public class MeleeWeapon : BaseWeapon
     void TickChargePose()
     {
         float eased = Mathf.SmoothStep(0, 1, chargeRatio);
-        float target = baseAngle + Mathf.Lerp(restAngle * directionSign, raisedAngle, eased);
+        float target = baseAngle + Mathf.Lerp(restAngle, raisedAngle, eased);
 
         float newAngle = Mathf.LerpAngle(
-            armPivot.localEulerAngles.z,
+            currentAngle,
             target,
             Time.deltaTime * rotateLerpSpeed
         );
-
-        armPivot.localRotation = Quaternion.Euler(0, 0, newAngle);
+        currentAngle = newAngle;
+        armPivot.localRotation = Quaternion.Euler(0, 0, FinalAngle(currentAngle));
     }
 
     void TickSwing()
     {
-        swingProgress += Time.deltaTime * 6f;
+        swingProgress += Time.deltaTime * swingSpeed;
         float t = Mathf.Clamp01(swingProgress);
 
         float smoothT = Mathf.SmoothStep(0, 1, t);
 
-        float angle = baseAngle + Mathf.Lerp(raisedAngle * directionSign, swingAngle * directionSign, smoothT);
+        float angle = baseAngle + Mathf.Lerp(raisedAngle, swingAngle, smoothT);
 
         float newAngle = Mathf.LerpAngle(
-            armPivot.localEulerAngles.z,
+            currentAngle,
             angle,
             Time.deltaTime * rotateLerpSpeed
         );
-
-        armPivot.localRotation = Quaternion.Euler(0, 0, newAngle);
+        currentAngle = newAngle;
+        armPivot.localRotation = Quaternion.Euler(0, 0, FinalAngle(currentAngle));
 
         if (t >= 1f)
         {
             swinging = false;
             chargeRatio = 0f;
 
-            //float startAngle = baseAngle + (raisedAngle * directionSign);
-            //armPivot.localRotation = Quaternion.Euler(0, 0, startAngle);
         }
     }
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (((1 << other.gameObject.layer) & hitLayers) == 0) return;
+        if (!swinging) return;
         if (hitRegistered) return;
+        if (((1 << other.gameObject.layer) & hitLayers) == 0) return;
         if (other.transform.IsChildOf(ownerTransform) || other.transform == ownerTransform) return;
 
         hitRegistered = true;
@@ -156,7 +160,16 @@ public class MeleeWeapon : BaseWeapon
         hitDirection = forward;
         baseAngle = Mathf.Atan2(forward.y, forward.x) * Mathf.Rad2Deg;
 
-        directionSign = Mathf.Sign(forward.x);
+    }
 
+    private float FinalAngle(float angle)
+    {
+        if(hitDirection.x < 0)
+        {
+            angle += 180f;
+            angle = -angle;
+        }
+
+        return angle;
     }
 }

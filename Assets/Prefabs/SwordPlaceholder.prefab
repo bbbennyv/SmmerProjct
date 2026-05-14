@@ -27,13 +27,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3923255714736054391}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 2.17455, y: 3.2398, z: 0}
   m_LocalScale: {x: 0.22839919, y: 1.1083238, z: 0.54782766}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!212 &8909354038547725264
 SpriteRenderer:
   serializedVersion: 2
@@ -105,9 +105,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baed19053bc70584f81a773c767c14ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeWeapon
-  restAngle: -45
+  restAngle: 0
   raisedAngle: 110
   swingAngle: -200
+  swingSpeed: 6
   rotateLerpSpeed: 18
   hitLayers:
     serializedVersion: 2

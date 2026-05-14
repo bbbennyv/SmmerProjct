@@ -197,8 +197,8 @@ public class PlayerController : MonoBehaviour
         GameObject weaponObject = Instantiate(weaponData.weaponPrefab, fist.transform.position, fist.transform.rotation);
 
         weaponObject.transform.SetParent(fist.transform);
-        weaponObject.transform.position = fist.transform.position + weaponOffset;
-        //weaponObject.transform.rotation = Quaternion.identity;
+        weaponObject.transform.localPosition =  weaponOffset;
+        weaponObject.transform.localRotation = Quaternion.identity;
 
         BaseWeapon weapon = weaponObject.GetComponent<BaseWeapon>();
 

@@ -105,6 +105,22 @@ public class FistController : MonoBehaviour
     public void ReleasePunch()
     {
         hitRegistered = false;
+
+        if(currentWeapon != null)
+        {
+            if (chargeRatio > 0.9f)
+            {
+                punchTimer = punchDuration;
+                SetState(FistState.Punching);
+            }
+            else
+            {
+                SetState(FistState.Idle);
+            }
+
+            return;
+        }
+
         punchTimer = punchDuration;
         SetState(FistState.Punching);
     }
