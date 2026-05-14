@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEditor.Rendering;
@@ -16,6 +17,22 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject upgradeUI;
     [SerializeField] public List<PlayerController> spawnedPlayers;
     [SerializeField] public List<PlayerController> alivePlayers;
+
+    [Header("Timer Config")]
+    [SerializeField] private float maxStartTimer = 3;
+    [SerializeField] private float maxWinTimer = 3;
+    [SerializeField] private float maxUpgradeTimer = 3;
+    [SerializeField] private float maxDrawTimer = 3;
+
+
+    [Header("CountDown UI")]
+    [SerializeField] private GameObject countdownUI;
+    [SerializeField] private TextMeshProUGUI countdownText;
+    [SerializeField] private CanvasGroup countdownCanvasGroup;
+
+    [SerializeField] private float numberDuration = 1f;
+    [SerializeField] private float fightDuration = 0.7f;
+    [SerializeField] private float fadeDuration = 1f;
 
     private State currentState;
 
@@ -38,18 +55,28 @@ public class GameManager : MonoBehaviour
     //public bool IsPaused => currentState is PauseState;
     //public State CurrentState => currentState;
 
-    private float startTimer = 3;
-    private float winTimer = 3;
-    private float UpgradeTimer = 3;
+    private float startTimer;
+    private float winTimer;
+    private float UpgradeTimer;
+    private float drawTimerPeriod;
+
+    private bool roundStarting = false;
+
     public bool respawn = false;
     private void Awake()
     {
         Instance = this;
+
     }
 
     private void Start()
     {
         SetState(startState);
+        startTimer = maxStartTimer;
+        winTimer = maxWinTimer;
+        UpgradeTimer = maxUpgradeTimer;
+        drawTimerPeriod = maxDrawTimer;
+
     }
 
 
@@ -64,17 +91,16 @@ public class GameManager : MonoBehaviour
             {
                 startTimer -= Time.deltaTime;
 
-                if (startTimer <= 0)
+                if (startTimer <= 0 && !roundStarting)
                 {
-                    SetState(gameplayState);
-
-                    Debug.Log("GAMEPLAY");
+                    roundStarting = true;
+                    StartCoroutine(BeginRound());
                 }
             }
         }
         else if (currentState == gameplayState)
         {
-            if (alivePlayers.Count <= 0)
+      /*      if (alivePlayers.Count <= 0)
             {
                 SetWinnerText("DRAW");
                 SetState(wonState);
@@ -88,7 +114,31 @@ public class GameManager : MonoBehaviour
                 SetState(wonState);
 
                 Debug.Log("WON");
+            }*/
+
+            if(alivePlayers.Count <= 1)
+            {
+                drawTimerPeriod -= Time.deltaTime;
             }
+
+
+
+            if(alivePlayers.Count == 0 && drawTimerPeriod <= 0)
+            {
+                SetWinnerText("DRAW");
+                SetState(wonState);
+
+                Debug.Log("DRAW");
+            }
+            else if(alivePlayers.Count == 1 && drawTimerPeriod <= 0)
+            {
+                SetWinnerText($"{alivePlayers[0].name} WON!!");
+                SetState(wonState);
+
+                Debug.Log("WON");
+            }
+
+
         }
         else if (currentState == wonState)
         {
@@ -124,26 +174,75 @@ public class GameManager : MonoBehaviour
             return;
 
         currentState = newState;
-
         if (currentState == wonState)
-            winTimer = 3f;
-
+        {
+            winTimer = maxWinTimer;
+            drawTimerPeriod = maxDrawTimer;
+        }
         if (currentState == upgradeState)
-            UpgradeTimer = 3f;
+            UpgradeTimer = maxUpgradeTimer;
 
         currentState.Enter(this);
+
         Debug.Log($"current state - {currentState.ToString()}");
+    }
+
+    private IEnumerator BeginRound()
+    {
+        countdownUI.SetActive(true);
+
+        countdownCanvasGroup.alpha = 1f;
+
+        string[] countdown = { "3", "2", "1", "FIGHT" };
+
+        for (int i = 0; i < countdown.Length; i++)
+        {
+            countdownText.text = countdown[i];
+
+            // Reset alpha for each new number
+            countdownCanvasGroup.alpha = 1f;
+
+            // Normal countdown numbers
+            if (countdown[i] != "FIGHT")
+            {
+                yield return new WaitForSeconds(numberDuration);
+            }
+            else
+            {
+                // Hold FIGHT briefly
+                yield return new WaitForSeconds(fightDuration);
+
+                // Fade out
+                float timer = 0f;
+
+                while (timer < fadeDuration)
+                {
+                    timer += Time.deltaTime;
+
+                    countdownCanvasGroup.alpha =
+                        Mathf.Lerp(1f, 0f, timer / fadeDuration);
+
+                    yield return null;
+                }
+            }
+        }
+
+        countdownUI.SetActive(false);
+
+        SetState(gameplayState);
+
+        roundStarting = false;
     }
 
 
     //if need be these are here
-  /*
-    public void GoToPause()
-    {
-        SetState(pauseState);
-    }
+    /*
+      public void GoToPause()
+      {
+          SetState(pauseState);
+      }
 
-  */
+    */
 
     public void TogglePause()
     {
@@ -156,6 +255,12 @@ public class GameManager : MonoBehaviour
     public void GoToGameplay()
     {
         SetState(gameplayState);
+    }
+
+    public void GoToStart()
+    {
+        startTimer = maxStartTimer;
+        SetState(startState);
     }
 
     public void SetWinnerText(string text)

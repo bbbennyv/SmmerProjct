@@ -35,25 +35,6 @@ public class PlayerInputManager : MonoBehaviour
 
         SpawnRandomMap();
 
-        /*GameObject mapInstance = Instantiate(MapPrefab);
-        spawnedMap = mapInstance;
-        Transform spawnPointsParent = mapInstance.transform
-      .GetComponentsInChildren<Transform>(includeInactive: true)
-      .FirstOrDefault(t => t.gameObject.name == "SpawnPoints");
-
-        Debug.Log("hello");
-
-        if (spawnPointsParent == null)
-        {
-            Debug.LogError("No GameObject named 'SpawnPoints' found on prefab.");
-            return;
-        }
-        foreach (Transform child in spawnPointsParent)
-            spawnPoints.Add(new Vector2(child.position.x, child.position.y));*/
-
-
-        
-
     }
 
     private int spawn;
@@ -67,14 +48,18 @@ public class PlayerInputManager : MonoBehaviour
                 player.transform.position =  spawnPoints[spawn];
                 readyText[spawn].SetActive(true);
                 player.name = $"Player {spawn + 1}";
-                spawn++;
                 joinedGamepads.Add(gamepad);
 
                 var controller = player.GetComponent<PlayerController>();
 
+                var controllerText = controller.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+                controllerText.text = $"Player {spawn + 1}";
+                readyText.Add(controllerText.gameObject);
+
                 GameManager.Instance.spawnedPlayers.Add(controller);
                 GameManager.Instance.alivePlayers.Add(controller);
 
+                spawn++;
                 if (spawn > 1)
                 {
                     gameStartable = true;
@@ -98,11 +83,14 @@ public class PlayerInputManager : MonoBehaviour
             
             foreach (var player in GameManager.Instance.spawnedPlayers)
             {
+                var playerController = player.GetComponent<PlayerController>();
+                playerController.isDashing = false;
                 GameManager.Instance.PlacePlayersAtSpawnPoints(player, spawnPoints[spawn]);
                 GameManager.Instance.alivePlayers.Add(player);
                 spawn++;
+
             }
-            GameManager.Instance.GoToGameplay();
+            GameManager.Instance.GoToStart();
         }
     }
 
