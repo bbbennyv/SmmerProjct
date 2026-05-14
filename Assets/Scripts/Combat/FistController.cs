@@ -65,7 +65,28 @@ public class FistController : MonoBehaviour
 
         float speed = GetCurrentSpeed();
 
-        rb.MovePosition(Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime));
+        //rb.MovePosition(Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime));
+
+        Vector2 ownerVelocity = Vector2.zero;
+
+        Rigidbody2D ownerRb = ownerTransform.GetComponent<Rigidbody2D>();
+
+        if (ownerRb != null)
+        {
+            ownerVelocity = ownerRb.linearVelocity;
+        }
+
+        Vector2 followMovement =
+            Vector2.MoveTowards(
+                rb.position,
+                target,
+                speed * Time.fixedDeltaTime
+            );
+
+        Vector2 finalPosition =
+            followMovement + ownerVelocity * Time.fixedDeltaTime;
+
+        rb.MovePosition(finalPosition);
 
         if (State == FistState.Punching)
         {

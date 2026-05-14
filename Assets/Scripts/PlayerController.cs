@@ -62,16 +62,20 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!GameManager.Instance.IsGameplay) return;
+        
+        float targetSpeed = horizontalMovement * movementSpeed;
 
-        if (GameManager.Instance.IsGameplay)
-        {
-            float targetSpeed = horizontalMovement * movementSpeed;
-            float speedDiff = targetSpeed - rb.linearVelocity.x;
+        Vector2 velocity = rb.linearVelocity;
 
-            float force = speedDiff * rb.mass / Time.fixedDeltaTime;
+        velocity.x = Mathf.Lerp(
+            velocity.x,
+            targetSpeed,
+            12f * Time.fixedDeltaTime
+        );
 
-            rb.AddForce(new Vector2(speedDiff * 10f, 0f));
-        }
+        rb.linearVelocity = velocity;
+
     }
 
     public void Move(InputAction.CallbackContext action)
