@@ -48,6 +48,9 @@ public class PlayerInputManager : MonoBehaviour
                 player.transform.position =  spawnPoints[spawn];
                 readyText[spawn].SetActive(true);
                 player.name = $"Player {spawn + 1}";
+              //  player.transform.position = spawnPoints[spawn].position;
+                player.GetComponent<Deck>().Initialise(spawn);
+                spawn++;
                 joinedGamepads.Add(gamepad);
 
                 var controller = player.GetComponent<PlayerController>();
@@ -59,7 +62,6 @@ public class PlayerInputManager : MonoBehaviour
                 GameManager.Instance.spawnedPlayers.Add(controller);
                 GameManager.Instance.alivePlayers.Add(controller);
 
-                spawn++;
                 if (spawn > 1)
                 {
                     gameStartable = true;

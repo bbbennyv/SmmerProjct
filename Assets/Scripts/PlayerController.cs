@@ -41,17 +41,19 @@ public class PlayerController : MonoBehaviour
 
     public WeaponData swordData;
 
+    private Deck _deck;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         punch = GetComponent<PunchSystem>();
-
-        /*       GameManager.Instance.spawnedPlayers.Add(this);
-               if (!GameManager.Instance.alivePlayers.Contains(this))
-               {
-                   GameManager.Instance.alivePlayers.Add(this);
-               }
-       */
+        
+ /*       GameManager.Instance.spawnedPlayers.Add(this);
+        if (!GameManager.Instance.alivePlayers.Contains(this))
+        {
+            GameManager.Instance.alivePlayers.Add(this);
+        }
+*/
+        _deck = GetComponent<Deck>();
 
         leftFist = punch.GetLeftFist();
         rightFist = punch.GetRightFist();
