@@ -37,7 +37,6 @@ public class MeleeWeapon : BaseWeapon
 
     [SerializeField] public LayerMask hitLayers;
 
-
     private void Start()
     {
         owner = GetComponentInParent<PlayerController>();
