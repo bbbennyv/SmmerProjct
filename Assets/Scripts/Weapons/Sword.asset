@@ -16,7 +16,7 @@ MonoBehaviour:
   weaponPrefab: {fileID: 3923255714736054391, guid: f7f7b7ab1fd3e064d8f43fee90c437e6, type: 3}
   damage: 10
   attackCooldown: 1
-  weaponOffset: {x: 0, y: 1, z: 0}
+  weaponOffset: {x: 0, y: 1.5, z: 0}
   minKnockback: 20
   maxKnockback: 50
   minDamage: 5
