@@ -104,8 +104,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 722992465076294576}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.8, y: -0.26, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.8000002, y: -0.26, z: 0}
   m_LocalScale: {x: 0.53154, y: 0.53154, z: 0.53154}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -251,13 +251,15 @@ MonoBehaviour:
   chargeDistance: 0.35
   punchForwardDistance: 2
   verticalOffset: 0.05
-  returnSpeed: 10
+  returnSpeed: 20
   chargeSpeed: 10
   punchSpeed: 20
   punchDuration: 0.1
+  chargeLift: 0.25
   hitLayers:
     serializedVersion: 2
     m_Bits: 64
+  ownerTransform: {fileID: 2396933447683209680}
 --- !u!1 &1153286422902562420
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,8 +288,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1153286422902562420}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.8, y: -0.26, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.8000002, y: -0.26, z: 0}
   m_LocalScale: {x: 0.53154, y: 0.53154, z: 0.53154}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -433,13 +435,15 @@ MonoBehaviour:
   chargeDistance: 0.35
   punchForwardDistance: 2
   verticalOffset: 0.05
-  returnSpeed: 10
+  returnSpeed: 20
   chargeSpeed: 10
   punchSpeed: 20
   punchDuration: 0.1
+  chargeLift: 0.25
   hitLayers:
     serializedVersion: 2
     m_Bits: 64
+  ownerTransform: {fileID: 2396933447683209680}
 --- !u!1 &3015877833799681643
 GameObject:
   m_ObjectHideFlags: 0
@@ -664,10 +668,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc9bd3112e5af47438ad461e518198ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  movementSpeed: 8
-  jumpHeight: 10
+  movementSpeed: 12
+  jumpHeight: 14
   dashAmount: 5
   dashCooldown: 1
+  swordData: {fileID: 11400000, guid: de82748275e774f46931efa29111cf9d, type: 2}
 --- !u!50 &-7706404620283566449
 Rigidbody2D:
   serializedVersion: 5
@@ -767,8 +772,6 @@ MonoBehaviour:
   cooldown: 0.1
   leftFist: {fileID: 771210563186174010}
   rightFist: {fileID: 5668249406111205683}
-  PunchParticles: {fileID: 8245891158460389032, guid: 507e127c786967348adf9c98659c154d, type: 3}
-  PunchParticlesCharged: {fileID: 8245891158460389032, guid: 405740676f6c5654e925eb57c0543d27, type: 3}
 --- !u!114 &6668006397209498759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -795,6 +798,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthSystem
   maxHealth: 100
+  PunchParticles: {fileID: 8245891158460389032, guid: 507e127c786967348adf9c98659c154d, type: 3}
+  PunchParticlesCharged: {fileID: 8245891158460389032, guid: 405740676f6c5654e925eb57c0543d27, type: 3}
 --- !u!1 &5402991200195749604
 GameObject:
   m_ObjectHideFlags: 0

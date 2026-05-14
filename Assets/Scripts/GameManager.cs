@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log($"CURRENTSTATE - { currentState}");
+        //.Log($"CURRENTSTATE - { currentState}");
 
         if (currentState == startState)
         {

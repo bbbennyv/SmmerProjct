@@ -27,8 +27,6 @@ public class PunchSystem : MonoBehaviour
     [SerializeField] private FistController leftFist;
     [SerializeField] private FistController rightFist;
 
-    [SerializeField] private ParticleSystem PunchParticles;
-    [SerializeField] private ParticleSystem PunchParticlesCharged;
     private float charge;
 
     private Rigidbody2D rb;
@@ -41,6 +39,7 @@ public class PunchSystem : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         fighter = GetComponent<PlayerController>();
         tracker = GetComponent<EnemyScan>();
+
         if (leftFist) leftFist.OnFistHit += (col, charge) => HandleHit(col, charge, Hand.Left);
         if (rightFist) rightFist.OnFistHit += (col, charge) => HandleHit(col, charge, Hand.Right);
     }
@@ -65,8 +64,6 @@ public class PunchSystem : MonoBehaviour
         }
         
     }
-
-
 
     public void ChargePunch(Hand hand)
     {
@@ -133,31 +130,23 @@ public class PunchSystem : MonoBehaviour
         float knockback = Mathf.Lerp(minPunchForce, maxPunchForce, chargeAmount);
         int damage = (int)Mathf.Lerp(minAttackDamage, maxAttackDamage, chargeAmount);
 
-
         Vector2 hitDir = TowardEnemyWithBias();
 
         Rigidbody2D targetRb = other.attachedRigidbody;
         if (targetRb != null)
-        {
-            targetRb.AddForce(hitDir * knockback, ForceMode2D.Impulse);
-            
-
-                //Debug.Log(charge);
-            if(charge < 0.5)
-            {
-                Instantiate(PunchParticles, targetRb.position, Quaternion.identity);
-                CameraShake.Instance.ShakeCamera(2f, .1f);
-            }
-            else
-            {
-                Instantiate(PunchParticlesCharged, targetRb.position, Quaternion.identity);
-                CameraShake.Instance.ShakeCamera(3f, .1f);
-
-            }
+        { 
             HealthSystem targetHealth = targetRb.GetComponent<HealthSystem>();
-            targetHealth.TakeDamage(damage);
+            targetHealth.TakeDamage(damage, knockback, hitDir, targetRb, chargeAmount);
         }
     }
 
+    public FistController GetLeftFist()
+    {
+        return leftFist;
+    }
 
+    public FistController GetRightFist()
+    {
+        return rightFist;
+    }
 }

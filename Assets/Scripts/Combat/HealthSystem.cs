@@ -8,6 +8,9 @@ public class HealthSystem : MonoBehaviour
 
     private bool isDead = false;
 
+    [SerializeField] private ParticleSystem PunchParticles;
+    [SerializeField] private ParticleSystem PunchParticlesCharged;
+
     private PlayerController player;
     public System.Action<int, int> OnHealthChanged;
 
@@ -28,13 +31,29 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(int amount, float knockback, Vector2 hitDir, Rigidbody2D targetRb, float charge)
     {
         if (isDead) return;
 
+
+        targetRb.AddForce(hitDir * knockback, ForceMode2D.Impulse);
+
+        if (charge < 0.5)
+        {
+            Instantiate(PunchParticles, targetRb.position, Quaternion.identity);
+            CameraShake.Instance.ShakeCamera(2f, .1f);
+        }
+        else
+        {
+            Instantiate(PunchParticlesCharged, targetRb.position, Quaternion.identity);
+            CameraShake.Instance.ShakeCamera(3f, .1f);
+
+        }
+
         currentHealth = Mathf.Max(0, currentHealth - amount);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
-        //Debug.Log(currentHealth);
+        
+
     }
 
     public void Heal(int amount)
