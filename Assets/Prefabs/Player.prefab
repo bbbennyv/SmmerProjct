@@ -462,6 +462,8 @@ GameObject:
   - component: {fileID: 8926006953864321296}
   - component: {fileID: 6668006397209498759}
   - component: {fileID: -262954450070483999}
+  - component: {fileID: -6445555448307612379}
+  - component: {fileID: 8473690520505478489}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -651,6 +653,70 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: d5db4dac-7971-4d5b-b263-ba899ae4b5f4
     m_ActionName: 'GamePlay/Dash[/XInputControllerWindows/buttonEast,/XInputControllerWindows1/buttonEast]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -6445555448307612379}
+        m_TargetAssemblyTypeName: Deck, Assembly-CSharp
+        m_MethodName: DrawHand
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+    m_ActionId: a9d38345-33a3-4ea0-993a-456889550c00
+    m_ActionName: 'GamePlay/Draw[/XInputControllerWindows/buttonNorth,/XInputControllerWindows1/buttonNorth]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8473690520505478489}
+        m_TargetAssemblyTypeName: HandController, Assembly-CSharp
+        m_MethodName: ScrollLeft
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+    m_ActionId: a24ce323-608e-4653-a6ff-36d92058c80d
+    m_ActionName: 'GamePlay/ScrollLeft[/XInputControllerWindows/leftTrigger,/XInputControllerWindows1/leftTrigger]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8473690520505478489}
+        m_TargetAssemblyTypeName: HandController, Assembly-CSharp
+        m_MethodName: ScrollRight
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+    m_ActionId: 54e8ec28-2e74-4d62-95c8-43d1986d781d
+    m_ActionName: 'GamePlay/ScrollRight[/XInputControllerWindows/rightTrigger,/XInputControllerWindows1/rightTrigger]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8473690520505478489}
+        m_TargetAssemblyTypeName: HandController, Assembly-CSharp
+        m_MethodName: UseCard
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+    m_ActionId: 95faeadb-babb-43e2-a665-5d144e89ebf8
+    m_ActionName: 'GamePlay/Use[/XInputControllerWindows/buttonEast,/XInputControllerWindows1/buttonEast]'
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: GamePlay
@@ -672,6 +738,7 @@ MonoBehaviour:
   jumpHeight: 14
   dashAmount: 5
   dashCooldown: 1
+  isDashing: 0
   swordData: {fileID: 11400000, guid: de82748275e774f46931efa29111cf9d, type: 2}
 --- !u!50 &-7706404620283566449
 Rigidbody2D:
@@ -800,6 +867,41 @@ MonoBehaviour:
   maxHealth: 100
   PunchParticles: {fileID: 8245891158460389032, guid: 507e127c786967348adf9c98659c154d, type: 3}
   PunchParticlesCharged: {fileID: 8245891158460389032, guid: 405740676f6c5654e925eb57c0543d27, type: 3}
+--- !u!114 &-6445555448307612379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3015877833799681643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cb9cf36f426baa45afcea69d3784ae8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Deck
+  _playerDeck: {fileID: 11400000, guid: 7433c123432f5004ca1ff36778cf2d57, type: 2}
+  _cardPrefab: {fileID: 6977478660672259614, guid: 3793483ab3297304b8514cfccc3dc0a0, type: 3}
+  _cardCanvas: {fileID: 0}
+  _deckPile: []
+  _discardPile: []
+  <HandCards>k__BackingField: []
+--- !u!114 &8473690520505478489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3015877833799681643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44f5e38692b787b47b2abb1ddb07e8d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HandController
+  selectedScale: 1.2
+  neighbourScale: 0.9
+  scaleSpeed: 8
+  cardSpacing: 80
+  moveSpeed: 8
 --- !u!1 &5402991200195749604
 GameObject:
   m_ObjectHideFlags: 0
