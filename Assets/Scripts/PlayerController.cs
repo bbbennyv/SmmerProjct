@@ -245,4 +245,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void ModifyStat(StatType stat,float amount,float duration)
+    {
+        StartCoroutine(StatRoutine(stat, amount, duration));
+    }
+
+    private IEnumerator StatRoutine(StatType stat, float amount, float duration)
+    {
+        ApplyStat(stat, amount);
+        yield return new WaitForSeconds(duration);
+        ApplyStat(stat, -amount);
+    }
+
+    private void ApplyStat(StatType stat, float amount)
+    {
+        switch(stat)
+        {
+            case StatType.Speed: movementSpeed += amount; break;
+        }
+    }
+
 }

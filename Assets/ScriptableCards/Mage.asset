@@ -16,3 +16,4 @@ MonoBehaviour:
   <CardDescription>k__BackingField: pew pew
   <PlayCost>k__BackingField: 0
   <Image>k__BackingField: {fileID: -5071834010248248600, guid: b30855bff1bcc774e9e92dcc77a3bbfb, type: 3}
+  <Effect>k__BackingField: {fileID: 11400000, guid: 669878ffdca1abf42816a7b3ffab0656, type: 2}

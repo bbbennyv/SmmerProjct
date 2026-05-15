@@ -655,10 +655,10 @@ MonoBehaviour:
     m_ActionName: 'GamePlay/Dash[/XInputControllerWindows/buttonEast,/XInputControllerWindows1/buttonEast]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: -6445555448307612379}
-        m_TargetAssemblyTypeName: Deck, Assembly-CSharp
-        m_MethodName: DrawHand
-        m_Mode: 1
+      - m_Target: {fileID: 8473690520505478489}
+        m_TargetAssemblyTypeName: HandController, Assembly-CSharp
+        m_MethodName: UseCard
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -702,19 +702,7 @@ MonoBehaviour:
     m_ActionId: 54e8ec28-2e74-4d62-95c8-43d1986d781d
     m_ActionName: 'GamePlay/ScrollRight[/XInputControllerWindows/rightTrigger,/XInputControllerWindows1/rightTrigger]'
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8473690520505478489}
-        m_TargetAssemblyTypeName: HandController, Assembly-CSharp
-        m_MethodName: UseCard
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
+      m_Calls: []
     m_ActionId: 95faeadb-babb-43e2-a665-5d144e89ebf8
     m_ActionName: 'GamePlay/Use[/XInputControllerWindows/buttonEast,/XInputControllerWindows1/buttonEast]'
   m_NeverAutoSwitchControlSchemes: 1
