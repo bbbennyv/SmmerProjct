@@ -7,7 +7,7 @@ public class SpeedEffect : CardEffect
   
   public override void Execute(GameObject user)
   {
-    //user.GetComponent<PlayerController>()?.ApplySpeedBoost(speedBoost);
+   // user.GetComponent<PlayerController>()?.ApplySpeedBoost(speedBoost);
     Debug.Log("Speeed");
   }
 }
