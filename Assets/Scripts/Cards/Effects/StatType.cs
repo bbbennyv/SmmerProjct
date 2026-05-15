@@ -1,8 +1,6 @@
 using UnityEngine;
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-   public enum StatType
+   public enum StatType //all stat effects for the stat cards
    {
      Speed,
      Damage

@@ -52,7 +52,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Draw",
+                    "name": "Use",
                     "type": "Button",
                     "id": "a9d38345-33a3-4ea0-993a-456889550c00",
                     "expectedControlType": "",
@@ -73,15 +73,6 @@
                     "name": "ScrollRight",
                     "type": "Button",
                     "id": "54e8ec28-2e74-4d62-95c8-43d1986d781d",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Use",
-                    "type": "Button",
-                    "id": "95faeadb-babb-43e2-a665-5d144e89ebf8",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -151,7 +142,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Draw",
+                    "action": "Use",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -174,17 +165,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "ScrollRight",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1535b560-08b6-4fb6-b744-3af5169e0355",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Use",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

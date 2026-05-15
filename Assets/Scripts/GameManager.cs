@@ -229,6 +229,11 @@ public class GameManager : MonoBehaviour
 
         countdownUI.SetActive(false);
 
+        foreach(PlayerController player in spawnedPlayers) //spawns each players decks at the start of the round
+        {
+            player.GetComponent<Deck>()?.DrawHand();
+        }
+
         SetState(gameplayState);
 
         roundStarting = false;
