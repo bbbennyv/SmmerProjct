@@ -5,6 +5,9 @@ public class BaseWeapon : MonoBehaviour
     protected WeaponData weaponData;
     protected bool attacking;
     protected float cooldownTimer;
+    protected float chargeRatio;
+    protected Vector2 hitDirection;
+
     public virtual void Use() { }
     
     public virtual void Initialize( WeaponData weaponData)
@@ -23,6 +26,16 @@ public class BaseWeapon : MonoBehaviour
     public virtual void BeginCharge()
     {
 
+    }
+
+    public virtual void SetBaseAngle(Vector2 forward)
+    {
+        hitDirection = forward;
+    }
+
+    public virtual void SetChargeRatio(float ratio)
+    {
+        chargeRatio = Mathf.Clamp01(ratio);
     }
 
     protected bool CanUse()

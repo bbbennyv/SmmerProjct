@@ -97,10 +97,10 @@ public class FistController : MonoBehaviour
 
         if(currentWeapon != null)
         {
+            currentWeapon.SetChargeRatio(chargeRatio);
             if(currentWeapon is MeleeWeapon melee)
             {
                 circleCollider.enabled = false; 
-                melee.SetChargeRatio(chargeRatio);
                 melee.SetBaseAngle(TrackingForward());
             }
         }
@@ -127,7 +127,7 @@ public class FistController : MonoBehaviour
     {
         hitRegistered = false;
 
-        if(currentWeapon != null)
+        if (currentWeapon != null)
         {
             if (chargeRatio > 0.9f)
             {
