@@ -100,22 +100,6 @@ public class GameManager : MonoBehaviour
         }
         else if (currentState == gameplayState)
         {
-      /*      if (alivePlayers.Count <= 0)
-            {
-                SetWinnerText("DRAW");
-                SetState(wonState);
-
-                Debug.Log("DRAW");
-            }
-
-            else if (alivePlayers.Count == 1)
-            {
-                SetWinnerText($"{alivePlayers[0].name} WON!!");
-                SetState(wonState);
-
-                Debug.Log("WON");
-            }*/
-
             if(alivePlayers.Count <= 1)
             {
                 drawTimerPeriod -= Time.deltaTime;
@@ -199,20 +183,17 @@ public class GameManager : MonoBehaviour
         {
             countdownText.text = countdown[i];
 
-            // Reset alpha for each new number
             countdownCanvasGroup.alpha = 1f;
-
-            // Normal countdown numbers
             if (countdown[i] != "FIGHT")
             {
                 yield return new WaitForSeconds(numberDuration);
             }
             else
             {
-                // Hold FIGHT briefly
                 yield return new WaitForSeconds(fightDuration);
 
-                // Fade out
+                SetState(gameplayState);
+
                 float timer = 0f;
 
                 while (timer < fadeDuration)

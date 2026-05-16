@@ -1519,7 +1519,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1049267990
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1734,7 +1734,7 @@ MonoBehaviour:
   countdownText: {fileID: 236696191}
   countdownCanvasGroup: {fileID: 236696193}
   numberDuration: 1
-  fightDuration: 0.7
+  fightDuration: 0.1
   fadeDuration: 1
   respawn: 0
 --- !u!1 &1769505411
@@ -2079,7 +2079,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Pick an Upgrade
 
-    Winners dont get to choose an upgrade'
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2106,8 +2106,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 80
-  m_fontSizeBase: 80
+  m_fontSize: 200
+  m_fontSizeBase: 200
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
