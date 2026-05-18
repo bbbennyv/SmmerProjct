@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public bool IsGameplay => currentState is GameplayState || currentState is WonState;
-
+    public bool IsUpgrade => currentState is UpgradeState;
     //public bool IsPaused => currentState is PauseState;
     //public State CurrentState => currentState;
 

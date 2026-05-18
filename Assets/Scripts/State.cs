@@ -22,6 +22,7 @@ public class GameplayState : State
         base.Enter(manager);
         
         manager.WonUI.SetActive(false);
+        manager.UpgradeUI.SetActive(false);
         manager.StartUI.SetActive(false);
     }
 }
@@ -48,7 +49,7 @@ public class UpgradeState : State
 
        manager.StartUI.SetActive(false);
        manager.WonUI.SetActive(false);
-
+       manager.UpgradeUI.SetActive(true);
     }
 }
 
@@ -61,6 +62,7 @@ public class StartState : State
         base.Enter(manager);
 
         manager.WonUI.SetActive(false);
+       manager.UpgradeUI.SetActive(false);
         manager.StartUI.SetActive(true);
     }
 }
@@ -74,6 +76,7 @@ public class WonState : State
         base.Enter(manager);
 
         manager.WonUI.SetActive(true);
+       manager.UpgradeUI.SetActive(false);
         manager.StartUI.SetActive(false);
     }
 }

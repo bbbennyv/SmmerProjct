@@ -6,10 +6,13 @@ using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 public class PlayerInputManager : MonoBehaviour
 {
+    [Header("ref")]
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject[] MapPrefab;
     [SerializeField] private List<Vector2> spawnPoints;
     [SerializeField] private List<GameObject> readyText = new List<GameObject>(4);
+
+    public List<UpgradePanel> UpgradePanelUI = new List<UpgradePanel>();
 
     private HashSet<Gamepad> joinedGamepads = new HashSet<Gamepad>();
     private GameObject spawnedMap;
@@ -33,6 +36,12 @@ public class PlayerInputManager : MonoBehaviour
 
         }
 
+        /*        foreach(var UI in UpgradePanelUI)
+                {
+                    if(GameManager.Instance.IsUpgrade)
+                        UI.gameObject.SetActive(true);
+                }*/
+        SetUpUpgradePanelUI();
         SpawnRandomMap();
 
     }
@@ -60,8 +69,12 @@ public class PlayerInputManager : MonoBehaviour
                 controllerText.text = $"Player {spawn + 1}";
                 readyText.Add(controllerText.gameObject);
 
+                UpgradePanelUI[spawn].Initialize(player, spawn);
+                Debug.Log($"{player} - {UpgradePanelUI.First()}");
+
                 GameManager.Instance.spawnedPlayers.Add(controller);
                 GameManager.Instance.alivePlayers.Add(controller);
+
                 spawn++;
 
                 if (spawn > 1)
@@ -128,6 +141,25 @@ public class PlayerInputManager : MonoBehaviour
         }
 
         Debug.Log($"Spawned map: {spawnedMap.name}");
+    }
+
+    private void SetUpUpgradePanelUI()
+    {
+        Transform upgradePanelParent = GameManager.Instance.UpgradeUI.transform
+         .GetComponentsInChildren<Transform>(true)
+         .FirstOrDefault(t => t.name == "PlayerUIUpgrades");
+
+        if (upgradePanelParent == null)
+            return;
+
+        foreach(Transform child in upgradePanelParent)
+        {
+            if (child.GetComponent<UpgradePanel>() == null)
+                return;
+
+            UpgradePanelUI.Add(child.GetComponent<UpgradePanel>());
+        }
+
     }
 
 }
