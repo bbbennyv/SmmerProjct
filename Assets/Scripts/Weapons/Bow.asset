@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 049b9b27274a33b4793965eaffa44d39, type: 3}
+  m_Name: Bow
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  weaponName: Bow
+  weaponPrefab: {fileID: 1022112709418891795, guid: a8e525513c358484386a3de39229fa3c, type: 3}
+  attackCooldown: 1
+  weaponOffset: {x: 0, y: 0, z: 0}
+  minKnockback: 20
+  maxKnockback: 50
+  minDamage: 5
+  maxDamage: 10

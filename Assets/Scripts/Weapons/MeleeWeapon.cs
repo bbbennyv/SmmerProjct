@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class MeleeWeapon : BaseWeapon
 {
-    private Transform armPivot;
-
     [SerializeField]
     private float restAngle = 0f;
     [SerializeField]
@@ -140,25 +138,11 @@ public class MeleeWeapon : BaseWeapon
 
     }
 
-    public void SetArmPivot(Transform pivot)
-    {
-        armPivot = pivot;
-    }
-
     public override void SetBaseAngle(Vector2 forward)
     {
         base.SetBaseAngle(forward);
         baseAngle = Mathf.Atan2(forward.y, forward.x) * Mathf.Rad2Deg;
     }
 
-    private float FinalAngle(float angle)
-    {
-        if(hitDirection.x < 0)
-        {
-            angle += 180f;
-            angle = -angle;
-        }
 
-        return angle;
-    }
 }

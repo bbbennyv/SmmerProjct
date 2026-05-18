@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -7,7 +8,10 @@ public class Projectile : MonoBehaviour
 
     private Rigidbody2D rb;
     private int damage;
+    private float knockback;
     private Vector2 direction;
+    private float chargeRatio;
+    private Transform ownerTransform;
 
     [SerializeField] public LayerMask hitLayers;
     private bool hitRegistered = false;
@@ -18,17 +22,19 @@ public class Projectile : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public void InitializeProjectile(Vector2 dir, int dmg)
+    public void InitializeProjectile(Vector2 dir, float kb, int dmg, float charge, Transform owner)
     {
-        direction = dir;
+        direction = dir.normalized;
+        knockback = kb;
         damage = dmg;
-
-
+        chargeRatio = charge;
+        ownerTransform = owner;
+        speed = speed + (speed * chargeRatio);
     }
 
-    public void Update() 
+    public void FixedUpdate() 
     {
-        rb.linearVelocity = direction * speed * Time.fixedDeltaTime;
+        rb.linearVelocity = direction * speed;
 
         if(hitRegistered)
         {
@@ -41,10 +47,18 @@ public class Projectile : MonoBehaviour
     {
         if (hitRegistered) return;
         if (((1 << other.gameObject.layer) & hitLayers) == 0) return;
-       
+        if (other.transform.IsChildOf(ownerTransform) || other.transform == ownerTransform) return;
+
+
         hitRegistered = true;
 
-        //float knockback = Mathf.Lerp(weaponData.minKnockback, weaponData.maxKnockback, chargeRatio);
-        //int damage = (int)Mathf.Lerp(weaponData.minDamage, weaponData.maxDamage, chargeRatio);
+
+        Rigidbody2D targetRb = other.GetComponent<Rigidbody2D>();
+        if (targetRb != null) 
+        {
+            HealthSystem targetHealth = targetRb.GetComponent<HealthSystem>();
+            targetHealth.TakeDamage(damage, knockback, direction, targetRb, chargeRatio);
+
+        }
     }
 }

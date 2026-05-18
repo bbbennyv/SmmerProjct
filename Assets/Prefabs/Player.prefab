@@ -701,10 +701,6 @@ MonoBehaviour:
         m_CallState: 1
     m_ActionId: 54e8ec28-2e74-4d62-95c8-43d1986d781d
     m_ActionName: 'GamePlay/ScrollRight[/XInputControllerWindows/rightTrigger,/XInputControllerWindows1/rightTrigger]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 95faeadb-babb-43e2-a665-5d144e89ebf8
-    m_ActionName: 'GamePlay/Use[/XInputControllerWindows/buttonEast,/XInputControllerWindows1/buttonEast]'
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: GamePlay
@@ -727,7 +723,7 @@ MonoBehaviour:
   dashAmount: 5
   dashCooldown: 1
   isDashing: 0
-  swordData: {fileID: 11400000, guid: de82748275e774f46931efa29111cf9d, type: 2}
+  swordData: {fileID: 11400000, guid: 5b10b8f6fd6dfb04da421a6c246ffae1, type: 2}
 --- !u!50 &-7706404620283566449
 Rigidbody2D:
   serializedVersion: 5

@@ -211,11 +211,7 @@ public class PlayerController : MonoBehaviour
         weapon.Initialize(weaponData);
         fist.SetWeapon(weapon);
 
-        MeleeWeapon meleeWeapon = weapon as MeleeWeapon;
-        if (meleeWeapon != null)
-        {
-            meleeWeapon.SetArmPivot(fist.transform);
-        }
+        weapon.SetArmPivot(fist.transform);
 
 
     }

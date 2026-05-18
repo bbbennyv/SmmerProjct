@@ -7,6 +7,7 @@ public class BaseWeapon : MonoBehaviour
     protected float cooldownTimer;
     protected float chargeRatio;
     protected Vector2 hitDirection;
+    protected Transform armPivot;
 
     public virtual void Use() { }
     
@@ -36,6 +37,21 @@ public class BaseWeapon : MonoBehaviour
     public virtual void SetChargeRatio(float ratio)
     {
         chargeRatio = Mathf.Clamp01(ratio);
+    }
+
+    public virtual void SetArmPivot(Transform pivot)
+    {
+        armPivot = pivot;
+    }
+    public virtual float FinalAngle(float angle)
+    {
+        if (hitDirection.x < 0)
+        {
+            angle += 180f;
+            angle = -angle;
+        }
+
+        return angle;
     }
 
     protected bool CanUse()
