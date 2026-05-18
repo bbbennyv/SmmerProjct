@@ -12,6 +12,7 @@ public class Projectile : MonoBehaviour
     private Vector2 direction;
     private float chargeRatio;
     private Transform ownerTransform;
+    private float speedMultiplier;
 
     [SerializeField] public LayerMask hitLayers;
     private bool hitRegistered = false;
@@ -22,19 +23,19 @@ public class Projectile : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public void InitializeProjectile(Vector2 dir, float kb, int dmg, float charge, Transform owner)
+    public void InitializeProjectile(Vector2 dir, float kb, int dmg, float charge, Transform owner, float speedMult)
     {
         direction = dir.normalized;
         knockback = kb;
         damage = dmg;
         chargeRatio = charge;
         ownerTransform = owner;
-        speed = speed + (speed * chargeRatio);
+        speedMultiplier = speedMult;
     }
 
     public void FixedUpdate() 
     {
-        rb.linearVelocity = direction * speed;
+        rb.linearVelocity = direction * speed * speedMultiplier;
 
         if(hitRegistered)
         {

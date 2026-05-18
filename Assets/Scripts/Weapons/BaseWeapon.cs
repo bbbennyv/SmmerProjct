@@ -43,6 +43,8 @@ public class BaseWeapon : MonoBehaviour
     {
         armPivot = pivot;
     }
+
+    public virtual bool CanCharge() {  return false; }
     public virtual float FinalAngle(float angle)
     {
         if (hitDirection.x < 0)

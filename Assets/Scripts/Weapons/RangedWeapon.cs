@@ -7,13 +7,6 @@ public class RangedWeapon : BaseWeapon
 
     protected Transform ownerTransform;
 
-    [SerializeField] private float minDrawAngle = 0f;
-    [SerializeField] private float maxDrawAngle = -35f;
-
-    [SerializeField] private float rotateLerpSpeed = 12f;
-
-    private float baseAngle;
-    private float currentAngle;
 
     private void Start()
     {
@@ -21,42 +14,18 @@ public class RangedWeapon : BaseWeapon
         ownerTransform = owner.GetComponent<Transform>();
     }
 
-    public override void Update()
-    {
-        base.Update();
-        TickChargePose();
-    }
-
-    void TickChargePose()
-    {
-        float eased = Mathf.SmoothStep(0, 1, chargeRatio);
-
-        float target =
-            baseAngle +
-            Mathf.Lerp(minDrawAngle, maxDrawAngle, eased);
-
-        currentAngle = Mathf.LerpAngle(
-            currentAngle,
-            target,
-            Time.deltaTime * rotateLerpSpeed
-        );
-
-        armPivot.localRotation =
-            Quaternion.Euler(0, 0, FinalAngle(currentAngle));
-    }
-
     public override void Use()
     {
         if(!CanUse()) return;
-        if (chargeRatio < 0.9f) return;
 
-        FireProjectile();
+
+        FireProjectile(1f);
 
         ResetCooldown();
     }
 
 
-    private void FireProjectile()
+    public virtual void FireProjectile(float speedMult)
     {
         GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
 
@@ -64,6 +33,6 @@ public class RangedWeapon : BaseWeapon
 
         float knockback = Mathf.Lerp(weaponData.minKnockback, weaponData.maxKnockback, chargeRatio);
         int damage = (int)Mathf.Lerp(weaponData.minDamage, weaponData.maxDamage, chargeRatio);
-        projectile.GetComponent<Projectile>().InitializeProjectile(direction, knockback, damage, chargeRatio, ownerTransform);
+        projectile.GetComponent<Projectile>().InitializeProjectile(direction, knockback, damage, chargeRatio, ownerTransform, speedMult);
     }
 }

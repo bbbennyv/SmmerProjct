@@ -144,5 +144,8 @@ public class MeleeWeapon : BaseWeapon
         baseAngle = Mathf.Atan2(forward.y, forward.x) * Mathf.Rad2Deg;
     }
 
-
+    public override bool CanCharge()
+    {
+        return true;
+    }
 }

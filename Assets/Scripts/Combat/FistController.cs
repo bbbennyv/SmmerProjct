@@ -101,12 +101,19 @@ public class FistController : MonoBehaviour
             currentWeapon.SetChargeRatio(chargeRatio);
             currentWeapon.SetBaseAngle(TrackingForward());
 
+            
         }
     }
 
     public void StartCharge()
     {
         if (State == FistState.Punching) return;
+
+        if (currentWeapon != null && !currentWeapon.CanCharge())
+        {
+            return;
+        }
+
         hitRegistered = false;
         SetState(FistState.Charging);
     }
@@ -127,14 +134,22 @@ public class FistController : MonoBehaviour
 
         if (currentWeapon != null)
         {
-            if (chargeRatio > 0.9f)
+            if (currentWeapon.CanCharge()) 
             {
-                punchTimer = punchDuration;
-                SetState(FistState.Punching);
+                if (chargeRatio > 0.9f)
+                {
+                    punchTimer = punchDuration;
+                    SetState(FistState.Punching);
+                }
+                else
+                {
+                    SetState(FistState.Idle);
+                }
             }
             else
             {
-                SetState(FistState.Idle);
+                punchTimer = punchDuration;
+                SetState(FistState.Punching);
             }
 
             return;

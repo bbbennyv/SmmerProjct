@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8323367604088232001}
   - component: {fileID: 6109086484333653731}
-  - component: {fileID: -8240205508842281620}
+  - component: {fileID: -6712830084284923008}
   m_Layer: 0
   m_Name: BowPlaceholder
   m_TagString: Untagged
@@ -92,7 +92,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &-8240205508842281620
+--- !u!114 &-6712830084284923008
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,7 +101,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1022112709418891795}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae22a2cc7e67eaa48a8697c8f1c32513, type: 3}
+  m_Script: {fileID: 11500000, guid: 188d0b60425f5d84588b75e1f963eac7, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RangedWeapon
+  m_EditorClassIdentifier: Assembly-CSharp::BowWeapon
   projectilePrefab: {fileID: 524546372488645080, guid: 0cf48aa483ff4a14bbf9aa4e292ffc35, type: 3}
+  minDrawAngle: 0
+  maxDrawAngle: -35
+  rotateLerpSpeed: 12
+  minProjectileSpeed: 0.5
+  maxProjectileSpeed: 2
