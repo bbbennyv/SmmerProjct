@@ -104,6 +104,7 @@ public class PlayerInputManager : MonoBehaviour
                 playerController.isDashing = false;
                 GameManager.Instance.PlacePlayersAtSpawnPoints(player, spawnPoints[spawn]);
                 GameManager.Instance.alivePlayers.Add(player);
+                player.RemoveAllWeapons();
                 spawn++;
 
             }

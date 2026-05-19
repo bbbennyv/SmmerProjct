@@ -723,7 +723,7 @@ MonoBehaviour:
   dashAmount: 5
   dashCooldown: 1
   isDashing: 0
-  swordData: {fileID: 11400000, guid: 5b10b8f6fd6dfb04da421a6c246ffae1, type: 2}
+  swordData: {fileID: 11400000, guid: e0211543647b6c84695435679463c240, type: 2}
 --- !u!50 &-7706404620283566449
 Rigidbody2D:
   serializedVersion: 5

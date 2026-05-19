@@ -17,7 +17,7 @@ public class HealthSystem : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        player = GetComponent<PlayerController>();
+        player = gameObject.GetComponent<PlayerController>();
         currentHealth = maxHealth;
     }
 
@@ -34,7 +34,6 @@ public class HealthSystem : MonoBehaviour
     public void TakeDamage(int amount, float knockback, Vector2 hitDir, Rigidbody2D targetRb, float charge)
     {
         if (isDead) return;
-
 
         targetRb.AddForce(hitDir * knockback, ForceMode2D.Impulse);
 
@@ -53,7 +52,6 @@ public class HealthSystem : MonoBehaviour
         currentHealth = Mathf.Max(0, currentHealth - amount);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
         
-
     }
 
     public void Heal(int amount)

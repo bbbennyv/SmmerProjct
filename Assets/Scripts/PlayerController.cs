@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 weaponOffset;
 
-    public WeaponData swordData;
+    //private WeaponData weaponData;
 
     private Deck _deck;
     void Start()
@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
         leftFist = punch.GetLeftFist();
         rightFist = punch.GetRightFist();
 
-        weaponOffset = swordData.weaponOffset;
+        //weaponOffset = weaponData.weaponOffset;
 
     }
 
@@ -104,7 +104,6 @@ public class PlayerController : MonoBehaviour
     {
         if (action.started && !isDashing && GameManager.Instance.IsGameplay)
         {
-            EquipWeapon(swordData);
             StartCoroutine(DashAction());
         }
     }
@@ -175,6 +174,8 @@ public class PlayerController : MonoBehaviour
 
         if (weaponData != null) { } ;
 
+        weaponOffset = weaponData.weaponOffset;
+
 
         if (!rightFist.GetFistFull())
         {
@@ -226,6 +227,16 @@ public class PlayerController : MonoBehaviour
         }
 
         fist.SetWeapon(null);
+        //fist.SetFistFull(false);
+    }
+
+    public void RemoveAllWeapons()
+    {
+        RemoveWeaponInHand(leftFist);
+        RemoveWeaponInHand(rightFist);
+
+        leftFist.SetFistFull(false);
+        rightFist.SetFistFull(false);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -255,5 +266,6 @@ public class PlayerController : MonoBehaviour
             case StatType.Speed: movementSpeed += amount; break;
         }
     }
+
 
 }

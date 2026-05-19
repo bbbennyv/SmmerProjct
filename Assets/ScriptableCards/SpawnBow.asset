@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cafe656df8749ed4d8f9c2c2943b2a6a, type: 3}
+  m_Name: SpawnBow
+  m_EditorClassIdentifier: Assembly-CSharp::ScriptableCard
+  <CardName>k__BackingField: SpawnBow
+  <CardDescription>k__BackingField: Thwang
+  <PlayCost>k__BackingField: 0
+  <Image>k__BackingField: {fileID: -5071834010248248600, guid: b30855bff1bcc774e9e92dcc77a3bbfb, type: 3}
+  <Effect>k__BackingField: {fileID: 11400000, guid: 45226d243c4aafc4c963c95a4a726147, type: 2}
