@@ -4,12 +4,11 @@ using UnityEngine;
 public class RangedWeapon : BaseWeapon
 {
     [SerializeField]
-    private GameObject projectilePrefab;
+    protected GameObject projectilePrefab;
 
     [SerializeField]
     private float recoil = 5f;
 
-    [SerializeField]
     protected float projectileSpeedMult = 1f;
 
     protected Transform ownerTransform;

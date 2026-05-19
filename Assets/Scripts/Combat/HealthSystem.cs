@@ -35,7 +35,6 @@ public class HealthSystem : MonoBehaviour
     {
         if (isDead) return;
 
-
         targetRb.AddForce(hitDir * knockback, ForceMode2D.Impulse);
 
         if (charge < 0.5)
@@ -53,7 +52,6 @@ public class HealthSystem : MonoBehaviour
         currentHealth = Mathf.Max(0, currentHealth - amount);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
         
-
     }
 
     public void Heal(int amount)
