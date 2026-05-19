@@ -5,6 +5,10 @@ public class BaseWeapon : MonoBehaviour
     protected WeaponData weaponData;
     protected bool attacking;
     protected float cooldownTimer;
+    protected float chargeRatio;
+    protected Vector2 hitDirection;
+    protected Transform armPivot;
+
     public virtual void Use() { }
     
     public virtual void Initialize( WeaponData weaponData)
@@ -23,6 +27,33 @@ public class BaseWeapon : MonoBehaviour
     public virtual void BeginCharge()
     {
 
+    }
+
+    public virtual void SetBaseAngle(Vector2 forward)
+    {
+        hitDirection = forward;
+    }
+
+    public virtual void SetChargeRatio(float ratio)
+    {
+        chargeRatio = Mathf.Clamp01(ratio);
+    }
+
+    public virtual void SetArmPivot(Transform pivot)
+    {
+        armPivot = pivot;
+    }
+
+    public virtual bool CanCharge() {  return false; }
+    public virtual float FinalAngle(float angle)
+    {
+        if (hitDirection.x < 0)
+        {
+            angle += 180f;
+            angle = -angle;
+        }
+
+        return angle;
     }
 
     protected bool CanUse()

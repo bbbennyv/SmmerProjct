@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class MeleeWeapon : BaseWeapon
 {
-    private Transform armPivot;
-
     [SerializeField]
     private float restAngle = 0f;
     [SerializeField]
@@ -22,14 +20,10 @@ public class MeleeWeapon : BaseWeapon
 
     [SerializeField] float rotateLerpSpeed = 18f;
 
-    private float chargeRatio;
     private float swingProgress;
     private bool swinging;
 
-    private PlayerController owner;
     private Transform ownerTransform;
-
-    private Vector2 hitDirection;
 
     private bool hitRegistered = false;
     
@@ -37,10 +31,9 @@ public class MeleeWeapon : BaseWeapon
 
     [SerializeField] public LayerMask hitLayers;
 
-
     private void Start()
     {
-        owner = GetComponentInParent<PlayerController>();
+        PlayerController owner = GetComponentInParent<PlayerController>();
         ownerTransform = owner.GetComponent<Transform>();
         
     }
@@ -68,15 +61,10 @@ public class MeleeWeapon : BaseWeapon
         hitRegistered = false;
     }
 
-    public void SetChargeRatio(float ratio)
-    {
-        chargeRatio = Mathf.Clamp01(ratio);
-    }
-
     public override void Use()
     {
         if (!CanUse()) return;
-        if (chargeRatio < 0.9f) return;
+        //if (chargeRatio < 0.9f) return;
         if (swinging) return;
 
         swinging = true;
@@ -92,7 +80,7 @@ public class MeleeWeapon : BaseWeapon
 
     void TickChargePose()
     {
-        float eased = Mathf.SmoothStep(0, 1, chargeRatio);
+        float eased = Mathf.SmoothStep(0, 0.5f, chargeRatio);
         float target = baseAngle + Mathf.Lerp(restAngle, raisedAngle, eased);
 
         float newAngle = Mathf.LerpAngle(
@@ -150,26 +138,14 @@ public class MeleeWeapon : BaseWeapon
 
     }
 
-    public void SetArmPivot(Transform pivot)
+    public override void SetBaseAngle(Vector2 forward)
     {
-        armPivot = pivot;
-    }
-
-    public void SetBaseAngle(Vector2 forward)
-    {
-        hitDirection = forward;
+        base.SetBaseAngle(forward);
         baseAngle = Mathf.Atan2(forward.y, forward.x) * Mathf.Rad2Deg;
-
     }
 
-    private float FinalAngle(float angle)
+    public override bool CanCharge()
     {
-        if(hitDirection.x < 0)
-        {
-            angle += 180f;
-            angle = -angle;
-        }
-
-        return angle;
+        return true;
     }
 }

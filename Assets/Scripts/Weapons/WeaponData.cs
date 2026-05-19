@@ -14,7 +14,6 @@ public class WeaponData : ScriptableObject
     public GameObject weaponPrefab;
 
 
-    public int damage;
     public float attackCooldown;
 
     public Vector3 weaponOffset;
