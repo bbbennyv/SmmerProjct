@@ -17,7 +17,7 @@ public class HealthSystem : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        player = GetComponent<PlayerController>();
+        player = gameObject.GetComponent<PlayerController>();
         currentHealth = maxHealth;
     }
 
