@@ -28,6 +28,7 @@ public class BowWeapon : RangedWeapon
             baseAngle +
             Mathf.Lerp(minDrawAngle, maxDrawAngle, eased);
 
+
         currentAngle = Mathf.LerpAngle(
             currentAngle,
             target,
@@ -42,11 +43,28 @@ public class BowWeapon : RangedWeapon
         if (!CanUse()) return;
         //if (chargeRatio < 0.9f) return;
 
-        float speed = Mathf.Lerp(minProjectileSpeed, maxProjectileSpeed, chargeRatio);
+        //launchAngle = Mathf.Lerp(30.0f, 5.0f, chargeRatio);
+        //launchAngle = FinalAngle(launchAngle);
 
-        FireProjectile(speed);
+        projectileSpeedMult = Mathf.Lerp(minProjectileSpeed, maxProjectileSpeed, chargeRatio);
+        
+        base.Use();
+    }
 
-        ResetCooldown();
+    protected override Vector2 GetFireDirection()
+    {
+        float angle = Mathf.Lerp(30.0f, 5.0f, chargeRatio);
+        angle = FinalAngle(angle);
+        return Quaternion.Euler(0, 0 , angle) * hitDirection.normalized;
+    }
+
+    public override float FinalAngle(float angle)
+    {
+        if (hitDirection.x < 0)
+        {
+            angle = -angle;
+        }
+        return angle;
     }
 
     public override bool CanCharge()

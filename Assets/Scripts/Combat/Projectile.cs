@@ -4,23 +4,25 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField]
-    private float speed = 15;
+    protected float speed = 15;
 
-    private Rigidbody2D rb;
-    private int damage;
-    private float knockback;
-    private Vector2 direction;
-    private float chargeRatio;
-    private Transform ownerTransform;
-    private float speedMultiplier;
+    protected Rigidbody2D rb;
+    protected int damage;
+    protected float knockback;
+    protected Vector2 direction;
+    protected float chargeRatio;
+    protected Transform ownerTransform;
+    protected float speedMultiplier;
 
-    [SerializeField] public LayerMask hitLayers;
-    private bool hitRegistered = false;
+    [SerializeField] protected LayerMask hitLayers;
+
+    protected bool hitRegistered = false;
 
 
-    private void Start()
+    protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        Destroy(gameObject, 5f);
     }
 
     public void InitializeProjectile(Vector2 dir, float kb, int dmg, float charge, Transform owner, float speedMult)
@@ -33,7 +35,7 @@ public class Projectile : MonoBehaviour
         speedMultiplier = speedMult;
     }
 
-    public void FixedUpdate() 
+    protected virtual void FixedUpdate() 
     {
         rb.linearVelocity = direction * speed * speedMultiplier;
 

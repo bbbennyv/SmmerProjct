@@ -104,9 +104,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 188d0b60425f5d84588b75e1f963eac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BowWeapon
-  projectilePrefab: {fileID: 524546372488645080, guid: 0cf48aa483ff4a14bbf9aa4e292ffc35, type: 3}
+  projectilePrefab: {fileID: 2365070019932295011, guid: 54eab6e201694c04aa1e417048aba2ba, type: 3}
+  recoil: 5
   minDrawAngle: 0
   maxDrawAngle: -35
   rotateLerpSpeed: 12
   minProjectileSpeed: 0.5
-  maxProjectileSpeed: 2
+  maxProjectileSpeed: 2.5
