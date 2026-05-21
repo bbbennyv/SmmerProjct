@@ -13,6 +13,7 @@ public class RangedWeapon : BaseWeapon
 
     protected Transform ownerTransform;
 
+    [SerializeField] private ParticleSystem MuzzleFlash;
 
     private void Start()
     {
@@ -40,6 +41,9 @@ public class RangedWeapon : BaseWeapon
         float knockback = Mathf.Lerp(weaponData.minKnockback, weaponData.maxKnockback, chargeRatio);
         int damage = (int)Mathf.Lerp(weaponData.minDamage, weaponData.maxDamage, chargeRatio);
         projectile.GetComponent<Projectile>().InitializeProjectile(direction, knockback, damage, chargeRatio, ownerTransform, projectileSpeedMult);
+
+        if(MuzzleFlash != null)
+            Instantiate(MuzzleFlash, transform.position,Quaternion.Euler(direction.x,direction.y,0));
     }
 
     protected virtual Vector2 GetFireDirection()

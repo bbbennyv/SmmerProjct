@@ -107,3 +107,4 @@ MonoBehaviour:
   projectilePrefab: {fileID: 524546372488645080, guid: 0cf48aa483ff4a14bbf9aa4e292ffc35, type: 3}
   recoil: 5
   projectileSpeedMult: 1
+  MuzzleFlash: {fileID: 621949120790431837, guid: 33f8201a23088dc468758c25c072878e, type: 3}
