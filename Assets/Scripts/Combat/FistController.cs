@@ -95,13 +95,13 @@ public class FistController : MonoBehaviour
                 SetState(FistState.Idle);
         }
 
-        if(currentWeapon != null)
+        circleCollider.enabled = (currentWeapon == null);
+
+        if (currentWeapon != null)
         {
-            circleCollider.enabled = false; 
+            //circleCollider.enabled = false; 
             currentWeapon.SetChargeRatio(chargeRatio);
             currentWeapon.SetBaseAngle(TrackingForward());
-
-            
         }
     }
 

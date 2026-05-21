@@ -57,9 +57,6 @@ public class PlayerController : MonoBehaviour
 
         leftFist = punch.GetLeftFist();
         rightFist = punch.GetRightFist();
-
-        //weaponOffset = weaponData.weaponOffset;
-
     }
 
     private void FixedUpdate()
@@ -227,7 +224,7 @@ public class PlayerController : MonoBehaviour
         }
 
         fist.SetWeapon(null);
-        //fist.SetFistFull(false);
+        fist.SetFistFull(false);
     }
 
     public void RemoveAllWeapons()
@@ -235,8 +232,6 @@ public class PlayerController : MonoBehaviour
         RemoveWeaponInHand(leftFist);
         RemoveWeaponInHand(rightFist);
 
-        leftFist.SetFistFull(false);
-        rightFist.SetFistFull(false);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
