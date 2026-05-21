@@ -56,6 +56,8 @@ public class BaseWeapon : MonoBehaviour
         return angle;
     }
 
+    public virtual bool isRanged() { return false; }
+
     protected bool CanUse()
     {
         return cooldownTimer <= 0;

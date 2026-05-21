@@ -109,12 +109,17 @@ public class FistController : MonoBehaviour
     {
         if (State == FistState.Punching) return;
 
+        hitRegistered = false;
+        
         if (currentWeapon != null && !currentWeapon.CanCharge())
         {
+            if (currentWeapon.CanCharge())
+            {
+                SetState(FistState.Charging);
+            }
             return;
         }
 
-        hitRegistered = false;
         SetState(FistState.Charging);
     }
 
@@ -148,8 +153,7 @@ public class FistController : MonoBehaviour
             }
             else
             {
-                punchTimer = punchDuration;
-                SetState(FistState.Punching);
+                SetState(FistState.Idle);
             }
 
             return;
