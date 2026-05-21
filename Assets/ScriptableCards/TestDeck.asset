@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: TestDeck
   m_EditorClassIdentifier: Assembly-CSharp::CardCollection
   <CardsInCollection>k__BackingField:
-  - {fileID: 11400000, guid: 5be96002162add04f85b7be77079c933, type: 2}
-  - {fileID: 11400000, guid: 5be96002162add04f85b7be77079c933, type: 2}
+  - {fileID: 11400000, guid: 6a606e634d039b54299b3439d0487050, type: 2}
+  - {fileID: 11400000, guid: 79ad4156275a2b24c80d334e26dfe89d, type: 2}
+  - {fileID: 11400000, guid: 6a606e634d039b54299b3439d0487050, type: 2}
+  - {fileID: 11400000, guid: 79ad4156275a2b24c80d334e26dfe89d, type: 2}
+  - {fileID: 11400000, guid: 6a606e634d039b54299b3439d0487050, type: 2}
