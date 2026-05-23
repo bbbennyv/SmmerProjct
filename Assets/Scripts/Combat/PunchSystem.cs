@@ -13,6 +13,7 @@ public class PunchSystem : MonoBehaviour
     [SerializeField] private float horizontalKnockback = 0.01f;
     [SerializeField] private int minAttackDamage = 10;
     [SerializeField] private int maxAttackDamage = 20;
+    [SerializeField] float disarmChance = 0.5f;
 
     private bool isLeftCharging;
     private bool isRightCharging;
@@ -134,7 +135,17 @@ public class PunchSystem : MonoBehaviour
 
         Rigidbody2D targetRb = other.attachedRigidbody;
         if (targetRb != null)
-        { 
+        {
+            if (charge >= 0.9f)
+            {
+                float random = Random.value;
+                if (random <= disarmChance)
+                {
+                    PlayerController player = targetRb.GetComponent<PlayerController>();
+                    player.RemoveAllWeapons();
+                }
+
+            }
             HealthSystem targetHealth = targetRb.GetComponent<HealthSystem>();
             targetHealth.TakeDamage(damage, knockback, hitDir, targetRb, chargeAmount);
         }

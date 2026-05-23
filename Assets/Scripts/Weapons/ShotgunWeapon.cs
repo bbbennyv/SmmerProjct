@@ -10,6 +10,15 @@ public class ShotgunWeapon : RangedWeapon
         return hitDirection.x >= 0 ? Vector2.right : Vector2.left;
     }
 
+    public override void Update()
+    {
+        base.Update();
+        if (currentAmmo <= 0 && !reloading)
+        {
+            StartCoroutine(Reload());
+        }
+    }
+
     public override void FireProjectile()
     {
         for (int i = 0; i < projectileNumber; i++)
@@ -19,6 +28,7 @@ public class ShotgunWeapon : RangedWeapon
             Vector2 dir = Quaternion.Euler(0,0 ,angle) * GetFireDirection();
             SpawnPellet(dir);
         }
+        currentAmmo--;
     }
 
     private void SpawnPellet(Vector2 dir)

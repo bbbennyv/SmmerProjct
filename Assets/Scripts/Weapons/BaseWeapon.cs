@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class BaseWeapon : MonoBehaviour
@@ -67,4 +68,6 @@ public class BaseWeapon : MonoBehaviour
     {
         cooldownTimer = weaponData.attackCooldown;
     }
+
+    public virtual bool canStunOutOfHand() { return false; }
 }

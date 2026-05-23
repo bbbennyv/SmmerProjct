@@ -14,8 +14,8 @@ public class RangedWeapon : BaseWeapon
     [SerializeField] protected int maxAmmo;
     [SerializeField] protected float reloadSpeed = 1;
 
-    private int currentAmmo;
-    private bool reloading = false;
+    protected int currentAmmo;
+    protected bool reloading = false;
 
     protected float projectileSpeedMult = 1f;
 
@@ -71,7 +71,7 @@ public class RangedWeapon : BaseWeapon
 
     }
 
-    private IEnumerator Reload()
+    protected IEnumerator Reload()
     {
         reloading = true;
 
