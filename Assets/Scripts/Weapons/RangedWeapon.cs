@@ -21,8 +21,6 @@ public class RangedWeapon : BaseWeapon
 
     protected Transform ownerTransform;
 
-    [SerializeField]
-    protected TextMeshProUGUI ammoText;
 
     private void Start()
     {
@@ -31,7 +29,6 @@ public class RangedWeapon : BaseWeapon
         ownerTransform = owner.GetComponent<Transform>();
 
         currentAmmo = maxAmmo;
-        UpdateAmmoUI(currentAmmo, maxAmmo);
     }
 
     public override void Update()
@@ -67,7 +64,6 @@ public class RangedWeapon : BaseWeapon
         projectile.GetComponent<Projectile>().InitializeProjectile(direction, knockback, damage, chargeRatio, ownerTransform, projectileSpeedMult);
 
         currentAmmo--;
-        UpdateAmmoUI(currentAmmo, maxAmmo);
 
     }
 
@@ -94,7 +90,6 @@ public class RangedWeapon : BaseWeapon
 
         currentAmmo = maxAmmo;
 
-        UpdateAmmoUI(currentAmmo, maxAmmo);
 
         reloading = false;
     }
@@ -116,10 +111,6 @@ public class RangedWeapon : BaseWeapon
         }
     }
 
-    protected void UpdateAmmoUI(int currentAmmo, int MaxAmmo)
-    {
-        ammoText.text = currentAmmo + "/" + MaxAmmo; 
-    }
 
     public override bool isRanged()
     {
