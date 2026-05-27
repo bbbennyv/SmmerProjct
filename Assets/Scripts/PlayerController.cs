@@ -217,11 +217,9 @@ public class PlayerController : MonoBehaviour
     private void RemoveWeaponInHand(FistController fist)
     {
         BaseWeapon weapon = fist.GetWeapon();
+        if (weapon == null) return;
 
-        if (weapon != null) 
-        {
-            Destroy(weapon.gameObject);
-        }
+        StartCoroutine(PopWeaponsOutOfHand(weapon));
 
         fist.SetWeapon(null);
         fist.SetFistFull(false);
@@ -232,6 +230,22 @@ public class PlayerController : MonoBehaviour
         RemoveWeaponInHand(leftFist);
         RemoveWeaponInHand(rightFist);
 
+    }
+
+    private IEnumerator PopWeaponsOutOfHand(BaseWeapon weapon)
+    {
+        Debug.Log("Pop");
+        weapon.transform.SetParent(null);
+        
+        Rigidbody2D rb = weapon.GetComponent<Rigidbody2D>();
+        rb.bodyType = RigidbodyType2D.Dynamic;
+        rb.AddForce(new Vector2(1,0), ForceMode2D.Impulse);
+
+        Collider2D col = weapon.GetComponent<Collider2D>();
+        col.isTrigger = false;
+
+        yield return new WaitForSeconds(2f);
+        Destroy(weapon.gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

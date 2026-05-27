@@ -20,6 +20,8 @@ public class MeleeWeapon : BaseWeapon
 
     [SerializeField] float rotateLerpSpeed = 18f;
 
+    [SerializeField] float disarmChance = 0.5f;
+
     private float swingProgress;
     private bool swinging;
 
@@ -132,6 +134,18 @@ public class MeleeWeapon : BaseWeapon
         Rigidbody2D targetRb = other.attachedRigidbody;
         if (targetRb != null)
         {
+            if (chargeRatio >= 0.9f)
+            {
+                float random = Random.value;
+                if(random <= disarmChance)
+                {
+                    PlayerController player = targetRb.GetComponent<PlayerController>();
+                    player.RemoveAllWeapons();
+                }
+
+            }
+
+
             HealthSystem targetHealth = targetRb.GetComponent<HealthSystem>();
             targetHealth.TakeDamage(damage, knockback, hitDirection, targetRb, chargeRatio);
         }
@@ -145,6 +159,11 @@ public class MeleeWeapon : BaseWeapon
     }
 
     public override bool CanCharge()
+    {
+        return true;
+    }
+
+    public override bool canStunOutOfHand()
     {
         return true;
     }

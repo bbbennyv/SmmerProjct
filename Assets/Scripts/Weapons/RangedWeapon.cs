@@ -14,16 +14,13 @@ public class RangedWeapon : BaseWeapon
     [SerializeField] protected int maxAmmo;
     [SerializeField] protected float reloadSpeed = 1;
 
-    private int currentAmmo;
-    private bool reloading = false;
+    protected int currentAmmo;
+    protected bool reloading = false;
 
     protected float projectileSpeedMult = 1f;
 
     protected Transform ownerTransform;
 
-    [SerializeField]
-    protected TextMeshProUGUI ammoText;
-    [SerializeField] private ParticleSystem MuzzleFlash;
 
     private void Start()
     {
@@ -32,7 +29,6 @@ public class RangedWeapon : BaseWeapon
         ownerTransform = owner.GetComponent<Transform>();
 
         currentAmmo = maxAmmo;
-        UpdateAmmoUI(currentAmmo, maxAmmo);
     }
 
     public override void Update()
@@ -68,14 +64,13 @@ public class RangedWeapon : BaseWeapon
         projectile.GetComponent<Projectile>().InitializeProjectile(direction, knockback, damage, chargeRatio, ownerTransform, projectileSpeedMult);
 
         currentAmmo--;
-        UpdateAmmoUI(currentAmmo, maxAmmo);
 
 
         if(MuzzleFlash != null)
             Instantiate(MuzzleFlash, transform.position,Quaternion.Euler(direction.x,direction.y,0));
     }
 
-    private IEnumerator Reload()
+    protected IEnumerator Reload()
     {
         reloading = true;
 
@@ -98,7 +93,6 @@ public class RangedWeapon : BaseWeapon
 
         currentAmmo = maxAmmo;
 
-        UpdateAmmoUI(currentAmmo, maxAmmo);
 
         reloading = false;
     }
@@ -120,10 +114,6 @@ public class RangedWeapon : BaseWeapon
         }
     }
 
-    protected void UpdateAmmoUI(int currentAmmo, int MaxAmmo)
-    {
-        ammoText.text = currentAmmo + "/" + MaxAmmo; 
-    }
 
     public override bool isRanged()
     {

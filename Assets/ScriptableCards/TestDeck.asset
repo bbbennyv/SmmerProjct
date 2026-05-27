@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardCollection
   <CardsInCollection>k__BackingField:
   - {fileID: 11400000, guid: 6a606e634d039b54299b3439d0487050, type: 2}
+  - {fileID: 11400000, guid: 83d3e934190f3e742a31ad39996f3ab8, type: 2}
+  - {fileID: 11400000, guid: 30ba2f969e8a9694ebe2dac31938a91d, type: 2}
   - {fileID: 11400000, guid: 79ad4156275a2b24c80d334e26dfe89d, type: 2}
-  - {fileID: 11400000, guid: 6a606e634d039b54299b3439d0487050, type: 2}
-  - {fileID: 11400000, guid: 79ad4156275a2b24c80d334e26dfe89d, type: 2}
-  - {fileID: 11400000, guid: 6a606e634d039b54299b3439d0487050, type: 2}
+  - {fileID: 11400000, guid: feb65ae3a1483d143baf10456654b3a3, type: 2}

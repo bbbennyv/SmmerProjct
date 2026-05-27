@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5017fd8eb6546ed4ba9dd774b10f06bc, type: 3}
-  m_Name: SpawnGun
+  m_Name: SpawnShotgun
   m_EditorClassIdentifier: Assembly-CSharp::WeaponSpawnEffect
-  weaponData: {fileID: 11400000, guid: 5b10b8f6fd6dfb04da421a6c246ffae1, type: 2}
+  weaponData: {fileID: 11400000, guid: e0211543647b6c84695435679463c240, type: 2}
