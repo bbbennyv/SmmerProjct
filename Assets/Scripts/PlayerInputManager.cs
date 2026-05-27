@@ -69,12 +69,15 @@ public class PlayerInputManager : MonoBehaviour
                 controllerText.text = $"Player {spawn + 1}";
                 readyText.Add(controllerText.gameObject);
 
-                UpgradePanelUI[spawn].Initialize(player, spawn);
                 Debug.Log($"{player} - {UpgradePanelUI.First()}");
 
                 GameManager.Instance.spawnedPlayers.Add(controller);
                 GameManager.Instance.alivePlayers.Add(controller);
 
+                Debug.Log($"{player} + {spawn}");
+                UpgradePanelUI[spawn].gameObject.SetActive(true);
+
+                UpgradePanelUI[spawn].Initialize(player.GetComponent<PlayerInput>(), spawn);
                 spawn++;
 
                 if (spawn > 1)
@@ -156,9 +159,10 @@ public class PlayerInputManager : MonoBehaviour
         foreach(Transform child in upgradePanelParent)
         {
             if (child.GetComponent<UpgradePanel>() == null)
-                return;
+                continue;
 
             UpgradePanelUI.Add(child.GetComponent<UpgradePanel>());
+            
         }
 
     }

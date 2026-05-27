@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
@@ -22,8 +23,25 @@ public class UINavigation : MonoBehaviour
         if (!active)
         {
             active = true;
-            UpdateSelection();
         }
+    }
+
+    private void OnEnable()
+    {
+        if (active)
+            UpdateSelection();
+    }
+
+    public void InitializeWithPlayerInput(PlayerInput input)
+    {
+        var gamepad = input.devices.OfType<Gamepad>().FirstOrDefault();
+        if (gamepad != null)
+            AddGamepad(gamepad);
+    }
+
+    public void Initialize(List<UIOption> options)
+    {
+        this.options = options;
     }
 
     private void Update()
@@ -80,7 +98,6 @@ public class UINavigation : MonoBehaviour
             options[i].SetHighlighted(i == currentIndex);
         }
     }
-
     public void SetActive(bool Active)
     {
         this.active = Active;
