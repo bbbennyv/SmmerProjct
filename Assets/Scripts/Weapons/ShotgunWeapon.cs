@@ -5,7 +5,7 @@ public class ShotgunWeapon : RangedWeapon
     [SerializeField] private float spread = 20f;
     [SerializeField] private int projectileNumber = 6;
 
-    protected override Vector2 GetFireDirection()
+    public override Vector2 GetFireDirection()
     {
         return hitDirection.x >= 0 ? Vector2.right : Vector2.left;
     }

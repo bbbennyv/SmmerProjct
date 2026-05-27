@@ -211,7 +211,10 @@ public class PlayerController : MonoBehaviour
 
         weapon.SetArmPivot(fist.transform);
 
-
+        if (weapon is RangedWeapon ranged)
+        {
+            ranged.SetOwnerFist(fist);
+        }
     }
 
     private void RemoveWeaponInHand(FistController fist)

@@ -24,6 +24,10 @@ public class RangedWeapon : BaseWeapon
     [SerializeField]
     protected GameObject MuzzleFlash;
 
+    [SerializeField] protected bool destroyOnEmpty = false;
+
+    private FistController ownerFist;
+
     private void Start()
     {
         PlayerController owner = GetComponentInParent<PlayerController>();
@@ -39,9 +43,17 @@ public class RangedWeapon : BaseWeapon
 
         if(currentAmmo <= 0 && !reloading)
         {
-            StartCoroutine(Reload());
+            if (destroyOnEmpty)
+            {
+                RemoveTemporaryWeapon();
+            }
+            else
+            {
+                StartCoroutine(Reload());
+            }
         }
     }
+    
 
     public override void Use()
     {
@@ -54,16 +66,38 @@ public class RangedWeapon : BaseWeapon
         ResetCooldown();
     }
 
+    public void SetOwnerFist(FistController fist)
+    {
+        ownerFist = fist;
+    }
+
+    private void RemoveTemporaryWeapon()
+    {
+        if (ownerFist != null)
+        {
+            ownerFist.SetWeapon(null);
+            ownerFist.SetFistFull(false);
+        }
+
+        Destroy(gameObject);
+    }
 
     public virtual void FireProjectile()
     {
         GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-
+        Projectile spawnedProjectile = projectile.GetComponent<Projectile>();
         Vector2 direction = GetFireDirection();
 
         float knockback = Mathf.Lerp(weaponData.minKnockback, weaponData.maxKnockback, chargeRatio);
         int damage = (int)Mathf.Lerp(weaponData.minDamage, weaponData.maxDamage, chargeRatio);
-        projectile.GetComponent<Projectile>().InitializeProjectile(direction, knockback, damage, chargeRatio, ownerTransform, projectileSpeedMult);
+        spawnedProjectile.InitializeProjectile(direction, knockback, damage, chargeRatio, ownerTransform, projectileSpeedMult);
+
+        RuntimeCardEffect[] effects = ownerTransform.GetComponents<RuntimeCardEffect>();
+
+        foreach (RuntimeCardEffect effect in effects)
+        {
+            effect.OnProjectileFired(this, spawnedProjectile);
+        }
 
         currentAmmo--;
 
@@ -99,7 +133,7 @@ public class RangedWeapon : BaseWeapon
         reloading = false;
     }
 
-    protected virtual Vector2 GetFireDirection()
+    public virtual Vector2 GetFireDirection()
     {
         return hitDirection.normalized;
     }
@@ -114,6 +148,31 @@ public class RangedWeapon : BaseWeapon
 
             rb.AddForce(recoilDirection * recoil, ForceMode2D.Impulse);
         }
+    }
+
+    public GameObject GetProjectilePrefab()
+    {
+        return projectilePrefab;
+    }
+
+    public float GetProjectileSpeedMultiplier()
+    {
+        return projectileSpeedMult;
+    }
+
+    public Transform GetOwnerTransform()
+    {
+        return ownerTransform;
+    }
+
+    public float GetChargeRatio()
+    {
+        return chargeRatio;
+    }
+
+    public WeaponData GetWeaponData()
+    {
+        return weaponData;
     }
 
 

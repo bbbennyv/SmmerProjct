@@ -51,7 +51,7 @@ public class BowWeapon : RangedWeapon
         base.Use();
     }
 
-    protected override Vector2 GetFireDirection()
+    public override Vector2 GetFireDirection()
     {
         float angle = Mathf.Lerp(30.0f, 5.0f, chargeRatio);
         angle = FinalAngle(angle);
