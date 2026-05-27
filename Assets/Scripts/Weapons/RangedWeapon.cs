@@ -21,6 +21,8 @@ public class RangedWeapon : BaseWeapon
 
     protected Transform ownerTransform;
 
+    [SerializeField]
+    protected GameObject MuzzleFlash;
 
     private void Start()
     {

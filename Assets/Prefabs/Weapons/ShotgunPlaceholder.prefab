@@ -352,7 +352,7 @@ MonoBehaviour:
   recoil: 40
   maxAmmo: 1
   reloadSpeed: 1
-  ammoText: {fileID: 1196830605661304658}
+  MuzzleFlash: {fileID: 7478437199603833493, guid: 33f8201a23088dc468758c25c072878e, type: 3}
   spread: 10
   projectileNumber: 6
 --- !u!50 &6280444472469205715
