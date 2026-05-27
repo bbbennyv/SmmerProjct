@@ -176,5 +176,5 @@ MonoBehaviour:
   gravityScale: 1.5
   rotateSpeed: 15
   explosionRadius: 3
-  explosionKnockbackMultiplier: 1.5
+  explosionKnockbackMultiplier: 1
   explosionEffect: {fileID: 1169377891852744779, guid: 44e7e43fc3163074e898da5e4eeff8c1, type: 3}
