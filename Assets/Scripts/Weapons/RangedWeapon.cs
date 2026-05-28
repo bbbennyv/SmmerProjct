@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Diagnostics.Contracts;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -90,14 +91,12 @@ public class RangedWeapon : BaseWeapon
 
         float knockback = Mathf.Lerp(weaponData.minKnockback, weaponData.maxKnockback, chargeRatio);
         int damage = (int)Mathf.Lerp(weaponData.minDamage, weaponData.maxDamage, chargeRatio);
+
         spawnedProjectile.InitializeProjectile(direction, knockback, damage, chargeRatio, ownerTransform, projectileSpeedMult);
 
-        RuntimeCardEffect[] effects = ownerTransform.GetComponents<RuntimeCardEffect>();
+        var handler = ownerTransform.GetComponent<CardEffectHandler>();
 
-        foreach (RuntimeCardEffect effect in effects)
-        {
-            effect.OnProjectileFired(this, spawnedProjectile);
-        }
+        handler?.NotifyProjectileFired(this, spawnedProjectile);
 
         currentAmmo--;
 
@@ -181,3 +180,12 @@ public class RangedWeapon : BaseWeapon
         return true;
     }
 }
+
+//public struct ProjectileContext
+//{
+//    public Vector2 direction;
+//    public float chargeRat;
+//    public Transform owner;
+//    public WeaponData weapon;
+//    public float projectileMult;
+//}

@@ -7,6 +7,11 @@ public abstract class RuntimeCardEffect : MonoBehaviour
     public virtual void OnProjectileFired(RangedWeapon rangedWeapon, Projectile projectile) { }
     public virtual void OnHit() { }
 
+    public virtual RuntimeCardEffect CreateInstance()
+    {
+        return Instantiate(this);
+    }
+
     public bool ConsumeUse()
     {
         if (usesRemaining < 0)

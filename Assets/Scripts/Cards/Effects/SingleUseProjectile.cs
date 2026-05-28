@@ -1,14 +1,16 @@
 using UnityEngine;
-using static UnityEngine.UIElements.UxmlAttributeDescription;
 
-[CreateAssetMenu(menuName = "CardEffects/SingleUseProjectile/TripleShot")]
+[CreateAssetMenu(menuName = "CardEffects/SingleUseProjectile")]
 public class SingleUseProjectile : CardEffect
 {
-    [SerializeField] private WeaponData singleUseWeapon;
+    [SerializeField] private WeaponData weaponData;
+    [SerializeField] private RuntimeEffectSO effect;
+
     public override void Execute(GameObject user)
     {
-        user.GetComponent<PlayerController>()?.EquipWeapon(singleUseWeapon);
-        RuntimeCardEffect effect = user.AddComponent<TripleShot>();
+        user.GetComponent<PlayerController>().EquipWeapon(weaponData);
 
+        var runtime = effect.CreateRuntimeEffect(user);
+        user.GetComponent<CardEffectHandler>().Register(runtime);
     }
 }
