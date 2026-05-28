@@ -18,7 +18,7 @@ public class UpgradePanel : MonoBehaviour
 
     private void Awake()
     {
-        if(navigation != null)
+        if(navigation == null)
             navigation = GetComponent<UINavigation>();
 
         Debug.Log($"{navigation} ");
@@ -30,10 +30,21 @@ public class UpgradePanel : MonoBehaviour
         OwnerInput = input;
         PlayerIndex = playerIndex;
 
+        PlayerController player = input.GetComponent<PlayerController>();
+        List<ScriptableCard> offer = CardOfferSystem.Instance.GenerateOffer(player);
+
         for (int i = 0; i < cardOptions.Count; i++)
         {
-            int index = i; 
-            cardOptions[i].OnConfirm = () => LockIn(index);
+            if(i < offer.Count)
+            {
+               cardOptions[i].SetCard(offer[i]);
+                int index = i; 
+                cardOptions[i].OnConfirm = () => LockIn(index);
+            }
+            else
+            {
+                cardOptions[i].gameObject.SetActive(false);
+            }
         }
 
         navigation.InitializeWithPlayerInput(input);
@@ -45,7 +56,11 @@ public class UpgradePanel : MonoBehaviour
         if (LockedIn) return;
         LockedIn = true;
 
-        
+        PlayerController player = OwnerInput.GetComponent<PlayerController>();
+        Deck deck = OwnerInput.GetComponent<Deck>();
+        deck.AddCard(cardOptions[cardIndex].CardData);
+
+        UpgradeManager.Instance.PlayerLockedIn(PlayerIndex);
 
         // TODO: OwnerInput.GetComponent<Deck>().AddCard(cardOptions[cardIndex].CardData);
         // TODO: UpgradeManager.Instance.PlayerLockedIn(PlayerIndex);

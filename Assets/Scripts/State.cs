@@ -53,14 +53,15 @@ public class UpgradeState : State
        manager.UpgradeUI.SetActive(true);
 
 
-       foreach(PlayerController player in manager.spawnedPlayers)
-       {
-        Deck deck  = player.GetComponent<Deck>();
-         if (deck == null) continue;
+    //    foreach(PlayerController player in manager.spawnedPlayers)
+    //    {
+    //     Deck deck  = player.GetComponent<Deck>();
+    //      if (deck == null) continue;
 
-         List<ScriptableCard> offer = CardOfferSystem.Instance.GenerateOffer(player);
-         CardChoiceUI.Instance.ShowForPlayer(player, offer, deck);
-       }
+    //      List<ScriptableCard> offer = CardOfferSystem.Instance.GenerateOffer(player);
+    //      CardChoiceUI.Instance.ShowForPlayer(player, offer, deck);
+    //    }
+    UpgradeManager.Instance.StartUpgradePhase();
     }
 }
 

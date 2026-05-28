@@ -31,6 +31,7 @@ public class CardUI : MonoBehaviour
    private void Awake()
    {
     _card = GetComponent<Card>();
+    if(_card!= null)
     SetCardUI();
    }
 
@@ -46,6 +47,7 @@ public class CardUI : MonoBehaviour
             // SetCardText();
             // SetCardImage();
             SetCardUI(_card.CardData);
+            Debug.Log("data");
         }
     }
 

@@ -8,8 +8,17 @@ public class UIOption : MonoBehaviour
 
     [SerializeField] private GameObject highlightIndicator;
 
+    [SerializeField] private CardUI cardUI;
+    public ScriptableCard CardData {get; private set; }
+
     public void SetHighlighted(bool highlighted)
     {
         highlightIndicator.SetActive(highlighted);
+    }
+
+    public void SetCard(ScriptableCard data)
+    {
+        CardData = data;
+        cardUI.SetCardUI(data);
     }
 }

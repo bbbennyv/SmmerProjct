@@ -75,9 +75,9 @@ public class PlayerInputManager : MonoBehaviour
                 GameManager.Instance.alivePlayers.Add(controller);
 
                 Debug.Log($"{player} + {spawn}");
-                UpgradePanelUI[spawn].gameObject.SetActive(true);
+               //UpgradePanelUI[spawn].gameObject.SetActive(true);
 
-                UpgradePanelUI[spawn].Initialize(player.GetComponent<PlayerInput>(), spawn);
+               // UpgradePanelUI[spawn].Initialize(player.GetComponent<PlayerInput>(), spawn);
                 spawn++;
 
                 if (spawn > 1)
@@ -166,5 +166,17 @@ public class PlayerInputManager : MonoBehaviour
         }
 
     }
+
+    public void InitialiseUpgradePanels()
+        {
+            for(int i = 0; i < GameManager.Instance.spawnedPlayers.Count; i++)
+            {
+                PlayerInput input = GameManager.Instance.spawnedPlayers[i].GetComponent<PlayerInput>();
+                  UpgradePanelUI[i].gameObject.SetActive(true);
+                  UpgradePanelUI[i].LockedIn = false;
+                  UpgradePanelUI[i].Initialize(input, i);
+            }
+        }
+    
 
 }
