@@ -94,9 +94,10 @@ public class RangedWeapon : BaseWeapon
 
         spawnedProjectile.InitializeProjectile(direction, knockback, damage, chargeRatio, ownerTransform, projectileSpeedMult);
 
-        var handler = ownerTransform.GetComponent<CardEffectHandler>();
+        ProjectileContext projectileContext = new ProjectileContext{ prefab = projectile, dmg = damage, kb = knockback, direction = direction, chargeRat = chargeRatio, owner = ownerTransform, projectileMult = projectileSpeedMult};
 
-        handler?.NotifyProjectileFired(this, spawnedProjectile);
+        var handler = ownerTransform.GetComponent<CardEffectHandler>();
+        handler?.NotifyProjectileFired(projectileContext);
 
         currentAmmo--;
 
@@ -149,43 +150,19 @@ public class RangedWeapon : BaseWeapon
         }
     }
 
-    public GameObject GetProjectilePrefab()
-    {
-        return projectilePrefab;
-    }
-
-    public float GetProjectileSpeedMultiplier()
-    {
-        return projectileSpeedMult;
-    }
-
-    public Transform GetOwnerTransform()
-    {
-        return ownerTransform;
-    }
-
-    public float GetChargeRatio()
-    {
-        return chargeRatio;
-    }
-
-    public WeaponData GetWeaponData()
-    {
-        return weaponData;
-    }
-
-
     public override bool isRanged()
     {
         return true;
     }
 }
 
-//public struct ProjectileContext
-//{
-//    public Vector2 direction;
-//    public float chargeRat;
-//    public Transform owner;
-//    public WeaponData weapon;
-//    public float projectileMult;
-//}
+public struct ProjectileContext
+{
+    public GameObject prefab;
+    public Vector2 direction;
+    public float chargeRat;
+    public Transform owner;
+    public int dmg;
+    public float kb;
+    public float projectileMult;
+}

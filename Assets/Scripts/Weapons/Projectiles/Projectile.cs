@@ -1,3 +1,4 @@
+using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -55,6 +56,10 @@ public class Projectile : MonoBehaviour
 
         hitRegistered = true;
 
+        ProjectileContext projCont = new ProjectileContext {direction = direction, kb = knockback, dmg = damage, chargeRat = chargeRatio, owner = ownerTransform, projectileMult = speedMultiplier, prefab = this.gameObject};
+
+        var handler = ownerTransform.GetComponent<CardEffectHandler>();
+        handler?.NotifyProjectileHit(projCont, other);
 
         Rigidbody2D targetRb = other.GetComponent<Rigidbody2D>();
         if (targetRb != null) 
