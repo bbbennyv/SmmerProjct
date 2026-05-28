@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 
 public class UpgradePanel : MonoBehaviour
 {
-    //[SerializeField] private UINavigation navigation;
     [SerializeField] private List<UIOption> cardOptions = new List<UIOption>();
     public int PlayerIndex;
 
