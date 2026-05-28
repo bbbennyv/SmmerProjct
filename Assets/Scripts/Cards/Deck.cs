@@ -22,10 +22,12 @@ public class Deck : MonoBehaviour
     [SerializeField] private  Canvas _cardCanvas;
 
     private Transform _cardParent;
-    [field:SerializeField]  private List<Card> _deckPile = new();
-    [field:SerializeField]private List<Card> _discardPile = new();
+    [field:SerializeField] private List<Card> _deckPile = new();
+    [field:SerializeField] private List<Card> _discardPile = new();
 
     [field:SerializeField] public List<Card> HandCards { get; private set; } = new();
+
+    [SerializeField] private CardCollection upgradeDeck;
     
 
 
@@ -97,5 +99,22 @@ public class Deck : MonoBehaviour
             card.gameObject.SetActive(false);
         }
     }
+
+
+    public void AddCard(ScriptableCard cardData)
+    {
+        Card card = Instantiate(_cardPrefab, _cardParent);
+         card.SetUp(cardData);
+         card.gameObject.SetActive(false);
+         _discardPile.Add(card);
+
+    }
+
+
+
+
+
+
+
     #endregion
 }

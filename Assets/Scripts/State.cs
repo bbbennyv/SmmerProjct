@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using UnityEngine;
+using System.Collections.Generic;
 
 public abstract class State
 {
@@ -50,6 +51,16 @@ public class UpgradeState : State
        manager.StartUI.SetActive(false);
        manager.WonUI.SetActive(false);
        manager.UpgradeUI.SetActive(true);
+
+
+       foreach(PlayerController player in manager.spawnedPlayers)
+       {
+        Deck deck  = player.GetComponent<Deck>();
+         if (deck == null) continue;
+
+         List<ScriptableCard> offer = CardOfferSystem.Instance.GenerateOffer(player);
+         CardChoiceUI.Instance.ShowForPlayer(player, offer, deck);
+       }
     }
 }
 

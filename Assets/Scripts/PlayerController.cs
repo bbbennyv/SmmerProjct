@@ -12,9 +12,12 @@ public enum Hand
     Right
 }
 
+public enum PlayerClasses { Warrior, Mage, Rogue, Ranger}
+
 public class PlayerController : MonoBehaviour
 {
-
+    [Header("Class Config")]
+    [field: SerializeField] public PlayerClasses playerClass {get; private set; }
     [Header("Movement Config")]
     [SerializeField]
     private float movementSpeed = 500.0f;

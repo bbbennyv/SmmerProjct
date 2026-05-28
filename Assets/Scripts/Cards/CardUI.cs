@@ -43,8 +43,9 @@ public class CardUI : MonoBehaviour
     {
         if(_card != null && _card.CardData != null)
         {
-            SetCardText();
-            SetCardImage();
+            // SetCardText();
+            // SetCardImage();
+            SetCardUI(_card.CardData);
         }
     }
 
@@ -62,5 +63,13 @@ public class CardUI : MonoBehaviour
         _cardImage.sprite = _card.CardData.Image;
     }
 
+
+    public void SetCardUI(ScriptableCard data)
+    {
+        if(data == null) return;
+         _cardName.text = _card.CardData.CardName;
+        _cardDescription.text = _card.CardData.CardDescription;
+         _cardImage.sprite = _card.CardData.Image;
+    }
    #endregion
 }
