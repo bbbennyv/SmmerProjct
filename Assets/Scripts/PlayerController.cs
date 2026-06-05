@@ -213,7 +213,10 @@ public class PlayerController : MonoBehaviour
 
         if (weapon is RangedWeapon ranged)
         {
-            ranged.SetOwnerFist(fist);
+            if(ranged.destroyOnEmpty)
+            {
+                ranged.SetOwnerFist(fist);
+            }
         }
     }
 

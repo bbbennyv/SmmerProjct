@@ -25,7 +25,7 @@ public class RangedWeapon : BaseWeapon
     [SerializeField]
     protected GameObject MuzzleFlash;
 
-    [SerializeField] protected bool destroyOnEmpty = false;
+    [SerializeField] public bool destroyOnEmpty = false;
 
     private FistController ownerFist;
 
@@ -96,8 +96,13 @@ public class RangedWeapon : BaseWeapon
 
         ProjectileContext projectileContext = new ProjectileContext{ prefab = projectile, dmg = damage, kb = knockback, direction = direction, chargeRat = chargeRatio, owner = ownerTransform, projectileMult = projectileSpeedMult};
 
-        var handler = ownerTransform.GetComponent<CardEffectHandler>();
-        handler?.NotifyProjectileFired(projectileContext);
+        if (destroyOnEmpty)
+        {
+            var handler = ownerTransform.GetComponent<CardEffectHandler>();
+
+            handler?.NotifyProjectileFired(projectileContext);
+        }
+
 
         currentAmmo--;
 

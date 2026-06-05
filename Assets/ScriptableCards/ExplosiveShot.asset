@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cafe656df8749ed4d8f9c2c2943b2a6a, type: 3}
   m_Name: ExplosiveShot
   m_EditorClassIdentifier: Assembly-CSharp::ScriptableCard
-  <CardName>k__BackingField: 
-  <CardDescription>k__BackingField: 
+  <CardName>k__BackingField: ExplosiveShot
+  <CardDescription>k__BackingField: BOOM
   <PlayCost>k__BackingField: 0
-  <Image>k__BackingField: {fileID: 0}
-  <Effect>k__BackingField: {fileID: 0}
+  <Image>k__BackingField: {fileID: -5071834010248248600, guid: b30855bff1bcc774e9e92dcc77a3bbfb, type: 3}
+  <Effect>k__BackingField: {fileID: 11400000, guid: 5dfc6a659bad6b446b45c62f49af724b, type: 2}

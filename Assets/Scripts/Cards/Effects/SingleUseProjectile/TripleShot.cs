@@ -13,14 +13,19 @@ public class TripleShot : RuntimeCardEffect
             Vector2 dir = Quaternion.Euler(0,0, angle) * p.direction;
             SpawnArrow(dir, p);
         }
+
         ConsumeUse();
     }
 
     private void SpawnArrow(Vector2 direction, ProjectileContext p)
     {
+        if (this == null) return;
+
         GameObject projectile = Instantiate(p.prefab, transform.position, Quaternion.identity);
 
         projectile.GetComponent<Projectile>().InitializeProjectile(direction, p.kb, p.dmg,p.chargeRat, p.owner, p.projectileMult);
+
+
     }
 }
 
