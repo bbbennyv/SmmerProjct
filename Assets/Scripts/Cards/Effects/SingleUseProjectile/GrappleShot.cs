@@ -3,6 +3,9 @@ using UnityEngine;
 public class GrappleShot : RuntimeCardEffect
 {
     private float grappleSpeed;
+    private bool isPulling = false;
+    private Vector2 targetPosition;
+    private Rigidbody2D ownerRb;
 
     public void Init(float speed)
     {
@@ -11,14 +14,32 @@ public class GrappleShot : RuntimeCardEffect
 
     public override void OnHitProjectile(ProjectileContext projCont, Collider2D other)
     {
-        Vector2 launchDirection = projCont.direction.normalized;
+        ownerRb = projCont.owner.GetComponent<Rigidbody2D>();
 
-        Rigidbody2D rigidbody2D = projCont.owner.GetComponent<Rigidbody2D>();
+        targetPosition = other.transform.position;
 
-        rigidbody2D.AddForceX(launchDirection.x * grappleSpeed, ForceMode2D.Impulse);
-
-        base.OnHitProjectile(projCont, other);
+        isPulling = true;
     }
+
+    private void FixedUpdate()
+    {
+        if (!isPulling || ownerRb == null) return;
+
+        Vector2 currentPos = ownerRb.position;
+        Vector2 direction = (targetPosition - currentPos).normalized;
+        float distance = Vector2.Distance(currentPos, targetPosition);
+
+        Vector2 movement = direction * grappleSpeed * Time.fixedDeltaTime;
+        ownerRb.MovePosition(currentPos + movement);
+
+        if (distance <= 5f)
+        {
+            isPulling = false;
+            ConsumeUse();
+            return;
+        }
+    }
+
 }
 
 [CreateAssetMenu(menuName = "CardEffects/Runtime/GrappleShot")]
