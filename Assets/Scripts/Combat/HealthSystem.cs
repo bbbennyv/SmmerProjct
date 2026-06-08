@@ -68,7 +68,11 @@ public class HealthSystem : MonoBehaviour
 
         isDead = true;
 
-        player.gameObject.SetActive(false);
+       // player.gameObject.SetActive(false);
+        player.GetComponent<Renderer>().enabled = false;
+        player.GetComponentInChildren<Renderer>().enabled = false;
+        player.transform.position = Vector2.zero;
+        player.enabled = false;
         GameManager.Instance.alivePlayers.Remove(player);
     }
 
@@ -77,7 +81,11 @@ public class HealthSystem : MonoBehaviour
         isDead = false;
         currentHealth = maxHealth;
 
+        player.GetComponent<Renderer>().enabled = true;
+        
+        player.enabled = true;
         transform.position = pos;
+        Debug.Log("Player respawned at: " + pos);
         gameObject.SetActive(true);
 
         OnHealthChanged?.Invoke(currentHealth, maxHealth);

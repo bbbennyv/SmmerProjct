@@ -29,6 +29,7 @@ public class UpgradeManager : MonoBehaviour
     //     upgradePanels[i].LockedIn = false;
     //     upgradePanels[i].Initialize(input, i);
     // }
+
     PlayerInputManager.instance.InitialiseUpgradePanels();
    }
 

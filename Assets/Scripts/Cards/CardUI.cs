@@ -69,9 +69,9 @@ public class CardUI : MonoBehaviour
     public void SetCardUI(ScriptableCard data)
     {
         if(data == null) return;
-         _cardName.text = _card.CardData.CardName;
-        _cardDescription.text = _card.CardData.CardDescription;
-         _cardImage.sprite = _card.CardData.Image;
+         _cardName.text = data.CardName;
+        _cardDescription.text = data.CardDescription;
+         _cardImage.sprite = data.Image;
     }
    #endregion
 }

@@ -175,6 +175,7 @@ public class PlayerInputManager : MonoBehaviour
                   UpgradePanelUI[i].gameObject.SetActive(true);
                   UpgradePanelUI[i].LockedIn = false;
                   UpgradePanelUI[i].Initialize(input, i);
+                  Debug.Log("helooooo");
             }
         }
     

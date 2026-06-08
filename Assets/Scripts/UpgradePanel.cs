@@ -35,6 +35,7 @@ public class UpgradePanel : MonoBehaviour
 
         for (int i = 0; i < cardOptions.Count; i++)
         {
+            cardOptions[i].gameObject.SetActive(true);
             if(i < offer.Count)
             {
                cardOptions[i].SetCard(offer[i]);
@@ -61,6 +62,11 @@ public class UpgradePanel : MonoBehaviour
         deck.AddCard(cardOptions[cardIndex].CardData);
 
         UpgradeManager.Instance.PlayerLockedIn(PlayerIndex);
+
+         for (int i = 0; i < cardOptions.Count; i++)
+        {
+             cardOptions[i].gameObject.SetActive(false);
+        }
 
         // TODO: OwnerInput.GetComponent<Deck>().AddCard(cardOptions[cardIndex].CardData);
         // TODO: UpgradeManager.Instance.PlayerLockedIn(PlayerIndex);
