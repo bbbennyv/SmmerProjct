@@ -29,15 +29,15 @@ public class GrappleShot : RuntimeCardEffect
         Vector2 direction = (targetPosition - currentPos).normalized;
         float distance = Vector2.Distance(currentPos, targetPosition);
 
-        Vector2 movement = direction * grappleSpeed * Time.fixedDeltaTime;
-        ownerRb.MovePosition(currentPos + movement);
+        //Vector2 movement = direction * grappleSpeed * Time.fixedDeltaTime;
 
-        if (distance <= 5f)
+        if (distance <= 2f)
         {
             isPulling = false;
             ConsumeUse();
             return;
         }
+        ownerRb.AddForce(direction * grappleSpeed, ForceMode2D.Force);
     }
 
 }
@@ -46,7 +46,7 @@ public class GrappleShot : RuntimeCardEffect
 public class GrappleShotEffectSO : RuntimeEffectSO
 {
     [SerializeField]
-    private float grappleSpeed = 200.0f;
+    private float grappleSpeed = 18.0f;
     public override RuntimeCardEffect CreateRuntimeEffect(GameObject user)
     {
         var effect = user.AddComponent<GrappleShot>();

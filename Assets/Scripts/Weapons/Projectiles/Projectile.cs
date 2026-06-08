@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -19,6 +20,8 @@ public class Projectile : MonoBehaviour
 
     protected bool hitRegistered = false;
 
+    protected bool isPiercing = false;
+    private HashSet<GameObject> damagedTargets = new HashSet<GameObject>();
 
     protected virtual void Start()
     {
@@ -53,20 +56,60 @@ public class Projectile : MonoBehaviour
         if (((1 << other.gameObject.layer) & hitLayers) == 0) return;
         if (other.transform.IsChildOf(ownerTransform) || other.transform == ownerTransform) return;
 
-
-        hitRegistered = true;
-
         ProjectileContext projCont = new ProjectileContext {direction = direction, kb = knockback, dmg = damage, chargeRat = chargeRatio, owner = ownerTransform, projectileMult = speedMultiplier, prefab = this.gameObject};
 
         var handler = ownerTransform.GetComponent<CardEffectHandler>();
         handler?.NotifyProjectileHit(projCont, other);
+
+        if (isPiercing)
+        {
+            var targetHealthPierce = other.GetComponentInParent<HealthSystem>();
+            if (targetHealthPierce != null)
+            {
+                GameObject targetRoot = targetHealthPierce.gameObject;
+
+                if (!damagedTargets.Contains(targetRoot))
+                {
+                    damagedTargets.Add(targetRoot);
+
+                    Rigidbody2D targetRbPierce = other.GetComponentInParent<Rigidbody2D>();
+                    if (targetRbPierce != null)
+                    {
+                        targetHealthPierce.TakeDamage(damage, knockback, direction, targetRbPierce, chargeRatio);
+                    }
+
+                }
+                return;
+            }
+
+            hitRegistered = true;
+            return;
+        }
+
+        hitRegistered = true;
 
         Rigidbody2D targetRb = other.GetComponent<Rigidbody2D>();
         if (targetRb != null) 
         {
             HealthSystem targetHealth = targetRb.GetComponent<HealthSystem>();
             targetHealth.TakeDamage(damage, knockback, direction, targetRb, chargeRatio);
-
         }
     }
+
+    public void setIsPiercing(bool isPierce)
+    {
+        isPiercing = isPierce;
+
+    }
+
+    public void MultiplySpeedMultiplier(float factor)
+    {
+        speedMultiplier *= factor;
+
+        if(rb != null)
+        {
+            rb.linearVelocity = direction * speed * speedMultiplier;
+        }
+    }
+
 }

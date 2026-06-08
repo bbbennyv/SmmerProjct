@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e0f42fd135469b4b9e5110aa25c6a7e, type: 3}
-  m_Name: ExplosiveShot
+  m_Name: PiercingShot
   m_EditorClassIdentifier: Assembly-CSharp::SingleUseProjectile
-  weaponData: {fileID: 11400000, guid: dc63941e8c727014cac252ec2b6dfb85, type: 2}
-  effect: {fileID: 11400000, guid: 787d83d56008b5f4fb1fdf39d64d0429, type: 2}
+  weaponData: {fileID: 0}
+  effect: {fileID: 0}

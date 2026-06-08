@@ -25,7 +25,6 @@ public class TripleShot : RuntimeCardEffect
 
         projectile.GetComponent<Projectile>().InitializeProjectile(direction, p.kb, p.dmg,p.chargeRat, p.owner, p.projectileMult);
 
-
     }
 }
 
