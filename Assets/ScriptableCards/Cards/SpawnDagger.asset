@@ -9,7 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5017fd8eb6546ed4ba9dd774b10f06bc, type: 3}
+  m_Script: {fileID: 11500000, guid: cafe656df8749ed4d8f9c2c2943b2a6a, type: 3}
   m_Name: SpawnDagger
-  m_EditorClassIdentifier: Assembly-CSharp::WeaponSpawnEffect
-  weaponData: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::ScriptableCard
+  <CardName>k__BackingField: SpawnDagger
+  <CardDescription>k__BackingField: stabby
+  <PlayCost>k__BackingField: 0
+  <Image>k__BackingField: {fileID: -3876109809262808709, guid: e1d3ec4ca7eaea84ea28591d15c51369, type: 3}
+  <Effect>k__BackingField: {fileID: 11400000, guid: bab2c0b8f485e4a4084fc2d3ff70226a, type: 2}

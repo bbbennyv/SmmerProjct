@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5017fd8eb6546ed4ba9dd774b10f06bc, type: 3}
-  m_Name: SpawnStaff
+  m_Name: SpawnSpear
   m_EditorClassIdentifier: Assembly-CSharp::WeaponSpawnEffect
-  weaponData: {fileID: 11400000, guid: 8a3379e5a6a32f84f9b392b23c91ab8a, type: 2}
+  weaponData: {fileID: 11400000, guid: 2580f3ee02a8e374a8a98dbcd8482220, type: 2}

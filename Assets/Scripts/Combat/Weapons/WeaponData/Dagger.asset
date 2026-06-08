@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 049b9b27274a33b4793965eaffa44d39, type: 3}
   m_Name: Dagger
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
-  weaponName: 
-  weaponPrefab: {fileID: 0}
-  attackCooldown: 0
+  weaponName: Dagger
+  weaponPrefab: {fileID: 4180777286036990255, guid: 3dbabb868861b814295dd6f59012317a, type: 3}
+  attackCooldown: 0.2
   weaponOffset: {x: 0, y: 0, z: 0}
-  minKnockback: 0
-  maxKnockback: 0
-  minDamage: 0
-  maxDamage: 0
+  minKnockback: 20
+  maxKnockback: 50
+  minDamage: 5
+  maxDamage: 10

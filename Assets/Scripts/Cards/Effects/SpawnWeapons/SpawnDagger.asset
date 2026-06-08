@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5017fd8eb6546ed4ba9dd774b10f06bc, type: 3}
   m_Name: SpawnDagger
   m_EditorClassIdentifier: Assembly-CSharp::WeaponSpawnEffect
-  weaponData: {fileID: 0}
+  weaponData: {fileID: 11400000, guid: 2f4868c547e05294593ab838112675aa, type: 2}

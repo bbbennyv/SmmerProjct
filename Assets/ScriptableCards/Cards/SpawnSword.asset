@@ -16,4 +16,4 @@ MonoBehaviour:
   <CardDescription>k__BackingField: swingy
   <PlayCost>k__BackingField: 0
   <Image>k__BackingField: {fileID: -3876109809262808709, guid: e1d3ec4ca7eaea84ea28591d15c51369, type: 3}
-  <Effect>k__BackingField: {fileID: 11400000, guid: e088db59ff4cd8249b2a908564b3fab6, type: 2}
+  <Effect>k__BackingField: {fileID: 11400000, guid: 94f3be0e6fbb35c4bbf9e0ef3ac97ed8, type: 2}
