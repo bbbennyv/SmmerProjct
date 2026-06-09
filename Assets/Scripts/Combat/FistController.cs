@@ -65,8 +65,6 @@ public class FistController : MonoBehaviour
 
         float speed = GetCurrentSpeed();
 
-        //rb.MovePosition(Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime));
-
         Vector2 ownerVelocity = Vector2.zero;
 
         Rigidbody2D ownerRb = ownerTransform.GetComponent<Rigidbody2D>();
@@ -99,7 +97,6 @@ public class FistController : MonoBehaviour
 
         if (currentWeapon != null)
         {
-            //circleCollider.enabled = false; 
             currentWeapon.SetChargeRatio(chargeRatio);
             currentWeapon.SetBaseAngle(TrackingForward());
         }

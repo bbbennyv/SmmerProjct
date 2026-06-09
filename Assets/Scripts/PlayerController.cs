@@ -259,9 +259,15 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (!collision.gameObject.CompareTag("Ground")) return;
+
+        foreach (ContactPoint2D contact in collision.contacts)
         {
-            jumpsToUse = 2;
+            if (contact.normal.y > 0.5f)
+            {
+                jumpsToUse = 2;
+                break;
+            }
         }
     }
 

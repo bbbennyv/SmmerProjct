@@ -9,6 +9,7 @@ public class BaseWeapon : MonoBehaviour
     protected float chargeRatio;
     protected Vector2 hitDirection;
     protected Transform armPivot;
+    protected float baseAngleDegrees;
 
     public virtual void Use() { }
     
@@ -33,6 +34,7 @@ public class BaseWeapon : MonoBehaviour
     public virtual void SetBaseAngle(Vector2 forward)
     {
         hitDirection = forward;
+        baseAngleDegrees = Mathf.Atan2(forward.y, forward.x) * Mathf.Rad2Deg;
     }
 
     public virtual void SetChargeRatio(float ratio)
