@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: New Super Charged Shot Effect SO
   m_EditorClassIdentifier: Assembly-CSharp::SuperChargedShotEffectSO
-  chargeMultiplier: 1.5
+  chargeMultiplier: 2

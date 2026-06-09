@@ -12,6 +12,8 @@ public class SuperChargedShot : RuntimeCardEffect
         }
 
         ConsumeUse();
+
+        Destroy(this);
     }
     public void SetChargeMultiplier(float multiplier)
     {

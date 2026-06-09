@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ExplosiveShotSO
   explosionRadius: 3
   explosionKnockbackMultiplier: 1.5
-  explosionEffect: {fileID: 1169377891852744779, guid: 44e7e43fc3163074e898da5e4eeff8c1, type: 3}
+  explosionEffect: {fileID: 0}

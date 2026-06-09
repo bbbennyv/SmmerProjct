@@ -11,6 +11,7 @@ public class PiercingShot : RuntimeCardEffect
         }
 
         ConsumeUse();
+
     }
 }
 
