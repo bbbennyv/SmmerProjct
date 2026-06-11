@@ -105,6 +105,13 @@ public class UINavigation : MonoBehaviour
         options[currentIndex].SetHighlighted(true);
     }
 
+    public void Reset()
+    {
+        currentIndex = 0;
+        active = true;
+        UpdateSelection();
+    }
+
     private void UpdateSelection()
     {
         for (int i = 0; i < options.Count; i++)

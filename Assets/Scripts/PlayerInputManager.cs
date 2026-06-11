@@ -173,7 +173,6 @@ public class PlayerInputManager : MonoBehaviour
             {
                 PlayerInput input = GameManager.Instance.spawnedPlayers[i].GetComponent<PlayerInput>();
                   UpgradePanelUI[i].gameObject.SetActive(true);
-                  UpgradePanelUI[i].LockedIn = false;
                   UpgradePanelUI[i].Initialize(input, i);
             }
         }

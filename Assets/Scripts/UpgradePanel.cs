@@ -6,19 +6,18 @@ using UnityEngine.InputSystem;
 public class UpgradePanel : MonoBehaviour
 {
     [SerializeField] private List<UIOption> cardOptions = new List<UIOption>();
-    [SerializeField] private float upgradeInputDelay = 0.5f;
     public int PlayerIndex;
 
     public PlayerInput OwnerInput;
-
-    public bool LockedIn;
 
     public int CurrentSelection;
     
     public UINavigation navigation;
 
-    private bool canAcceptInput;
-    private bool waitingForRelease;
+
+    public bool IsConfirmed { get; private set; }
+    public int SelectedCardIndex { get; private set; }
+
     private void Awake()
     {
         if(navigation == null)
@@ -43,82 +42,68 @@ public class UpgradePanel : MonoBehaviour
                cardOptions[i].SetCard(offer[i]);
                 int index = i; 
                 cardOptions[i].OnConfirm = () => LockIn(index);
+                cardOptions[i].OnCancel = Cancel;
+                cardOptions[i].GetComponent<CardUI>().getCardImage().canvasRenderer.SetAlpha(1f);
+
             }
             else
             {
-                cardOptions[i].gameObject.SetActive(false);
+                cardOptions[i].GetComponent<CardUI>().getCardImage().canvasRenderer.SetAlpha(1f);
             }
         }
 
 
-        navigation.InitializeWithPlayerInput(input);
         navigation.Initialize(cardOptions);
+        navigation.InitializeWithPlayerInput(input);
 
-        StartCoroutine(EnableInputRoutine());
 
-    }
-
-    private IEnumerator EnableInputRoutine()
-    {
-        canAcceptInput = false;
-        waitingForRelease = true;
-
-        yield return new WaitForSeconds(upgradeInputDelay);
-
-        canAcceptInput = true;
-    }
-
-    public bool CanAcceptInput()
-    {
-        if (!canAcceptInput)
-            return false;
-
-        if (!waitingForRelease)
-            return true;
-
-        Gamepad gamepad = OwnerInput.devices[0] as Gamepad;
-
-        if (gamepad == null)
-        {
-            waitingForRelease = false;
-            return true;
-        }
-
-        bool anyButtonHeld =
-            gamepad.buttonSouth.isPressed ||
-            gamepad.buttonNorth.isPressed ||
-            gamepad.buttonEast.isPressed ||
-            gamepad.buttonWest.isPressed ||
-            gamepad.dpad.up.isPressed ||
-            gamepad.dpad.down.isPressed ||
-            gamepad.dpad.left.isPressed ||
-            gamepad.dpad.right.isPressed;
-
-        if (!anyButtonHeld)
-        {
-            waitingForRelease = false;
-            return true;
-        }
-
-        return false;
     }
 
     private void LockIn(int cardIndex)
     {
-        if (LockedIn) return;
-        LockedIn = true;
 
-        PlayerController player = OwnerInput.GetComponent<PlayerController>();
-        Deck deck = OwnerInput.GetComponent<Deck>();
-        deck.AddCard(cardOptions[cardIndex].CardData);
+        SelectedCardIndex = cardIndex;
+        IsConfirmed = true;
 
         UpgradeManager.Instance.PlayerLockedIn(PlayerIndex);
 
         for (int i = 0; i < cardOptions.Count; i++)
         {
-             cardOptions[i].gameObject.SetActive(false);
+            cardOptions[i].GetComponent<CardUI>().getCardImage().canvasRenderer.SetAlpha(0.5f);
         }
 
+
+    }
+
+    private void Cancel()
+    {
+        if (!IsConfirmed) return;
+        IsConfirmed = false;
+        navigation.Reset();
+        UpgradeManager.Instance.PlayerUnLocked(PlayerIndex);
+
+        for (int i = 0; i < cardOptions.Count; i++)
+        {
+            cardOptions[i].GetComponent<CardUI>().getCardImage().canvasRenderer.SetAlpha(1f);
+        }
+
+    }
+
+    public ScriptableCard GetSelectedCard()
+    {
+        return cardOptions[SelectedCardIndex].CardData;
+    }
+
+    public void AssignRandomCard()
+    {
+        int randomIndex = Random.Range(0, cardOptions.Count);
+        SelectedCardIndex = randomIndex;
+        IsConfirmed = true;
+
+        for (int i = 0; i < cardOptions.Count; i++)
+        {
+            cardOptions[i].SetHighlighted(i == SelectedCardIndex);
+        }
     }
 
 }

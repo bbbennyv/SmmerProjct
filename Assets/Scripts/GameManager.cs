@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour
             UpgradeTimer -= Time.deltaTime;
             if (UpgradeTimer <= 0)
             {
-                respawn = true;
+                UpgradeManager.Instance.ForceResolve();
             }
         }
 
