@@ -69,12 +69,10 @@ public class PlayerInputManager : MonoBehaviour
                 controllerText.text = $"Player {spawn + 1}";
                 readyText.Add(controllerText.gameObject);
 
-                Debug.Log($"{player} - {UpgradePanelUI.First()}");
 
                 GameManager.Instance.spawnedPlayers.Add(controller);
                 GameManager.Instance.alivePlayers.Add(controller);
 
-                Debug.Log($"{player} + {spawn}");
                //UpgradePanelUI[spawn].gameObject.SetActive(true);
 
                // UpgradePanelUI[spawn].Initialize(player.GetComponent<PlayerInput>(), spawn);
@@ -83,7 +81,6 @@ public class PlayerInputManager : MonoBehaviour
                 if (spawn > 1)
                 {
                     gameStartable = true;
-                    Debug.Log("STartable");
                 }
             }
 
@@ -110,8 +107,12 @@ public class PlayerInputManager : MonoBehaviour
                 player.RemoveAllWeapons();
                 spawn++;
 
+
             }
             GameManager.Instance.GoToStart();
+
+            
+
         }
     }
 
@@ -144,7 +145,6 @@ public class PlayerInputManager : MonoBehaviour
             spawnPoints.Add(child.position);
         }
 
-        Debug.Log($"Spawned map: {spawnedMap.name}");
     }
 
     private void SetUpUpgradePanelUI()
@@ -175,7 +175,6 @@ public class PlayerInputManager : MonoBehaviour
                   UpgradePanelUI[i].gameObject.SetActive(true);
                   UpgradePanelUI[i].LockedIn = false;
                   UpgradePanelUI[i].Initialize(input, i);
-                  Debug.Log("helooooo");
             }
         }
     

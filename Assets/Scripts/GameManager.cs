@@ -83,7 +83,6 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        //.Log($"CURRENTSTATE - { currentState}");
 
         if (currentState == startState)
         {
@@ -112,14 +111,12 @@ public class GameManager : MonoBehaviour
                 SetWinnerText("DRAW");
                 SetState(wonState);
 
-                Debug.Log("DRAW");
             }
             else if(alivePlayers.Count == 1 && drawTimerPeriod <= 0)
             {
                 SetWinnerText($"{alivePlayers[0].name} WON!!");
                 SetState(wonState);
 
-                Debug.Log("WON");
             }
 
 
@@ -131,7 +128,6 @@ public class GameManager : MonoBehaviour
             if (winTimer <= 0)
             {
                 SetState(upgradeState);
-                Debug.Log("UPGRADE");
             }
         }
         else if (currentState == upgradeState)
@@ -140,7 +136,6 @@ public class GameManager : MonoBehaviour
             if (UpgradeTimer <= 0)
             {
                 respawn = true;
-                Debug.Log("RESPAWN");
             }
         }
 
@@ -168,7 +163,6 @@ public class GameManager : MonoBehaviour
 
         currentState.Enter(this);
 
-        Debug.Log($"current state - {currentState.ToString()}");
     }
 
     private IEnumerator BeginRound()

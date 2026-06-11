@@ -47,7 +47,6 @@ public class CardUI : MonoBehaviour
             // SetCardText();
             // SetCardImage();
             SetCardUI(_card.CardData);
-            Debug.Log("data");
         }
     }
 

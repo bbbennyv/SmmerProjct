@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
@@ -13,6 +14,7 @@ public class HealthSystem : MonoBehaviour
 
     private PlayerController player;
     public System.Action<int, int> OnHealthChanged;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -68,12 +70,15 @@ public class HealthSystem : MonoBehaviour
 
         isDead = true;
 
-       // player.gameObject.SetActive(false);
+        // player.gameObject.SetActive(false);
         player.GetComponent<Renderer>().enabled = false;
         player.GetComponentInChildren<Renderer>().enabled = false;
-        player.transform.position = Vector2.zero;
         player.enabled = false;
         GameManager.Instance.alivePlayers.Remove(player);
+            TargetGroupAutoRegister.instance
+        .targetGroupManager
+        .UnregisterTarget(player.transform);
+        player.transform.position = Vector2.zero;
     }
 
     public void Respawn(Vector2 pos)
@@ -82,12 +87,13 @@ public class HealthSystem : MonoBehaviour
         currentHealth = maxHealth;
 
         player.GetComponent<Renderer>().enabled = true;
-        
         player.enabled = true;
         transform.position = pos;
-        Debug.Log("Player respawned at: " + pos);
-        gameObject.SetActive(true);
+        player.gameObject.SetActive(true);
 
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        //if (TargetGroupAutoRegister.instance.targetGroupManager.targetGroup.Targets.Contains(player)
+            //return;
+        TargetGroupAutoRegister.instance.targetGroupManager.RegisterTarget(player.transform);
     }
 }

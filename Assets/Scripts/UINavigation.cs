@@ -46,7 +46,7 @@ public class UINavigation : MonoBehaviour
 
     private void Update()
     {
-        if (!active || gamepads.Count == 0) return;
+        if (!active  || !GameManager.Instance.IsUpgrade || gamepads.Count == 0) return;
 
         cooldownTimer -= Time.deltaTime;
 
@@ -58,13 +58,27 @@ public class UINavigation : MonoBehaviour
 
                 if (axis > 0.5f)
                 {
-                    Move(-1);
-                    cooldownTimer = navCooldown;
+                    if (isHorizontal)
+                    {
+                        Move(1);
+                    }
+                    else
+                    {
+                        Move(-1);
+                    }
+                        cooldownTimer = navCooldown;
                     break;
                 }
                 else if (axis < -0.5f)
                 {
-                    Move(1);
+                    if (isHorizontal)
+                    {
+                        Move(-1);
+                    }
+                    else
+                    {
+                        Move(1);
+                    }
                     cooldownTimer = navCooldown;
                     break;
                 }

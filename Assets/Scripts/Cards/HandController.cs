@@ -50,6 +50,10 @@ public class HandController : MonoBehaviour
 
     public void UseCard(InputAction.CallbackContext action)
     {
+        if (!GameManager.Instance.IsGameplay)
+            return;
+
+
         if(!action.started) return;
         var hand = deck.HandCards;
         if(hand.Count == 0) return;
