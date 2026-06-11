@@ -77,7 +77,10 @@ public class MeleeWeapon : BaseWeapon
         if (!CanUse()) return;
         if (state == SwingState.Swinging) return;
 
-        Instantiate(trailParticles, this.gameObject.transform.position, Quaternion.identity, armPivot);
+        if(trailParticles != null)
+        {
+            Instantiate(trailParticles, this.gameObject.transform.position, Quaternion.identity, armPivot);
+        }
 
         lockedBaseAngle = ComputeBaseAngle();
         currentAngle = lockedBaseAngle + raisedAngle;
