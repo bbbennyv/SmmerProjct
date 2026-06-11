@@ -1,0 +1,173 @@
+using System.Collections;
+using System.Diagnostics.Contracts;
+using TMPro;
+using Unity.VisualScripting;
+using UnityEngine;
+
+public class RangedWeapon : BaseWeapon
+{
+    [SerializeField]
+    protected GameObject projectilePrefab;
+
+    [SerializeField]
+    private float recoil = 5f;
+
+    [SerializeField] protected int maxAmmo;
+    [SerializeField] protected float reloadSpeed = 1;
+
+    protected int currentAmmo;
+    protected bool reloading = false;
+
+    protected float projectileSpeedMult = 1f;
+
+    protected Transform ownerTransform;
+
+    [SerializeField]
+    protected GameObject MuzzleFlash;
+
+    [SerializeField] public bool destroyOnEmpty = false;
+
+    private FistController ownerFist;
+
+    private void Start()
+    {
+        PlayerController owner = GetComponentInParent<PlayerController>();
+
+        ownerTransform = owner.GetComponent<Transform>();
+
+        currentAmmo = maxAmmo;
+    }
+
+    public override void Update()
+    {
+        base.Update();
+
+        if(currentAmmo <= 0 && !reloading)
+        {
+            if (destroyOnEmpty)
+            {
+                RemoveTemporaryWeapon();
+            }
+            else
+            {
+                StartCoroutine(Reload());
+            }
+        }
+    }
+    
+
+    public override void Use()
+    {
+        if(!CanUse()) return;
+        if (reloading) return;
+
+        FireProjectile();
+        ApplyRecoil();
+
+        ResetCooldown();
+    }
+
+    public void SetOwnerFist(FistController fist)
+    {
+        ownerFist = fist;
+    }
+
+    private void RemoveTemporaryWeapon()
+    {
+        if (ownerFist != null)
+        {
+            ownerFist.SetWeapon(null);
+            ownerFist.SetFistFull(false);
+        }
+
+        Destroy(gameObject);
+    }
+
+    public virtual void FireProjectile()
+    {
+        GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        Projectile spawnedProjectile = projectile.GetComponent<Projectile>();
+        Vector2 direction = GetFireDirection();
+
+        float knockback = Mathf.Lerp(weaponData.minKnockback, weaponData.maxKnockback, chargeRatio);
+        int damage = (int)Mathf.Lerp(weaponData.minDamage, weaponData.maxDamage, chargeRatio);
+
+        spawnedProjectile.InitializeProjectile(direction, knockback, damage, chargeRatio, ownerTransform, projectileSpeedMult);
+
+        ProjectileContext projectileContext = new ProjectileContext{ prefab = projectile, dmg = damage, kb = knockback, direction = direction, chargeRat = chargeRatio, owner = ownerTransform, projectileMult = projectileSpeedMult};
+
+        if (destroyOnEmpty)
+        {
+            var handler = ownerTransform.GetComponent<CardEffectHandler>();
+
+            handler?.NotifyProjectileFired(projectileContext);
+        }
+
+
+        currentAmmo--;
+
+
+        if(MuzzleFlash != null)
+            Instantiate(MuzzleFlash, transform.position,Quaternion.Euler(direction.x,direction.y,0));
+    }
+
+    protected IEnumerator Reload()
+    {
+        reloading = true;
+
+        Quaternion startRotation = transform.localRotation;
+
+        float elapsed = 0f;
+
+        while (elapsed < reloadSpeed)
+        {
+            elapsed += Time.deltaTime;
+
+            float angle = 720f * elapsed;
+
+            transform.localRotation = startRotation * Quaternion.Euler(0f, 0f, angle);
+
+            yield return null;
+        }
+
+        transform.localRotation = startRotation;
+
+        currentAmmo = maxAmmo;
+
+
+        reloading = false;
+    }
+
+    public virtual Vector2 GetFireDirection()
+    {
+        return hitDirection.normalized;
+    }
+
+    protected virtual void ApplyRecoil()
+    {
+        Rigidbody2D rb = ownerTransform.gameObject.GetComponent<Rigidbody2D>();
+
+        if(rb != null)
+        {
+            Vector2 recoilDirection = -hitDirection.normalized;
+
+            rb.AddForce(recoilDirection * recoil, ForceMode2D.Impulse);
+        }
+    }
+
+    public override bool isRanged()
+    {
+        return true;
+    }
+}
+
+public struct ProjectileContext
+{
+    public GameObject prefab;
+    public Vector2 direction;
+    public float chargeRat;
+    public Transform owner;
+    public int dmg;
+    public float kb;
+    public float projectileMult;
+}
