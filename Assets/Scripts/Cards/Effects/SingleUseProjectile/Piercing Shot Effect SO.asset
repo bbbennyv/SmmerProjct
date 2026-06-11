@@ -9,9 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: New Explosive Shot SO
-  m_EditorClassIdentifier: Assembly-CSharp::ExplosiveShotSO
-  explosionRadius: 3
-  explosionKnockbackMultiplier: 1.5
-  explosionEffect: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 800d25e0b60c39b4b89b74cfe0199f4c, type: 3}
+  m_Name: Piercing Shot Effect SO
+  m_EditorClassIdentifier: Assembly-CSharp::PiercingShotEffectSO
