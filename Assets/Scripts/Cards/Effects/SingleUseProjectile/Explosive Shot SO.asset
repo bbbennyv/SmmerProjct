@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c7e1aef1eb010c4f99436ed692ae618, type: 3}
+  m_Name: Explosive Shot SO
+  m_EditorClassIdentifier: Assembly-CSharp::ExplosiveShotSO
+  explosionRadius: 3
+  explosionKnockbackMultiplier: 1.5
+  explosionEffect: {fileID: 1169377891852744779, guid: 44e7e43fc3163074e898da5e4eeff8c1, type: 3}

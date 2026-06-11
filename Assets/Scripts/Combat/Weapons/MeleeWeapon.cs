@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 public class MeleeWeapon : BaseWeapon
 {
@@ -13,31 +14,34 @@ public class MeleeWeapon : BaseWeapon
     [SerializeField]
     private float swingAngle = 70f;
 
-    [SerializeField]
-    private float swingSpeed = 3f;
 
-    private float baseAngle;
+    [SerializeField] private float swingDuration = 0.18f;
 
-    [SerializeField] float rotateLerpSpeed = 18f;
+    [SerializeField] private AnimationCurve swingCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+
+    [SerializeField] private float poseSmoothing = 8f;
 
     [SerializeField] float disarmChance = 0.5f;
 
-    private float swingProgress;
-    private bool swinging;
-
     private Transform ownerTransform;
 
-    private bool hitRegistered = false;
-    
-    private float currentAngle;
+    private enum SwingState { Idle, Charging, Swinging, Returning }
+    private SwingState state = SwingState.Idle;
 
+
+    private float currentAngle;
+    private float lockedBaseAngle;
+    private float swingTimer;
+
+    private bool hitRegistered = false;
     [SerializeField] public LayerMask hitLayers;
 
     private void Start()
     {
         PlayerController owner = GetComponentInParent<PlayerController>();
         ownerTransform = owner.GetComponent<Transform>();
-        
+
+        currentAngle = ComputeBaseAngle() + restAngle;
     }
 
     public override void Update()
@@ -46,82 +50,82 @@ public class MeleeWeapon : BaseWeapon
 
         if (armPivot == null) return;
 
-
-        if (!swinging)
+        switch (state)
         {
-            TickChargePose();
+            case SwingState.Idle: TickIdle(); break;
+            case SwingState.Charging: TickChargePose(); break;
+            case SwingState.Swinging: TickSwing(); break;
+            case SwingState.Returning: TickReturnToRest(); break;
         }
-        else
-        {
-            TickSwing();
-        }
+        
+        armPivot.localRotation = Quaternion.Euler(0, 0, FinalAngle(currentAngle));
     }
 
     public override void BeginCharge()
     {
-        swinging = false;
+        if(state == SwingState.Swinging) return;
+        state = SwingState.Charging;
         hitRegistered = false;
     }
 
     public override void Use()
     {
         if (!CanUse()) return;
-        //if (chargeRatio < 0.9f) return;
-        if (swinging) return;
+        if (state == SwingState.Swinging) return;
 
-        swinging = true;
-        swingProgress = 0f;
-
-        float startAngle = baseAngle + (raisedAngle);
-        currentAngle = startAngle;
-
-        armPivot.localRotation = Quaternion.Euler(0, 0, FinalAngle(currentAngle));
-
+        lockedBaseAngle = ComputeBaseAngle();
+        currentAngle = lockedBaseAngle + raisedAngle;
+        
+        state = SwingState.Swinging;
+        swingTimer = 0f;
+        hitRegistered = false;
         ResetCooldown();
+    }
+
+    void TickIdle()
+    {
+        SmoothToward(ComputeBaseAngle() + restAngle);
     }
 
     void TickChargePose()
     {
         float eased = Mathf.SmoothStep(0, 0.5f, chargeRatio);
-        float target = baseAngle + Mathf.Lerp(restAngle, raisedAngle, eased);
+        float target = ComputeBaseAngle() + Mathf.Lerp(restAngle, raisedAngle, eased);
 
-        float newAngle = Mathf.LerpAngle(
-            currentAngle,
-            target,
-            Time.deltaTime * rotateLerpSpeed
-        );
-        currentAngle = newAngle;
-        armPivot.localRotation = Quaternion.Euler(0, 0, FinalAngle(currentAngle));
+        SmoothToward(target);
     }
 
     void TickSwing()
     {
-        swingProgress += Time.deltaTime * swingSpeed;
-        float t = Mathf.Clamp01(swingProgress);
+        swingTimer += Time.deltaTime;
+        float t = Mathf.Clamp01(swingTimer / swingDuration);
 
-        float smoothT = Mathf.SmoothStep(0, 1, t);
-
-        float angle = baseAngle + Mathf.Lerp(raisedAngle, swingAngle, smoothT);
-
-        float newAngle = Mathf.LerpAngle(
-            currentAngle,
-            angle,
-            Time.deltaTime * rotateLerpSpeed
-        );
-        currentAngle = newAngle;
-        armPivot.localRotation = Quaternion.Euler(0, 0, FinalAngle(currentAngle));
+        float curveT = swingCurve.Evaluate(t);
+        currentAngle = lockedBaseAngle + Mathf.Lerp(raisedAngle, swingAngle, curveT);
 
         if (t >= 1f)
         {
-            swinging = false;
             chargeRatio = 0f;
+            state = SwingState.Returning;
 
+        }
+    }
+
+    void TickReturnToRest()
+    {
+        float target = ComputeBaseAngle() + restAngle;
+        SmoothToward(target);
+
+        if (Mathf.Abs(Mathf.DeltaAngle(currentAngle, target)) < 1f)
+        {
+            currentAngle = target;
+            state = SwingState.Idle;
         }
     }
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (!swinging) return;
+        if (state != SwingState.Swinging) return;
         if (hitRegistered) return;
         if (((1 << other.gameObject.layer) & hitLayers) == 0) return;
         if (other.transform.IsChildOf(ownerTransform) || other.transform == ownerTransform) return;
@@ -155,7 +159,7 @@ public class MeleeWeapon : BaseWeapon
     public override void SetBaseAngle(Vector2 forward)
     {
         base.SetBaseAngle(forward);
-        baseAngle = Mathf.Atan2(forward.y, forward.x) * Mathf.Rad2Deg;
+
     }
 
     public override bool CanCharge()
@@ -167,4 +171,14 @@ public class MeleeWeapon : BaseWeapon
     {
         return true;
     }
+
+    float ComputeBaseAngle()
+    {
+        return baseAngleDegrees;
+    }
+    void SmoothToward(float target)
+    {
+        currentAngle = Mathf.LerpAngle(currentAngle, target, Time.deltaTime * poseSmoothing);
+    }
+
 }

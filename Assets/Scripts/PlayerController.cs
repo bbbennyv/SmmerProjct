@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
     private float dashAmount = 20.0f;
     [SerializeField]
     private float dashCooldown = 1.0f;
+    [SerializeField]
+    private float dashDuration = 0.2f;
 
     public bool isDashing; 
     private float horizontalMovement;
@@ -42,26 +44,25 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 weaponOffset;
 
-    //private WeaponData weaponData;
-
     private Deck _deck;
+
+    [SerializeField] private GameObject afterImagePrefab;
+    [SerializeField] private float afterImageSpawnRate = 0.05f;
+
+    private SpriteRenderer spriteRenderer;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         punch = GetComponent<PunchSystem>();
         
- /*       GameManager.Instance.spawnedPlayers.Add(this);
-        if (!GameManager.Instance.alivePlayers.Contains(this))
-        {
-            GameManager.Instance.alivePlayers.Add(this);
-        }
-*/
         _deck = GetComponent<Deck>();
 
         leftFist = punch.GetLeftFist();
         rightFist = punch.GetRightFist();
-    }
 
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
     private void FixedUpdate()
     {
         if (!GameManager.Instance.IsGameplay) return;
@@ -88,8 +89,9 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext action)
     {
-
         if (action.started && GameManager.Instance.IsGameplay) {
+
+            if (rb == null) return;
 
             if (jumpsToUse > 0)
             {
@@ -102,6 +104,8 @@ public class PlayerController : MonoBehaviour
 
     public void Dash(InputAction.CallbackContext action)
     {
+        if (rb == null) return;
+
         if (action.started && !isDashing && GameManager.Instance.IsGameplay)
         {
             StartCoroutine(DashAction());
@@ -111,7 +115,27 @@ public class PlayerController : MonoBehaviour
     private IEnumerator DashAction()
     {
         isDashing = true;
-        rb.AddForce(new Vector2(rb.linearVelocity.x * dashAmount, rb.linearVelocity.y), ForceMode2D.Impulse);
+
+        float elapsedTimer = 0f;
+        float afterImageTimer = 0f;
+
+        rb.linearVelocity = new Vector2(horizontalMovement * dashAmount, rb.linearVelocity.y);
+        
+        while (elapsedTimer < dashDuration)
+        {
+            //rb.AddForce(new Vector2(rb.linearVelocity.x * dashAmount, rb.linearVelocity.y), ForceMode2D.Impulse);
+
+            afterImageTimer += Time.deltaTime;
+            if(afterImageTimer >= afterImageSpawnRate)
+            {
+                SpawnAfterImage();
+                afterImageTimer = 0f;
+            }
+
+            elapsedTimer += Time.deltaTime;
+            yield return null;
+        }
+
         yield return new WaitForSeconds(dashCooldown);
         isDashing = false;
     }
@@ -258,9 +282,15 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (!collision.gameObject.CompareTag("Ground")) return;
+
+        foreach (ContactPoint2D contact in collision.contacts)
         {
-            jumpsToUse = 2;
+            if (contact.normal.y > 0.5f)
+            {
+                jumpsToUse = 2;
+                break;
+            }
         }
     }
 
@@ -284,5 +314,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void SpawnAfterImage()
+    {
+        if (afterImagePrefab == null) { Debug.LogError("AfterImagePRefab not assigned"); return; }
 
+        GameObject img = Instantiate(afterImagePrefab, transform.position, Quaternion.identity);
+        if (!img) { Debug.LogError("failed to instantiate afterimage"); return; }
+
+        AfterImage afterImage = img.GetComponent<AfterImage>();
+        if (!afterImage) { Debug.LogError("AfterImage script missing on prefab"); return; }
+
+        afterImage.Init(spriteRenderer.sprite, transform.position, transform.localScale, spriteRenderer.color);
+    }
 }

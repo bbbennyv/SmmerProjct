@@ -920,11 +920,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc9bd3112e5af47438ad461e518198ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  <playerClass>k__BackingField: 0
   movementSpeed: 12
   jumpHeight: 14
-  dashAmount: 5
+  dashAmount: 50
   dashCooldown: 1
+  dashDuration: 0.2
   isDashing: 0
+  afterImagePrefab: {fileID: 6944141588433423757, guid: b9ca2849c0ea6654099d7484d60b2925, type: 3}
+  afterImageSpawnRate: 0.05
 --- !u!114 &7067668913706727250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1007,6 +1011,7 @@ MonoBehaviour:
   _deckPile: []
   _discardPile: []
   <HandCards>k__BackingField: []
+  upgradeDeck: {fileID: 0}
 --- !u!114 &8473690520505478489
 MonoBehaviour:
   m_ObjectHideFlags: 0
