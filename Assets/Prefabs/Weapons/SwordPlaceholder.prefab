@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3923255714736054391}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 2.17455, y: 3.2398, z: 0}
+  m_LocalPosition: {x: 2.83, y: 3.773, z: 0}
   m_LocalScale: {x: 0.22839919, y: 1.1083238, z: 0.54782766}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -136,6 +136,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   poseSmoothing: 8
   disarmChance: 0.5
+  trailParticles: {fileID: 1366042684682048157, guid: dfe0682970e5db146987c84bec4bb013, type: 3}
   hitLayers:
     serializedVersion: 2
     m_Bits: 64

@@ -14,16 +14,18 @@ public class MeleeWeapon : BaseWeapon
     [SerializeField]
     private float swingAngle = 70f;
 
-
     [SerializeField] private float swingDuration = 0.18f;
 
     [SerializeField] private AnimationCurve swingCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     [SerializeField] private float poseSmoothing = 8f;
 
-    [SerializeField] float disarmChance = 0.5f;
+    [SerializeField] private float disarmChance = 0.5f;
 
     private Transform ownerTransform;
+
+    [SerializeField] private GameObject trailParticles;
+
 
     private enum SwingState { Idle, Charging, Swinging, Returning }
     private SwingState state = SwingState.Idle;
@@ -42,6 +44,7 @@ public class MeleeWeapon : BaseWeapon
         ownerTransform = owner.GetComponent<Transform>();
 
         currentAngle = ComputeBaseAngle() + restAngle;
+
     }
 
     public override void Update()
@@ -66,6 +69,7 @@ public class MeleeWeapon : BaseWeapon
         if(state == SwingState.Swinging) return;
         state = SwingState.Charging;
         hitRegistered = false;
+
     }
 
     public override void Use()
@@ -73,12 +77,16 @@ public class MeleeWeapon : BaseWeapon
         if (!CanUse()) return;
         if (state == SwingState.Swinging) return;
 
+        Instantiate(trailParticles, this.gameObject.transform.position, Quaternion.identity, armPivot);
+
         lockedBaseAngle = ComputeBaseAngle();
         currentAngle = lockedBaseAngle + raisedAngle;
         
         state = SwingState.Swinging;
         swingTimer = 0f;
         hitRegistered = false;
+
+
         ResetCooldown();
     }
 
