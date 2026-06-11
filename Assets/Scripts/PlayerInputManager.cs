@@ -79,6 +79,7 @@ public class PlayerInputManager : MonoBehaviour
 
                // UpgradePanelUI[spawn].Initialize(player.GetComponent<PlayerInput>(), spawn);
                 spawn++;
+                GameManager.Instance.RegisterPlayer(spawn - 1);
 
                 if (spawn > 1)
                 {
@@ -90,10 +91,11 @@ public class PlayerInputManager : MonoBehaviour
 
         }
 
-        if (GameManager.Instance.respawn)
+        if (GameManager.Instance.respawn || GameManager.Instance.matchOver)
         {
             GameManager.Instance.alivePlayers.Clear();
             GameManager.Instance.respawn = false;
+            
 
             SpawnRandomMap();
 
@@ -110,13 +112,16 @@ public class PlayerInputManager : MonoBehaviour
                 player.RemoveAllWeapons();
                 spawn++;
 
+                
             }
             GameManager.Instance.GoToStart();
         }
+
+        
     }
 
 
-    private void SpawnRandomMap()
+    public void SpawnRandomMap()
     {
         if (spawnedMap != null)
         {

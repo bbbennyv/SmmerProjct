@@ -7,6 +7,7 @@ using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -63,6 +64,10 @@ public class GameManager : MonoBehaviour
     private bool roundStarting = false;
 
     public bool respawn = false;
+
+    private Dictionary<int, int> playerWins = new Dictionary<int, int>();
+    [SerializeField] private int winsToEnd = 3;
+      public bool matchOver = false;
     private void Awake()
     {
         Instance = this;
@@ -105,6 +110,7 @@ public class GameManager : MonoBehaviour
                 drawTimerPeriod -= Time.deltaTime;
             }
 
+            
 
 
             if(alivePlayers.Count == 0 && drawTimerPeriod <= 0)
@@ -117,6 +123,8 @@ public class GameManager : MonoBehaviour
             else if(alivePlayers.Count == 1 && drawTimerPeriod <= 0)
             {
                 SetWinnerText($"{alivePlayers[0].name} WON!!");
+                int winnerIndex = spawnedPlayers.IndexOf(alivePlayers[0]);
+                AddWinToPlayer(winnerIndex);
                 SetState(wonState);
 
                 Debug.Log("WON");
@@ -130,8 +138,16 @@ public class GameManager : MonoBehaviour
 
             if (winTimer <= 0)
             {
+               matchOver = playerWins.Values.Any(wins => wins >= winsToEnd);
+                if(!matchOver)
+                {
                 SetState(upgradeState);
                 Debug.Log("UPGRADE");
+                }
+                else
+                {
+                  SetState(startState);
+                }
             }
         }
         else if (currentState == upgradeState)
@@ -246,7 +262,23 @@ public class GameManager : MonoBehaviour
     public void GoToStart()
     {
         startTimer = maxStartTimer;
+        
+       
+        if(matchOver)
+            {
+             for (int i = 0; i < spawnedPlayers.Count; i++)
+                {
+                    playerWins[i] = 0;
+                    spawnedPlayers[i].GetComponent<Deck>().ResetDeck();
+                    spawnedPlayers[i].GetComponent<Deck>().Initialise(i);
+                    Debug.Log($"Player {i} wins reset to 0");
+                }
+                    matchOver = false;
+            }
+        
+
         SetState(startState);
+
     }
 
     public void SetWinnerText(string text)
@@ -255,4 +287,42 @@ public class GameManager : MonoBehaviour
         playertext.text = text;
     }
 
+
+    public void RegisterPlayer(int playerIndex)
+    {
+        if(!playerWins.ContainsKey(playerIndex))
+        {
+            playerWins.Add(playerIndex, 0);
+        }
+    }
+
+    public int GetPlayerScore(int playerIndex)
+    {
+        if(playerWins.TryGetValue(playerIndex, out int score))
+        {
+            return score;
+        }
+        return 0;
+    }
+
+    private void AddWinToPlayer(int playerIndex)
+    {
+        if(playerWins.ContainsKey(playerIndex))
+        {
+            playerWins[playerIndex]++;
+            Debug.Log($"Player {playerIndex} wins: {playerWins[playerIndex]}");
+        }
+
+        if(playerWins[playerIndex] >= winsToEnd)
+        {
+            SetWinnerText($"Player {playerIndex} Wins the Game!");
+            SetState(wonState);
+            respawn = false;
+
+            // for (int i = 0; i < spawnedPlayers.Count; i++)
+            // {
+            //    playerWins[i] = 0;
+            // }
+        }
+    }
 }
