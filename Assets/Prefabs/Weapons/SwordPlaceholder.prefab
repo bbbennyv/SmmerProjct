@@ -108,10 +108,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MeleeWeapon
   restAngle: 0
   raisedAngle: 110
-  swingAngle: -200
-  swingSpeed: 6
-  rotateLerpSpeed: 18
-  knockOutOfHandChance: 0.5
+  swingAngle: -220
+  swingDuration: 0.3
+  swingCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  poseSmoothing: 8
+  disarmChance: 0.5
   hitLayers:
     serializedVersion: 2
     m_Bits: 64
