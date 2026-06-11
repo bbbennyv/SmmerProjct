@@ -959,9 +959,11 @@ MonoBehaviour:
   maxPunchForce: 50
   verticalKnockback: 0.3
   horizontalKnockback: 1
-  minAttackDamage: 5
+  minAttackDamage: 2
   maxAttackDamage: 10
   disarmChance: 0.5
+  allowOvercharge: 1
+  overchargeMultiplier: 2
   cooldown: 0.1
   leftFist: {fileID: 771210563186174010}
   rightFist: {fileID: 5668249406111205683}
@@ -993,6 +995,7 @@ MonoBehaviour:
   maxHealth: 100
   PunchParticles: {fileID: 8245891158460389032, guid: 507e127c786967348adf9c98659c154d, type: 3}
   PunchParticlesCharged: {fileID: 8245891158460389032, guid: 405740676f6c5654e925eb57c0543d27, type: 3}
+  verticalKnockbackBias: 0.2
 --- !u!114 &-6445555448307612379
 MonoBehaviour:
   m_ObjectHideFlags: 0

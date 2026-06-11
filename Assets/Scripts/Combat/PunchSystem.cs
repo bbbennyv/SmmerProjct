@@ -156,17 +156,18 @@ public class PunchSystem : MonoBehaviour
 
         return fighter.transform.localScale.x >= 0 ? Vector2.right : Vector2.left;
     }
-    Vector2 TowardEnemyWithBias()
-    {
-        float x = Mathf.Sign(TowardEnemy().x);
-        return new Vector2(x * horizontalKnockback,  verticalKnockback).normalized;
-    }
+
+    //Vector2 TowardEnemyWithBias()
+    //{
+    //    float x = Mathf.Sign(TowardEnemy().x);
+    //    return new Vector2(x * horizontalKnockback,  verticalKnockback).normalized;
+    //}
     void HandleHit(Collider2D other, float chargeAmount, Hand hand)
     {
         float knockback = Mathf.Lerp(minPunchForce, maxPunchForce, chargeAmount);
         int damage = (int)Mathf.Lerp(minAttackDamage, maxAttackDamage, chargeAmount);
 
-        Vector2 hitDir = TowardEnemyWithBias();
+        Vector2 hitDir = TowardEnemy();
 
         Rigidbody2D targetRb = other.attachedRigidbody;
         if (targetRb != null)

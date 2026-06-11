@@ -11,6 +11,8 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] private ParticleSystem PunchParticles;
     [SerializeField] private ParticleSystem PunchParticlesCharged;
 
+    [SerializeField] private float verticalKnockbackBias = 0.3f;
+
     private PlayerController player;
     public System.Action<int, int> OnHealthChanged;
 
@@ -35,7 +37,13 @@ public class HealthSystem : MonoBehaviour
     {
         if (isDead) return;
 
-        targetRb.AddForce(hitDir * knockback, ForceMode2D.Impulse);
+        if(targetRb != null)
+        {
+            Vector2 biasedDirection = ApplyKnockbackBias(hitDir);
+            targetRb.AddForce(biasedDirection * knockback, ForceMode2D.Impulse);
+
+        }
+
 
         if (charge < 0.5)
         {
@@ -52,6 +60,12 @@ public class HealthSystem : MonoBehaviour
         currentHealth = Mathf.Max(0, currentHealth - amount);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
         
+    }
+
+    private Vector2 ApplyKnockbackBias(Vector2 direction)
+    {
+        float x = Mathf.Sign(direction.x);
+        return new Vector2(x, verticalKnockbackBias).normalized;
     }
 
     public void Heal(int amount)

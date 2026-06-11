@@ -19,10 +19,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] public List<PlayerController> alivePlayers;
 
     [Header("Timer Config")]
-    [SerializeField] private float maxStartTimer = 3;
-    [SerializeField] private float maxWinTimer = 3;
-    [SerializeField] private float maxUpgradeTimer = 3;
-    [SerializeField] private float maxDrawTimer = 3;
+    [SerializeField] private float maxStartTimer = 0.5f;
+    [SerializeField] private float maxWinTimer = 0.5f;
+    [SerializeField] private float maxUpgradeTimer = 0.5f;
+    [SerializeField] private float maxDrawTimer = 0.5f;
 
 
     [Header("CountDown UI")]

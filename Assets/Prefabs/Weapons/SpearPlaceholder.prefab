@@ -109,9 +109,34 @@ MonoBehaviour:
   restAngle: 90
   raisedAngle: 90
   swingAngle: 0
-  swingSpeed: 3
-  rotateLerpSpeed: 18
-  knockOutOfHandChance: 0.5
+  swingDuration: 0.18
+  swingCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  poseSmoothing: 8
+  disarmChance: 0.5
+  trailParticles: {fileID: 1366042684682048157, guid: dfe0682970e5db146987c84bec4bb013, type: 3}
   hitLayers:
     serializedVersion: 2
     m_Bits: 64
