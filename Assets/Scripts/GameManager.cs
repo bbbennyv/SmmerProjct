@@ -20,10 +20,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] public List<PlayerController> alivePlayers;
 
     [Header("Timer Config")]
-    [SerializeField] private float maxStartTimer = 0.5f;
-    [SerializeField] private float maxWinTimer = 0.5f;
-    [SerializeField] private float maxUpgradeTimer = 0.5f;
-    [SerializeField] private float maxDrawTimer = 0.5f;
+    [SerializeField] private float maxStartTimer = 3;
+    [SerializeField] private float maxWinTimer = 3;
+    [SerializeField] private float maxUpgradeTimer = 3;
+    [SerializeField] private float maxDrawTimer = 3;
 
 
     [Header("CountDown UI")]
@@ -88,7 +88,6 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        //.Log($"CURRENTSTATE - { currentState}");
 
         if (currentState == startState)
         {
@@ -110,7 +109,6 @@ public class GameManager : MonoBehaviour
                 drawTimerPeriod -= Time.deltaTime;
             }
 
-            
 
 
             if(alivePlayers.Count == 0 && drawTimerPeriod <= 0)
@@ -118,7 +116,6 @@ public class GameManager : MonoBehaviour
                 SetWinnerText("DRAW");
                 SetState(wonState);
 
-                Debug.Log("DRAW");
             }
             else if(alivePlayers.Count == 1 && drawTimerPeriod <= 0)
             {
@@ -127,7 +124,6 @@ public class GameManager : MonoBehaviour
                 AddWinToPlayer(winnerIndex);
                 SetState(wonState);
 
-                Debug.Log("WON");
             }
 
 
@@ -142,7 +138,6 @@ public class GameManager : MonoBehaviour
                 if(!matchOver)
                 {
                 SetState(upgradeState);
-                Debug.Log("UPGRADE");
                 }
                 else
                 {
@@ -155,8 +150,7 @@ public class GameManager : MonoBehaviour
             UpgradeTimer -= Time.deltaTime;
             if (UpgradeTimer <= 0)
             {
-                respawn = true;
-                Debug.Log("RESPAWN");
+                UpgradeManager.Instance.ForceResolve();
             }
         }
 
@@ -184,7 +178,6 @@ public class GameManager : MonoBehaviour
 
         currentState.Enter(this);
 
-        Debug.Log($"current state - {currentState.ToString()}");
     }
 
     private IEnumerator BeginRound()
@@ -237,15 +230,6 @@ public class GameManager : MonoBehaviour
     }
 
 
-    //if need be these are here
-    /*
-      public void GoToPause()
-      {
-          SetState(pauseState);
-      }
-
-    */
-
     public void TogglePause()
     {
         if (currentState is PauseState)
@@ -271,7 +255,6 @@ public class GameManager : MonoBehaviour
                     playerWins[i] = 0;
                     spawnedPlayers[i].GetComponent<Deck>().ResetDeck();
                     spawnedPlayers[i].GetComponent<Deck>().Initialise(i);
-                    Debug.Log($"Player {i} wins reset to 0");
                 }
                     matchOver = false;
             }
@@ -310,7 +293,6 @@ public class GameManager : MonoBehaviour
         if(playerWins.ContainsKey(playerIndex))
         {
             playerWins[playerIndex]++;
-            Debug.Log($"Player {playerIndex} wins: {playerWins[playerIndex]}");
         }
 
         if(playerWins[playerIndex] >= winsToEnd)
@@ -319,10 +301,6 @@ public class GameManager : MonoBehaviour
             SetState(wonState);
             respawn = false;
 
-            // for (int i = 0; i < spawnedPlayers.Count; i++)
-            // {
-            //    playerWins[i] = 0;
-            // }
         }
     }
 }

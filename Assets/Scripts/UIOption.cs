@@ -19,7 +19,6 @@ public class UIOption : MonoBehaviour
     public void SetCard(ScriptableCard data)
     {
         CardData = data;
-        Debug.Log(data);
         cardUI.SetCardUI(data);
     }
 }

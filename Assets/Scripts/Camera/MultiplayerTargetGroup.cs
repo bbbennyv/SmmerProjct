@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class MultiplayerTargetGroupManager : MonoBehaviour
 {
-    [SerializeField] private CinemachineTargetGroup targetGroup;
+    [SerializeField] public CinemachineTargetGroup targetGroup;
 
     [SerializeField] private float defaultWeight = 1.0f;
     [SerializeField] private float defaultRadius = 2.0f;
@@ -22,6 +22,12 @@ public class MultiplayerTargetGroupManager : MonoBehaviour
     {
         if (targetGroup == null || target == null)
             return;
+
+        foreach (var member in targetGroup.Targets)
+        {
+            if (member.Object == target)
+                return;
+        }
 
         targetGroup.AddMember(target,defaultWeight,defaultRadius);
     }
