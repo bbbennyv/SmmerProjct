@@ -5,6 +5,8 @@ using UnityEngine;
 public enum SoundType
 {
     PlayerJump,
+    SwordSwing,
+    CardUse,
 }
 
 [ExecuteInEditMode]

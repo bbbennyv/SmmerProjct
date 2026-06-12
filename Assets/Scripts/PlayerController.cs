@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
             if (jumpsToUse > 0)
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpHeight);
-                SoundManager.PlaySound(SoundType.PlayerJump, 0.1f);
+                SoundManager.PlaySound(SoundType.PlayerJump, 0.8f);
                 jumpsToUse--;
             }
         }
@@ -151,6 +151,7 @@ public class PlayerController : MonoBehaviour
                 if (leftFist.GetFistFull())
                 {
                     leftFist.GetWeapon().BeginCharge();
+                   
                 }
 
             }
@@ -161,6 +162,7 @@ public class PlayerController : MonoBehaviour
                 if (leftFist.GetFistFull())
                 {
                     leftFist.GetWeapon().Use();
+                    
                 }
             }
            
@@ -179,6 +181,7 @@ public class PlayerController : MonoBehaviour
                 if(rightFist.GetFistFull())
                 {
                     rightFist.GetWeapon().BeginCharge();
+                    
                 }
             }
 
@@ -188,6 +191,7 @@ public class PlayerController : MonoBehaviour
                 if (rightFist.GetWeapon())
                 {
                     rightFist.GetWeapon().Use();
+                    
                 }
             }
            

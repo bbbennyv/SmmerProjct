@@ -3106,6 +3106,12 @@ MonoBehaviour:
   - name: PlayerJump
     sounds:
     - {fileID: 8300000, guid: 9cdea9d4c8aa60c43aa43d1118608048, type: 3}
+  - name: SwordSwing
+    sounds:
+    - {fileID: 8300000, guid: d55e5e9a55e59674b902b634109719bd, type: 3}
+  - name: CardUse
+    sounds:
+    - {fileID: 8300000, guid: 25eef7ef99b0df64a959c489daebabda, type: 3}
 --- !u!4 &1054390454
 Transform:
   m_ObjectHideFlags: 0
@@ -4304,6 +4310,8 @@ MonoBehaviour:
   fightDuration: 0.1
   fadeDuration: 1
   respawn: 0
+  winsToEnd: 3
+  matchOver: 0
 --- !u!114 &1419337794
 MonoBehaviour:
   m_ObjectHideFlags: 0

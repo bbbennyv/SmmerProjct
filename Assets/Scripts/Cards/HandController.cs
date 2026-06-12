@@ -59,6 +59,8 @@ public class HandController : MonoBehaviour
         deck.DiscardCard(selected);
 
         selectedIndex = Mathf.Clamp(selectedIndex, 0, Mathf.Max(0, hand.Count - 1));
+
+        SoundManager.PlaySound(SoundType.CardUse, 1f);
     }
 
     private void UpdateCardVisibility()

@@ -118,29 +118,7 @@ public class Deck : MonoBehaviour
 
         _deckPile.Clear();
         _discardPile.Clear();   
-        HandCards.Clear();
-
-    //     List<ScriptableCard> fullPool = new List<ScriptableCard>(_originalDeck.CardsInCollection);
-    //     fullPool.AddRange(upgradeDeck.CardsInCollection);
-        
-    //     for(int i = fullPool.Count - 1; i > 0; i--)
-    //     {
-    //         int j = Random.Range(0, i + 1);
-    //         var temp = fullPool[i];
-    //         fullPool[i] = fullPool[j];
-    //         fullPool[j] = temp;
-    //     }
-
-    // int count = Mathf.Min(baseHandSize, fullPool.Count);
-
-    //     for(int i = 0; i < count; i++)
-    //     {
-    //         Card card = Instantiate(_cardPrefab, _cardParent);
-    //         card.SetUp(fullPool[i]);
-    //         card.gameObject.SetActive(false);
-    //         _deckPile.Add(card);
-    //     }
-        
+        HandCards.Clear();   
     }
 
 
