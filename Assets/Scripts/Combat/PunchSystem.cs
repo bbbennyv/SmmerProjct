@@ -15,6 +15,9 @@ public class PunchSystem : MonoBehaviour
     [SerializeField] private int maxAttackDamage = 20;
     [SerializeField] float disarmChance = 0.5f;
 
+    [SerializeField] private bool allowOvercharge = true;
+    [SerializeField] private float overchargeMultiplier = 2f;
+
     private bool isLeftCharging;
     private bool isRightCharging;
 
@@ -34,6 +37,9 @@ public class PunchSystem : MonoBehaviour
     private PlayerController fighter;
     private EnemyScan tracker;
 
+    private float leftChargeSpeedMult = 1f;
+    private float rightChargeSpeedMult = 1f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -52,15 +58,18 @@ public class PunchSystem : MonoBehaviour
         leftCooldown = Mathf.Max(0, leftCooldown - Time.deltaTime);
         rightCooldown = Mathf.Max(0, rightCooldown - Time.deltaTime);
 
-        if(isLeftCharging)
+        float leftMax = maxChargeTime * (allowOvercharge ? overchargeMultiplier : 1f);
+        float rightMax = maxChargeTime * (allowOvercharge ? overchargeMultiplier : 1f);
+
+        if (isLeftCharging)
         {
-            leftCharge = Mathf.Min(leftCharge + Time.deltaTime, maxChargeTime);
+            leftCharge = Mathf.Min(leftCharge + Time.deltaTime * leftChargeSpeedMult, leftMax);
             leftFist.SetChargeRatio(leftCharge/ maxChargeTime);
         }
 
         if (isRightCharging)
         {
-            rightCharge = Mathf.Min(rightCharge + Time.deltaTime, maxChargeTime);
+            rightCharge = Mathf.Min(rightCharge + Time.deltaTime * rightChargeSpeedMult, rightMax);
             rightFist.SetChargeRatio(rightCharge/ maxChargeTime);
         }
         
@@ -73,6 +82,7 @@ public class PunchSystem : MonoBehaviour
             isLeftCharging = true;
             leftCharge = 0;
             leftFist.StartCharge();
+            UpdateChargeSpeed(Hand.Left);
 
         }
         if (hand == Hand.Right && rightCooldown <= 0)
@@ -80,6 +90,7 @@ public class PunchSystem : MonoBehaviour
             isRightCharging = true;
             rightCharge = 0;
             rightFist.StartCharge();
+            UpdateChargeSpeed(Hand.Right);
 
         }
 
@@ -110,10 +121,34 @@ public class PunchSystem : MonoBehaviour
         fist.SetChargeRatio(chargeAmount);
         fist.ReleasePunch();
         charge = fist.GetChargeRatio();
-        //Vector2 punchDir = getPunchDirection();
-        //float selfImpulse = Mathf.Lerp(minPunchForce, maxPunchForce, chargeAmount) * 0.1f;
-        //rb.AddForce(punchDir * selfImpulse, ForceMode2D.Impulse);
+
     }
+
+    private void UpdateChargeSpeed(Hand hand)
+    {
+        FistController fist = hand == Hand.Left ? leftFist : rightFist;
+        BaseWeapon weapon = fist?.GetWeapon();
+
+        if(weapon == null)
+        {
+            if(hand == Hand.Left) leftChargeSpeedMult = 1f;
+            else rightChargeSpeedMult = 1f;
+            return;
+        }
+
+        float chargeSpeedMult = weapon.GetChargeSpeed();
+
+        if (hand == Hand.Left)
+        {
+            leftChargeSpeedMult = chargeSpeedMult;
+        }
+        else
+        {
+            rightChargeSpeedMult = chargeSpeedMult;
+        }
+
+    }
+
     Vector2 TowardEnemy()
     {
         if (tracker != null && tracker.closestEnemy != null)
@@ -121,17 +156,18 @@ public class PunchSystem : MonoBehaviour
 
         return fighter.transform.localScale.x >= 0 ? Vector2.right : Vector2.left;
     }
-    Vector2 TowardEnemyWithBias()
-    {
-        float x = Mathf.Sign(TowardEnemy().x);
-        return new Vector2(x * horizontalKnockback,  verticalKnockback).normalized;
-    }
+
+    //Vector2 TowardEnemyWithBias()
+    //{
+    //    float x = Mathf.Sign(TowardEnemy().x);
+    //    return new Vector2(x * horizontalKnockback,  verticalKnockback).normalized;
+    //}
     void HandleHit(Collider2D other, float chargeAmount, Hand hand)
     {
         float knockback = Mathf.Lerp(minPunchForce, maxPunchForce, chargeAmount);
         int damage = (int)Mathf.Lerp(minAttackDamage, maxAttackDamage, chargeAmount);
 
-        Vector2 hitDir = TowardEnemyWithBias();
+        Vector2 hitDir = TowardEnemy();
 
         Rigidbody2D targetRb = other.attachedRigidbody;
         if (targetRb != null)

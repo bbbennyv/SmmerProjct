@@ -36,11 +36,7 @@ public class PlayerInputManager : MonoBehaviour
 
         }
 
-        /*        foreach(var UI in UpgradePanelUI)
-                {
-                    if(GameManager.Instance.IsUpgrade)
-                        UI.gameObject.SetActive(true);
-                }*/
+
         SetUpUpgradePanelUI();
         SpawnRandomMap();
 
@@ -57,7 +53,7 @@ public class PlayerInputManager : MonoBehaviour
                 player.transform.position =  spawnPoints[spawn];
                 readyText[spawn].SetActive(true);
                 player.name = $"Player {spawn + 1}";
-              //  player.transform.position = spawnPoints[spawn].position;
+           
                 
                 player.GetComponent<Deck>().Initialise(spawn);
 
@@ -69,25 +65,27 @@ public class PlayerInputManager : MonoBehaviour
                 controllerText.text = $"Player {spawn + 1}";
                 readyText.Add(controllerText.gameObject);
 
+                Debug.Log($"{player} - {UpgradePanelUI.First()}");
 
                 GameManager.Instance.spawnedPlayers.Add(controller);
                 GameManager.Instance.alivePlayers.Add(controller);
 
-               //UpgradePanelUI[spawn].gameObject.SetActive(true);
+                Debug.Log($"{player} + {spawn}");
 
-               // UpgradePanelUI[spawn].Initialize(player.GetComponent<PlayerInput>(), spawn);
                 spawn++;
+                GameManager.Instance.RegisterPlayer(spawn - 1);
 
                 if (spawn > 1)
                 {
                     gameStartable = true;
+            
                 }
             }
 
 
         }
 
-        if (GameManager.Instance.respawn)
+        if (GameManager.Instance.respawn || GameManager.Instance.matchOver)
         {
             GameManager.Instance.alivePlayers.Clear();
             GameManager.Instance.respawn = false;
@@ -107,17 +105,14 @@ public class PlayerInputManager : MonoBehaviour
                 player.RemoveAllWeapons();
                 spawn++;
 
-
+                
             }
             GameManager.Instance.GoToStart();
-
-            
-
         }
     }
 
 
-    private void SpawnRandomMap()
+    public void SpawnRandomMap()
     {
         if (spawnedMap != null)
         {
@@ -145,6 +140,7 @@ public class PlayerInputManager : MonoBehaviour
             spawnPoints.Add(child.position);
         }
 
+        Debug.Log($"Spawned map: {spawnedMap.name}");
     }
 
     private void SetUpUpgradePanelUI()
@@ -173,7 +169,9 @@ public class PlayerInputManager : MonoBehaviour
             {
                 PlayerInput input = GameManager.Instance.spawnedPlayers[i].GetComponent<PlayerInput>();
                   UpgradePanelUI[i].gameObject.SetActive(true);
+                  UpgradePanelUI[i].LockedIn = false;
                   UpgradePanelUI[i].Initialize(input, i);
+                 
             }
         }
     

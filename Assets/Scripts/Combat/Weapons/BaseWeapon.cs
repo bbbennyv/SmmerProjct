@@ -72,4 +72,9 @@ public class BaseWeapon : MonoBehaviour
     }
 
     public virtual bool canStunOutOfHand() { return false; }
+
+    public virtual float GetChargeSpeed()
+    {
+        return weaponData != null ? weaponData.chargeSpeed : 1.0f;
+    }
 }

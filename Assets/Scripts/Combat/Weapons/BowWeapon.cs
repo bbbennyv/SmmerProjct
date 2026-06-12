@@ -53,7 +53,7 @@ public class BowWeapon : RangedWeapon
 
     public override Vector2 GetFireDirection()
     {
-        float angle = Mathf.Lerp(30.0f, 5.0f, chargeRatio);
+        float angle = Mathf.Lerp(30.0f, 2.0f, chargeRatio);
         angle = FinalAngle(angle);
         return Quaternion.Euler(0, 0 , angle) * hitDirection.normalized;
     }

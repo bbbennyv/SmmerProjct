@@ -24,4 +24,6 @@ public class WeaponData : ScriptableObject
     public float minDamage;
     public float maxDamage;
 
+    public float chargeSpeed;
+
 }

@@ -96,6 +96,7 @@ public class PlayerController : MonoBehaviour
             if (jumpsToUse > 0)
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpHeight);
+                SoundManager.PlaySound(SoundType.PlayerJump, 0.1f);
                 jumpsToUse--;
             }
         }
