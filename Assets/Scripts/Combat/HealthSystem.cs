@@ -75,7 +75,6 @@ public class HealthSystem : MonoBehaviour
 
         currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
-       // Debug.Log(currentHealth);
     }
 
     public void Die()
@@ -84,7 +83,6 @@ public class HealthSystem : MonoBehaviour
 
         isDead = true;
 
-        // player.gameObject.SetActive(false);
         player.GetComponent<Renderer>().enabled = false;
         player.GetComponentInChildren<Renderer>().enabled = false;
         player.enabled = false;

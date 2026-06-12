@@ -65,12 +65,10 @@ public class PlayerInputManager : MonoBehaviour
                 controllerText.text = $"Player {spawn + 1}";
                 readyText.Add(controllerText.gameObject);
 
-                Debug.Log($"{player} - {UpgradePanelUI.First()}");
 
                 GameManager.Instance.spawnedPlayers.Add(controller);
                 GameManager.Instance.alivePlayers.Add(controller);
 
-                Debug.Log($"{player} + {spawn}");
 
                 spawn++;
                 GameManager.Instance.RegisterPlayer(spawn - 1);
@@ -140,7 +138,6 @@ public class PlayerInputManager : MonoBehaviour
             spawnPoints.Add(child.position);
         }
 
-        Debug.Log($"Spawned map: {spawnedMap.name}");
     }
 
     private void SetUpUpgradePanelUI()
@@ -169,7 +166,6 @@ public class PlayerInputManager : MonoBehaviour
             {
                 PlayerInput input = GameManager.Instance.spawnedPlayers[i].GetComponent<PlayerInput>();
                   UpgradePanelUI[i].gameObject.SetActive(true);
-                  UpgradePanelUI[i].LockedIn = false;
                   UpgradePanelUI[i].Initialize(input, i);
                  
             }

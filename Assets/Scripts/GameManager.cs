@@ -116,7 +116,6 @@ public class GameManager : MonoBehaviour
                 SetWinnerText("DRAW");
                 SetState(wonState);
 
-                Debug.Log("DRAW");
             }
             else if(alivePlayers.Count == 1 && drawTimerPeriod <= 0)
             {
@@ -125,7 +124,6 @@ public class GameManager : MonoBehaviour
                 AddWinToPlayer(winnerIndex);
                 SetState(wonState);
 
-                Debug.Log("WON");
             }
 
 
@@ -140,7 +138,6 @@ public class GameManager : MonoBehaviour
                 if(!matchOver)
                 {
                 SetState(upgradeState);
-                Debug.Log("UPGRADE");
                 }
                 else
                 {
@@ -181,7 +178,6 @@ public class GameManager : MonoBehaviour
 
         currentState.Enter(this);
 
-        Debug.Log($"current state - {currentState.ToString()}");
     }
 
     private IEnumerator BeginRound()
@@ -259,7 +255,6 @@ public class GameManager : MonoBehaviour
                     playerWins[i] = 0;
                     spawnedPlayers[i].GetComponent<Deck>().ResetDeck();
                     spawnedPlayers[i].GetComponent<Deck>().Initialise(i);
-                    Debug.Log($"Player {i} wins reset to 0");
                 }
                     matchOver = false;
             }
@@ -298,7 +293,6 @@ public class GameManager : MonoBehaviour
         if(playerWins.ContainsKey(playerIndex))
         {
             playerWins[playerIndex]++;
-            Debug.Log($"Player {playerIndex} wins: {playerWins[playerIndex]}");
         }
 
         if(playerWins[playerIndex] >= winsToEnd)
