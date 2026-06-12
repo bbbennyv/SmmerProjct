@@ -46,19 +46,20 @@ public class UpgradeManager : MonoBehaviour
         resolved = true;
 
         var panels = PlayerInputManager.instance.UpgradePanelUI;
-        foreach (var panel in panels)
+        int playerCount = GameManager.Instance.spawnedPlayers.Count;
+
+        for (int i = 0; i < playerCount; i++)
         {
+            var panel = panels[i];
             if (!panel.IsConfirmed) continue;
 
+            var card = panel.GetSelectedCard();
+            if (card == null) continue;
+
             var deck = panel.OwnerInput.GetComponent<Deck>();
+            if (deck == null) continue;
 
-            if (deck == null)
-            {
-                Debug.LogError($"No Deck found on player {panel.PlayerIndex}");
-                continue;
-            }
-
-            deck.AddCard(panel.GetSelectedCard());
+            deck.AddCard(card);
         }
 
         GameManager.Instance.respawn = true;
@@ -74,11 +75,14 @@ public class UpgradeManager : MonoBehaviour
         if (resolved) return;
 
         var panels = PlayerInputManager.instance.UpgradePanelUI;
-        foreach (var panel in panels)
+        int playerCount = GameManager.Instance.spawnedPlayers.Count;
+
+        for (int i = 0; i < playerCount; i++)
         {
-            if (!panel.IsConfirmed)
-                panel.AssignRandomCard();
+            if (!panels[i].IsConfirmed)
+                panels[i].AssignRandomCard();
         }
+
         ResolveUpgrades();
     }
 
