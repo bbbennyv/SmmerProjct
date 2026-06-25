@@ -66,7 +66,6 @@ public class Deck : MonoBehaviour
 
     private void ShuffleDeck()
     {
-        Debug.Log("shuffle");
         for(int i = _deckPile.Count - 1; i > 0; i--)
         {
             int j = Random.Range(0, i + 1);
@@ -78,7 +77,6 @@ public class Deck : MonoBehaviour
 
     public void DrawHand()
     {
-        Debug.Log("Size: " + _deckPile.Count);
         while(_deckPile.Count != 0)
         { 
             ShuffleDeck();

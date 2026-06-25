@@ -272,7 +272,6 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator PopWeaponsOutOfHand(BaseWeapon weapon)
     {
-        Debug.Log("Pop");
         weapon.transform.SetParent(null);
         
         Rigidbody2D rb = weapon.GetComponent<Rigidbody2D>();

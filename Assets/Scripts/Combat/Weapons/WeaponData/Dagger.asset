@@ -18,5 +18,6 @@ MonoBehaviour:
   weaponOffset: {x: 0, y: -1, z: 0}
   minKnockback: 20
   maxKnockback: 50
-  minDamage: 5
-  maxDamage: 10
+  minDamage: 6
+  maxDamage: 8
+  chargeSpeed: 4

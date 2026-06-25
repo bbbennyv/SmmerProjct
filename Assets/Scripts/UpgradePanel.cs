@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,69 +8,103 @@ public class UpgradePanel : MonoBehaviour
     [SerializeField] private List<UIOption> cardOptions = new List<UIOption>();
     public int PlayerIndex;
 
+    private List<ScriptableCard> currentOffer = new List<ScriptableCard>();
     public PlayerInput OwnerInput;
-
-    public bool LockedIn;
 
     public int CurrentSelection;
     
     public UINavigation navigation;
 
 
+    public bool IsConfirmed { get; private set; }
+    public int SelectedCardIndex { get; private set; }
+
     private void Awake()
     {
         if(navigation == null)
             navigation = GetComponent<UINavigation>();
-
-        Debug.Log($"{navigation} ");
-
     }
 
     public void Initialize(PlayerInput input, int playerIndex)
     {
+
         OwnerInput = input;
+
         PlayerIndex = playerIndex;
 
         PlayerController player = input.GetComponent<PlayerController>();
-        List<ScriptableCard> offer = CardOfferSystem.Instance.GenerateOffer(player);
+        currentOffer = CardOfferSystem.Instance.GenerateOffer(player);
 
         for (int i = 0; i < cardOptions.Count; i++)
         {
             cardOptions[i].gameObject.SetActive(true);
-            if(i < offer.Count)
+            if(i < currentOffer.Count)
             {
-               cardOptions[i].SetCard(offer[i]);
+               cardOptions[i].SetCard(currentOffer[i]);
                 int index = i; 
                 cardOptions[i].OnConfirm = () => LockIn(index);
+                cardOptions[i].OnCancel = Cancel;
+                cardOptions[i].GetComponent<CardUI>().getCardImage().canvasRenderer.SetAlpha(1f);
+
             }
             else
             {
-                cardOptions[i].gameObject.SetActive(false);
+                cardOptions[i].GetComponent<CardUI>().getCardImage().canvasRenderer.SetAlpha(1f);
             }
         }
 
-        navigation.InitializeWithPlayerInput(input);
+
         navigation.Initialize(cardOptions);
+        navigation.InitializeWithPlayerInput(input);
+
+
     }
 
     private void LockIn(int cardIndex)
     {
-        if (LockedIn) return;
-        LockedIn = true;
 
-        PlayerController player = OwnerInput.GetComponent<PlayerController>();
-        Deck deck = OwnerInput.GetComponent<Deck>();
-        deck.AddCard(cardOptions[cardIndex].CardData);
+        SelectedCardIndex = cardIndex;
+        IsConfirmed = true;
 
         UpgradeManager.Instance.PlayerLockedIn(PlayerIndex);
 
-         for (int i = 0; i < cardOptions.Count; i++)
+        for (int i = 0; i < cardOptions.Count; i++)
         {
-             cardOptions[i].gameObject.SetActive(false);
+            cardOptions[i].GetComponent<CardUI>().getCardImage().canvasRenderer.SetAlpha(0.5f);
         }
 
-        // TODO: OwnerInput.GetComponent<Deck>().AddCard(cardOptions[cardIndex].CardData);
-        // TODO: UpgradeManager.Instance.PlayerLockedIn(PlayerIndex);
+
+    }
+
+    private void Cancel()
+    {
+        if (!IsConfirmed) return;
+        IsConfirmed = false;
+        navigation.Reset();
+        UpgradeManager.Instance.PlayerUnLocked(PlayerIndex);
+
+        for (int i = 0; i < cardOptions.Count; i++)
+        {
+            cardOptions[i].GetComponent<CardUI>().getCardImage().canvasRenderer.SetAlpha(1f);
+        }
+
+    }
+
+    public ScriptableCard GetSelectedCard()
+    {
+        return cardOptions[SelectedCardIndex].CardData;
+    }
+
+    public void AssignRandomCard()
+    {
+        int randomIndex = Random.Range(0, currentOffer.Count);
+        SelectedCardIndex = randomIndex;
+        IsConfirmed = true;
+
+        for (int i = 0; i < cardOptions.Count; i++)
+        {
+            cardOptions[i].SetHighlighted(i == SelectedCardIndex);
+        }
     }
 
 }

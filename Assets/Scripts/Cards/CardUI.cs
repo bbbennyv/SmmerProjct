@@ -47,7 +47,6 @@ public class CardUI : MonoBehaviour
             // SetCardText();
             // SetCardImage();
             SetCardUI(_card.CardData);
-            Debug.Log("data");
         }
     }
 
@@ -65,6 +64,10 @@ public class CardUI : MonoBehaviour
         _cardImage.sprite = _card.CardData.Image;
     }
 
+    public Image getCardImage()
+    {
+        return _cardImage;
+    }
 
     public void SetCardUI(ScriptableCard data)
     {

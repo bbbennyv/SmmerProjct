@@ -66,7 +66,7 @@
                     "id": "a24ce323-608e-4653-a6ff-36d92058c80d",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press(behavior=1)",
                     "initialStateCheck": false
                 },
                 {
@@ -75,7 +75,7 @@
                     "id": "54e8ec28-2e74-4d62-95c8-43d1986d781d",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press(behavior=1)",
                     "initialStateCheck": false
                 }
             ],
@@ -105,7 +105,7 @@
                 {
                     "name": "",
                     "id": "00ed377b-bac1-4612-b411-5f36c96e3d77",
-                    "path": "<Gamepad>/leftShoulder",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": ";GamePad",
@@ -116,7 +116,7 @@
                 {
                     "name": "",
                     "id": "7bb3e394-b941-4001-bfbb-bba85fd101d4",
-                    "path": "<Gamepad>/rightShoulder",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": ";GamePad",
@@ -149,7 +149,7 @@
                 {
                     "name": "",
                     "id": "11a71935-0063-461c-b387-9f7a774ed912",
-                    "path": "<Gamepad>/leftTrigger",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -160,7 +160,7 @@
                 {
                     "name": "",
                     "id": "906ac9e1-acb3-478f-a7a1-937e73ff9830",
-                    "path": "<Gamepad>/rightTrigger",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

@@ -3,10 +3,15 @@ using UnityEngine;
 public class TargetGroupAutoRegister : MonoBehaviour
 {
 
-    [SerializeField] MultiplayerTargetGroupManager targetGroupManager;
+    [SerializeField] public MultiplayerTargetGroupManager targetGroupManager;
+
+    public static TargetGroupAutoRegister instance;
+
 
     void Start()
     {
+        instance  = this;
+
         targetGroupManager = FindFirstObjectByType<MultiplayerTargetGroupManager>();
 
         if (targetGroupManager != null)
@@ -16,7 +21,7 @@ public class TargetGroupAutoRegister : MonoBehaviour
 
     }
 
-    private void OnDestroy()
+    public void OnDestroy()
     {
         if (targetGroupManager != null) {targetGroupManager.UnregisterTarget(transform); }
     }
