@@ -64,7 +64,8 @@ public class GameManager : MonoBehaviour
     private bool roundStarting = false;
 
     public bool respawn = false;
-
+    private bool allLockedIn = false;
+    
     private Dictionary<int, int> playerWins = new Dictionary<int, int>();
     [SerializeField] private int winsToEnd = 3;
       public bool matchOver = false;

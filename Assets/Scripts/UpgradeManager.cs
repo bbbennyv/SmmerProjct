@@ -5,40 +5,56 @@ using UnityEngine.Rendering.VirtualTexturing;
 
 public class UpgradeManager : MonoBehaviour
 {
-   public static UpgradeManager Instance {get; private set; }
+    public static UpgradeManager Instance {get; private set; }
 
-   [SerializeField] private List<UpgradePanel> upgradePanels = new();
+    [SerializeField] private List<UpgradePanel> upgradePanels = new();
+    [SerializeField] private float maxlockedInCount = 3;
 
     private HashSet<int> lockedInPlayers = new HashSet<int>();
-    private int lockedInCount = 0;
+
+    private float lockedInCount;
 
     private bool resolved = false;
-
+    private bool allLockedIn = false;
     private void Awake()
-   {
+    {
         if( Instance != null && Instance != this) {Destroy(gameObject); return; }
         Instance = this;
-   }
-
-   public void StartUpgradePhase()
-   {
+    }
+    public void StartUpgradePhase()
+    {
         lockedInPlayers.Clear();
         resolved = false;
+        allLockedIn = false;
         PlayerInputManager.instance.InitialiseUpgradePanels();
-   }
+    }
 
    public void PlayerLockedIn(int playerIndex)
    {
         lockedInPlayers.Add(playerIndex);
 
-        //PlayerInputManager.instance.UpgradePanelUI[playerIndex].gameObject.SetActive(false);
-
         if (lockedInPlayers.Count >= GameManager.Instance.spawnedPlayers.Count)
         {
-            ResolveUpgrades();
+            allLockedIn = true;
+            lockedInCount = maxlockedInCount;
         }
 
    }
+
+
+    private void Update()
+    {
+        if (resolved) return;
+
+        if (allLockedIn)
+        {
+            lockedInCount -= Time.deltaTime;
+            if (lockedInCount <= 0f)
+            {
+                ResolveUpgrades();
+            }
+        }
+    }
 
     public void ResolveUpgrades()
     {
@@ -68,6 +84,8 @@ public class UpgradeManager : MonoBehaviour
     public void PlayerUnLocked(int playerIndex)
     {
         lockedInPlayers.Remove(playerIndex);
+        allLockedIn = false;
+
     }
 
     public void ForceResolve()
