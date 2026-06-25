@@ -90,6 +90,8 @@ public class MeleeWeapon : BaseWeapon
         hitRegistered = false;
 
 
+        SoundManager.PlaySound(SoundType.SwordSwing, 0.5f);
+
         ResetCooldown();
     }
 
@@ -163,6 +165,7 @@ public class MeleeWeapon : BaseWeapon
 
             HealthSystem targetHealth = targetRb.GetComponent<HealthSystem>();
             targetHealth.TakeDamage(damage, knockback, hitDirection, targetRb, chargeRatio);
+            SoundManager.PlaySound(SoundType.SwordHit, 0.7f);
         }
 
     }

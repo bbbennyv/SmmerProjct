@@ -86,12 +86,14 @@ public class UINavigation : MonoBehaviour
 
             if (gamepad.buttonSouth.wasPressedThisFrame)
             {
+                SoundManager.PlaySound(SoundType.UpgradeConfirm, .6f);
                 options[currentIndex].OnConfirm?.Invoke();
                 break;
             }
 
             if (gamepad.buttonEast.wasPressedThisFrame)
             {
+                SoundManager.PlaySound(SoundType.UpgradeCancel, .6f);
                 options[currentIndex].OnCancel?.Invoke();
                 break;
             }
@@ -103,6 +105,7 @@ public class UINavigation : MonoBehaviour
         options[currentIndex].SetHighlighted(false);
         currentIndex = Mathf.Clamp(currentIndex + direction, 0, options.Count - 1);
         options[currentIndex].SetHighlighted(true);
+        SoundManager.PlaySound(SoundType.UpgradeScroll, .2f);
     }
 
     public void Reset()

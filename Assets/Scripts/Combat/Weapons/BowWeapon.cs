@@ -37,6 +37,8 @@ public class BowWeapon : RangedWeapon
 
         armPivot.localRotation =
             Quaternion.Euler(0, 0, FinalAngle(currentAngle));
+
+         
     }
     public override void Use()
     {
@@ -48,6 +50,8 @@ public class BowWeapon : RangedWeapon
 
         projectileSpeedMult = Mathf.Lerp(minProjectileSpeed, maxProjectileSpeed, chargeRatio);
         
+        SoundManager.PlaySound(SoundType.BowUse, 0.5f);
+
         base.Use();
     }
 

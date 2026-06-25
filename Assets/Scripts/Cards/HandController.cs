@@ -40,12 +40,14 @@ public class HandController : MonoBehaviour
     {
         if(!action.started) return;
         selectedIndex = Mathf.Max(0, selectedIndex - 1);
+        SoundManager.PlaySound(SoundType.CardScroll, .3f);
     }
 
     public void ScrollRight(InputAction.CallbackContext action)
     {
          if(!action.started) return;
         selectedIndex = Mathf.Min(deck.HandCards.Count - 1, selectedIndex + 1);
+        SoundManager.PlaySound(SoundType.CardScroll, .3f);
     }
 
     public void UseCard(InputAction.CallbackContext action)
@@ -65,6 +67,7 @@ public class HandController : MonoBehaviour
         selectedIndex = Mathf.Clamp(selectedIndex, 0, Mathf.Max(0, hand.Count - 1));
 
         SoundManager.PlaySound(SoundType.CardUse, 1f);
+        SoundManager.PlaySound(SoundType.CardUse2, .6f);
     }
 
     private void UpdateCardVisibility()

@@ -46,6 +46,7 @@ public class HealthSystem : MonoBehaviour
 
         }
 
+        SoundManager.PlaySound(SoundType.PlayerPunch, 1.5f);
 
         if (charge < 0.5)
         {

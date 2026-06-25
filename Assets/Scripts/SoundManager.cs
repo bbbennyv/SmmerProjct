@@ -7,6 +7,18 @@ public enum SoundType
     PlayerJump,
     SwordSwing,
     CardUse,
+    BowUse,
+    BowCharge,
+    Dash,
+    PLayerLand,
+    PlayerPunch,
+    SwordHit,
+    SpawnIn,
+    CardScroll,
+    CardUse2,
+    UpgradeConfirm,
+    UpgradeCancel,
+    UpgradeScroll,
 }
 
 [ExecuteInEditMode]

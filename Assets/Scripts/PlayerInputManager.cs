@@ -58,6 +58,7 @@ public class PlayerInputManager : MonoBehaviour
                 player.GetComponent<Deck>().Initialise(spawn);
 
                 joinedGamepads.Add(gamepad);
+                
 
                 var controller = player.GetComponent<PlayerController>();
 
@@ -69,6 +70,7 @@ public class PlayerInputManager : MonoBehaviour
                 GameManager.Instance.spawnedPlayers.Add(controller);
                 GameManager.Instance.alivePlayers.Add(controller);
 
+                SoundManager.PlaySound(SoundType.SpawnIn, 1f);
 
                 spawn++;
                 GameManager.Instance.RegisterPlayer(spawn - 1);

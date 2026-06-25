@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
             if (jumpsToUse > 0)
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpHeight);
-                SoundManager.PlaySound(SoundType.PlayerJump, 0.8f);
+                SoundManager.PlaySound(SoundType.PlayerJump, 0.3f);
                 jumpsToUse--;
             }
         }
@@ -109,6 +109,7 @@ public class PlayerController : MonoBehaviour
 
         if (action.started && !isDashing && GameManager.Instance.IsGameplay)
         {
+            SoundManager.PlaySound(SoundType.Dash, 0.2f);
             StartCoroutine(DashAction());
         }
     }
@@ -181,7 +182,7 @@ public class PlayerController : MonoBehaviour
                 if(rightFist.GetFistFull())
                 {
                     rightFist.GetWeapon().BeginCharge();
-                    
+                  
                 }
             }
 
@@ -191,6 +192,7 @@ public class PlayerController : MonoBehaviour
                 if (rightFist.GetWeapon())
                 {
                     rightFist.GetWeapon().Use();
+                    
                     
                 }
             }
@@ -294,6 +296,7 @@ public class PlayerController : MonoBehaviour
             if (contact.normal.y > 0.5f)
             {
                 jumpsToUse = 2;
+                SoundManager.PlaySound(SoundType.PLayerLand, 0.8f);
                 break;
             }
         }
